@@ -1,0 +1,7 @@
+const THEME_KEY = "THEME_KEY";
+const THEME_LIGHT = "THEME_LIGHT";
+const THEME_DARK = "THEME_DARK";
+
+const THEME = { THEME_KEY, THEME_LIGHT, THEME_DARK };
+
+export default THEME;

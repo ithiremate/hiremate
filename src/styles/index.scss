@@ -30,9 +30,7 @@ body {
     width: 100vw;
     min-height: 100vh;
     overflow-x: hidden;
-    color: $primary-light;
     box-sizing: border-box;
-    background: $background-light;
     @include font-base;
 }
 
@@ -48,24 +46,20 @@ span {
     margin-block-end: 0;
 }
 
-h1::selection,
-h2::selection,
-h3::selection,
-h4::selection,
-h5::selection,
-h6::selection,
-p::selection,
-span::selection,
-input::selection {
-    background-color: $secondary-light;
-    color: $primary-light;
-}
-
 #root {
     min-width: 100vw;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $background-light;
+}
+
+.root_theme {
+    &_THEME_LIGHT {
+        background: $background-light;
+    }
+
+    &_THEME_DARK {
+        background: $background-dark;
+    }
 }
