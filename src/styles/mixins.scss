@@ -1,0 +1,73 @@
+@import "./variables.scss";
+
+// FONTS
+@mixin font-sm {
+    font-size: 14px;
+}
+
+@mixin font-base {
+    font-size: 16px;
+}
+
+@mixin font-lg {
+    font-size: 20px;
+}
+
+@mixin font-xl {
+    font-size: 24px;
+}
+
+@mixin font-2xl {
+    font-size: 32px;
+}
+
+@mixin font-3xl {
+    font-size: 36px;
+}
+
+@mixin font-4xl {
+    font-size: 42px;
+}
+
+// BREAK POINTS
+@mixin mobile-sm {
+    @media screen and (min-width: $mobile-sm-width) {
+        @content;
+    }
+}
+
+@mixin mobile-base {
+    @media screen and (min-width: $mobile-base-width) {
+        @content;
+    }
+}
+
+@mixin mobile-md {
+    @media screen and (min-width: $mobile-md-width) {
+        @content;
+    }
+}
+
+@mixin mobile-lg {
+    @media screen and (min-width: $mobile-lg-width) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media screen and (min-width: $tablet-width) {
+        @content;
+    }
+}
+
+@mixin laptop {
+    @media screen and (min-width: $laptop-width) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media screen and (min-width: $desktop-width) {
+        @content;
+    }
+}
