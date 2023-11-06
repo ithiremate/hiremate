@@ -8,7 +8,14 @@ const initialState = {
 const sessionSlice = createSlice({
   name: "session",
   initialState,
-  reducers: {},
+  reducers: {
+    updateUser: (state, action) => {
+      state.user = action.payload;
+      state.isInitialized = true;
+    },
+  },
 });
+
+export const { updateUser } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
