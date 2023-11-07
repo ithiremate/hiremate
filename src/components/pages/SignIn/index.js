@@ -1,7 +1,7 @@
 import styles from "./index.module.scss";
 
-function SignIn({ children }) {
-  return <section className={styles.container}>{children}</section>;
+function SignIn() {
+  return <section className={styles.container} />;
 }
 
 export default SignIn;

@@ -55,11 +55,11 @@ span {
 }
 
 .root_theme {
-    &_THEME_LIGHT {
+    &_light {
         background: $background-light;
     }
 
-    &_THEME_DARK {
+    &_dark {
         background: $background-dark;
     }
 }
