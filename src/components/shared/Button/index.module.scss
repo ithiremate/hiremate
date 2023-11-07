@@ -3,45 +3,71 @@
 
 .button {
     height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
     outline: 0;
     border: 2px solid transparent;
     border-radius: 0;
     text-transform: uppercase;
     font-weight: 600;
+    padding: 10px 0;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     @include font-base;
 
     &_light {
-        color: $background-light;
-        background: $primary-light;
+        color: $primary-light;
+        border-color: $primary-light;
+        background: $background-light;
 
         &:hover {
+            color: $background-light;
+            background: $primary-light;
+        }
+
+        &:active {
+            color: $primary-light;
+            border-color: $primary-light;
+            background: $background-light;
+        }
+    }
+
+    &_dark {
+        color: $primary-dark;
+        border-color: $primary-dark;
+        background: $background-dark;
+
+        &:hover {
+            color: $background-dark;
+            background: $primary-dark;
+        }
+
+        &:active {
+            color: $primary-dark;
+            border-color: $primary-dark;
+            background: $background-dark;
+        }
+    }
+
+    &_loading {
+        &_light,
+        &_light:hover,
+        &_light:active {
+            cursor: not-allowed;
             color: $primary-light;
             border-color: $primary-light;
             background: $background-light;
         }
 
-        &:active {
-            color: $background-light;
-            background: $primary-light;
-        }
-    }
-
-    &_dark {
-        color: $background-dark;
-        background: $primary-dark;
-
-        &:hover {
+        &_dark,
+        &_dark:hover,
+        &_dark:active {
+            cursor: not-allowed;
             color: $primary-dark;
             border-color: $primary-dark;
             background: $background-dark;
-        }
-
-        &:active {
-            color: $background-dark;
-            background: $primary-dark;
         }
     }
 }

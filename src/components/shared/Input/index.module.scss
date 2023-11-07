@@ -19,6 +19,16 @@
     }
 }
 
+.asterisk {
+    &_light {
+        color: $secondary-light;
+    }
+
+    &_dark {
+        color: $secondary-dark;
+    }
+}
+
 .field {
     height: 40px;
     padding: 0 14px;
@@ -37,6 +47,11 @@
         &::placeholder {
             color: rgba($color: $primary-light, $alpha: 0.6);
         }
+
+        &:read-only {
+            background: rgba($color: $primary-light, $alpha: 0.2);
+            cursor: not-allowed;
+        }
     }
 
     &_dark {
@@ -46,6 +61,11 @@
 
         &::placeholder {
             color: rgba($color: $primary-dark, $alpha: 0.6);
+        }
+
+        &:read-only {
+            background: rgba($color: $primary-dark, $alpha: 0.2);
+            cursor: not-allowed;
         }
     }
 

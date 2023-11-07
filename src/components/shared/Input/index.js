@@ -12,6 +12,8 @@ function Input({
   valueKey,
   name,
   isValid,
+  isRequired,
+  readOnly,
   onChange,
 }) {
   const { currentTheme } = useSelector((state) => state.theme);
@@ -28,6 +30,9 @@ function Input({
         htmlFor={id}
         className={classNames(styles.label, styles[`label_${currentTheme}`])}>
         {label}
+        {isRequired && (
+          <span className={styles[`asterisk_${currentTheme}`]}>*</span>
+        )}
       </label>
 
       <input
@@ -38,6 +43,7 @@ function Input({
         placeholder={placeholder}
         value={value}
         name={name}
+        readOnly={readOnly}
         onChange={handleChange}
       />
     </div>
@@ -51,6 +57,8 @@ Input.propTypes = {
   valueKey: PropTypes.string,
   name: PropTypes.string,
   isValid: PropTypes.bool,
+  isRequired: PropTypes.bool,
+  readOnly: PropTypes.bool,
   onChange: PropTypes.func,
 };
 
@@ -61,6 +69,8 @@ Input.defaultProps = {
   valueKey: "",
   name: "",
   isValid: true,
+  isRequired: false,
+  readOnly: false,
   onChange: () => {},
 };
 

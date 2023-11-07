@@ -1,7 +1,9 @@
 import { useState } from "react";
-import Button from "../../shared/Button";
+
+import validateCreateSession from "../../../utils/validation";
 
 import Input from "../../shared/Input";
+import Button from "../../shared/Button";
 
 import styles from "./index.module.scss";
 
@@ -18,8 +20,26 @@ function SignIn() {
     }));
   };
 
+  const handleFormError = (errors) => {
+    const updatedInputs = structuredClone(inputs);
+
+    Object.keys(errors).forEach((errorKey) => {
+      if (updatedInputs[errorKey]) {
+        updatedInputs[errorKey].isValid = !errors[errorKey];
+      }
+    });
+
+    setInputs(updatedInputs);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    validateCreateSession({
+      data: { email: inputs.email.value, password: inputs.password.value },
+      onSuccess: (validData) => console.log(validData),
+      onError: (errors) => handleFormError(errors),
+    });
   };
 
   return (
@@ -32,6 +52,7 @@ function SignIn() {
           valueKey="email"
           name="email"
           isValid={inputs.email.isValid}
+          isRequired
           onChange={handleInputChange}
         />
 
@@ -42,6 +63,7 @@ function SignIn() {
           valueKey="password"
           name="password"
           isValid={inputs.password.isValid}
+          isRequired
           onChange={handleInputChange}
         />
 
