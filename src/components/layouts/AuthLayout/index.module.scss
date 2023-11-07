@@ -1,7 +1,30 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
 .container {
     width: 100vw;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.content {
+    width: 100%;
+    max-width: $mobile-base-width;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo {
+    width: 280px;
+}
+
+@include mobile-base {
+    .logo {
+        width: unset;
+        max-width: $mobile-base-width;
+    }
 }

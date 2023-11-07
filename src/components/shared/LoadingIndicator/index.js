@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Oval } from "react-loader-spinner";
 import { useSelector } from "react-redux";
+
 import THEME from "../../../utils/constants/theme";
 
 const DEFAULT_COLORS = {
@@ -48,8 +49,8 @@ LoadingIndicator.propTypes = {
 };
 
 LoadingIndicator.defaultProps = {
-  width: 40,
-  height: 40,
+  width: 30,
+  height: 30,
   strokeWidth: 8,
   strokeWidthSecondary: 4,
 };

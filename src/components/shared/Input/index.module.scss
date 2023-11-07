@@ -1,0 +1,63 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.label {
+    @include font-lg;
+
+    &_light {
+        color: $primary-light;
+    }
+
+    &_dark {
+        color: $primary-dark;
+    }
+}
+
+.field {
+    height: 40px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    transition: all 0.3s ease-in-out;
+    @include font-base;
+
+    &_light {
+        color: $primary-light;
+        background: $background-light;
+        border: 2px solid $primary-light;
+
+        &::placeholder {
+            color: rgba($color: $primary-light, $alpha: 0.6);
+        }
+    }
+
+    &_dark {
+        color: $primary-dark;
+        background: $background-dark;
+        border: 2px solid $primary-dark;
+
+        &::placeholder {
+            color: rgba($color: $primary-dark, $alpha: 0.6);
+        }
+    }
+
+    &_error {
+        &_light {
+            color: $secondary-light;
+            border: 2px solid $secondary-light;
+        }
+
+        &_dark {
+            color: $secondary-light;
+            border: 2px solid $secondary-light;
+        }
+    }
+}

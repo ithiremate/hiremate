@@ -1,3 +1,5 @@
+@import "../../../styles/mixins.scss";
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -9,6 +11,12 @@
 }
 
 .logo {
-    width: 300px;
-    max-width: 100%;
+    width: 280px;
+}
+
+@include mobile-base {
+    .logo {
+        width: unset;
+        max-width: $mobile-base-width;
+    }
 }
