@@ -1,0 +1,59 @@
+@import "../../../../../styles/variables.scss";
+
+.container {
+    max-width: 300px;
+    padding: 6px 40px;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+    &_visible {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+
+    &_light {
+        &_success {
+            background: $green-light;
+
+            .message {
+                color: $background-light;
+            }
+        }
+
+        &_error {
+            background: $red-light;
+
+            .message {
+                color: $background-light;
+            }
+        }
+    }
+
+    &_dark {
+        &_success {
+            background: $green-dark;
+
+            .message {
+                color: $background-dark;
+            }
+        }
+
+        &_error {
+            background: $red-dark;
+
+            .message {
+                color: $background-dark;
+            }
+        }
+    }
+}
+
+.message {
+    white-space: nowrap;
+    font-weight: 600;
+}

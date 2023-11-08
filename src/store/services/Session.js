@@ -12,4 +12,18 @@ export default class SessionAPI extends Base {
       },
     });
   }
+
+  signInWithEmailAndPassword(email, password) {
+    return this.apiClient.request({
+      query: (auth) => {
+        const currentUser = fb.functions.auth.signInWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
+
+        return currentUser;
+      },
+    });
+  }
 }

@@ -1,6 +1,8 @@
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 import validateCreateSession from "../../../utils/validation";
+import { signInWithEmailAndPassword } from "../../../store/actions/sessionActions";
 
 import Input from "../../shared/Input";
 import Button from "../../shared/Button";
@@ -8,6 +10,9 @@ import Button from "../../shared/Button";
 import styles from "./index.module.scss";
 
 function SignIn() {
+  const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     email: { value: "", isValid: true },
     password: { value: "", isValid: true },
@@ -18,6 +23,12 @@ function SignIn() {
       ...prev,
       [valueKey]: { isValid: true, value },
     }));
+  };
+
+  const handleSignIn = async (validData) => {
+    setIsLoading(true);
+    await dispatch(signInWithEmailAndPassword(validData));
+    setIsLoading(false);
   };
 
   const handleFormError = (errors) => {
@@ -37,7 +48,7 @@ function SignIn() {
 
     validateCreateSession({
       data: { email: inputs.email.value, password: inputs.password.value },
-      onSuccess: (validData) => console.log(validData),
+      onSuccess: (validData) => handleSignIn(validData),
       onError: (errors) => handleFormError(errors),
     });
   };
@@ -67,7 +78,12 @@ function SignIn() {
           onChange={handleInputChange}
         />
 
-        <Button label="Login" type="submit" className={styles.button} />
+        <Button
+          label="Login"
+          type="submit"
+          className={styles.button}
+          isLoading={isLoading}
+        />
       </form>
     </div>
   );

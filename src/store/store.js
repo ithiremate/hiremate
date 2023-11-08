@@ -2,10 +2,12 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import theme from "./slices/themeSlice";
 import session from "./slices/sessionSlice";
+import toast from "./slices/toastSlice";
 
 const reducers = {
   theme,
   session,
+  toast,
 };
 
 const combinedReducer = combineReducers(reducers);

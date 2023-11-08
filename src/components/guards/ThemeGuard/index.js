@@ -16,9 +16,10 @@ function ThemeGuard({ children }) {
   };
 
   const initTheme = () => {
-    const lsTheme = localStorage.getItem(THEME.THEME_KEY) ?? THEME.THEME_LIGHT;
+    const lsTheme =
+      localStorage.getItem(THEME.THEME_TYPE_KEY) ?? THEME.THEME_DARK_TYPE;
 
-    localStorage.setItem(THEME.THEME_KEY, lsTheme);
+    localStorage.setItem(THEME.THEME_TYPE_KEY, lsTheme);
     dispatch(updateTheme(lsTheme));
   };
 

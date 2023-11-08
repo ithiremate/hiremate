@@ -21,11 +21,11 @@
 
 .asterisk {
     &_light {
-        color: $secondary-light;
+        color: $red-light;
     }
 
     &_dark {
-        color: $secondary-dark;
+        color: $red-dark;
     }
 }
 
@@ -71,13 +71,13 @@
 
     &_error {
         &_light {
-            color: $secondary-light;
-            border: 2px solid $secondary-light;
+            color: $red-light;
+            border: 2px solid $red-light;
         }
 
         &_dark {
-            color: $secondary-light;
-            border: 2px solid $secondary-light;
+            color: $red-dark;
+            border: 2px solid $red-dark;
         }
     }
 }
