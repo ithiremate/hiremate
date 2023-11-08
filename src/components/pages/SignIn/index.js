@@ -75,6 +75,7 @@ function SignIn() {
           name="password"
           isValid={inputs.password.isValid}
           isRequired
+          secured
           onChange={handleInputChange}
         />
 

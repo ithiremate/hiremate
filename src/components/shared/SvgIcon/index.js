@@ -8,6 +8,10 @@ import { ReactComponent as LogoDarkSmall } from "../../../assets/icons/logo_dark
 import { ReactComponent as LogoDarkDefault } from "../../../assets/icons/logo_dark_default.svg";
 import { ReactComponent as LogoDarkFull } from "../../../assets/icons/logo_dark_full.svg";
 
+// BASE
+import { ReactComponent as Lock } from "../../../assets/icons/lock.svg";
+import { ReactComponent as Unlock } from "../../../assets/icons/unlock.svg";
+
 function SvgIcon({ type, className }) {
   const LOGO = {
     logo_light_small: LogoLightSmall,
@@ -18,8 +22,14 @@ function SvgIcon({ type, className }) {
     logo_dark_full: LogoDarkFull,
   };
 
+  const BASE = {
+    lock: Lock,
+    unlock: Unlock,
+  };
+
   const SVG_BY_TYPE = {
     ...LOGO,
+    ...BASE,
   };
 
   const Component = SVG_BY_TYPE[type] ?? "svg";

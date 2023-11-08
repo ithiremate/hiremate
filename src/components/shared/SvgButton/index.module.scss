@@ -1,0 +1,65 @@
+@import "../../../styles/variables.scss";
+
+.button {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+
+    &_light {
+        &:hover {
+            background: $primary-light;
+
+            .icon {
+                &_light {
+                    path {
+                        fill: $background-light;
+                    }
+                }
+            }
+        }
+    }
+
+    &_dark {
+        &:hover {
+            background: $primary-dark;
+
+            .icon {
+                &_dark {
+                    path {
+                        fill: $background-dark;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.icon {
+    width: 20px;
+
+    path {
+        transition: all 0.3s ease-in-out;
+    }
+
+    &_light {
+        path {
+            fill: $primary-light;
+        }
+    }
+
+    &_dark {
+        path {
+            fill: $primary-dark;
+        }
+    }
+}
