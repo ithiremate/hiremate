@@ -1,0 +1,22 @@
+@import "../../../styles/variables.scss";
+
+.link {
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+
+    &_light {
+        color: $red-light;
+
+        &:hover {
+            color: $text-primary-light;
+        }
+    }
+
+    &_dark {
+        color: $red-dark;
+
+        &:hover {
+            color: $text-primary-dark;
+        }
+    }
+}

@@ -56,10 +56,12 @@ span {
 
 .root_theme {
     &_light {
+        color: $text-primary-light;
         background: $background-light;
     }
 
     &_dark {
+        color: $text-primary-dark;
         background: $background-dark;
     }
 }

@@ -18,35 +18,35 @@
     @include font-base;
 
     &_light {
-        color: $primary-light;
-        border-color: $primary-light;
+        color: $text-primary-light;
+        border-color: $text-primary-light;
         background: $background-light;
 
         &:hover {
             color: $background-light;
-            background: $primary-light;
+            background: $text-primary-light;
         }
 
         &:active {
-            color: $primary-light;
-            border-color: $primary-light;
+            color: $text-primary-light;
+            border-color: $text-primary-light;
             background: $background-light;
         }
     }
 
     &_dark {
-        color: $primary-dark;
-        border-color: $primary-dark;
+        color: $text-primary-dark;
+        border-color: $text-primary-dark;
         background: $background-dark;
 
         &:hover {
             color: $background-dark;
-            background: $primary-dark;
+            background: $text-primary-dark;
         }
 
         &:active {
-            color: $primary-dark;
-            border-color: $primary-dark;
+            color: $text-primary-dark;
+            border-color: $text-primary-dark;
             background: $background-dark;
         }
     }
@@ -56,8 +56,8 @@
         &_light:hover,
         &_light:active {
             cursor: not-allowed;
-            color: $primary-light;
-            border-color: $primary-light;
+            color: $text-primary-light;
+            border-color: $text-primary-light;
             background: $background-light;
         }
 
@@ -65,8 +65,8 @@
         &_dark:hover,
         &_dark:active {
             cursor: not-allowed;
-            color: $primary-dark;
-            border-color: $primary-dark;
+            color: $text-primary-dark;
+            border-color: $text-primary-dark;
             background: $background-dark;
         }
     }

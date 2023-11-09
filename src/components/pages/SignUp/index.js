@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
-import { validateSignIn } from "../../../utils/validation";
-import { signInWithEmailAndPassword } from "../../../store/actions/sessionActions";
+import { validateSignUp } from "../../../utils/validation";
+import { createUserWithEmailAndPassword } from "../../../store/actions/sessionActions";
 
 import Input from "../../shared/Input";
 import Button from "../../shared/Button";
@@ -17,6 +17,7 @@ function SignIn() {
   const [inputs, setInputs] = useState({
     email: { value: "", errorMessage: "" },
     password: { value: "", errorMessage: "" },
+    passwordConfirm: { value: "", errorMessage: "" },
   });
 
   const handleInputChange = ({ value, valueKey }) => {
@@ -26,9 +27,9 @@ function SignIn() {
     }));
   };
 
-  const handleSignIn = async (validData) => {
+  const handleSignUp = async (validData) => {
     setIsLoading(true);
-    await dispatch(signInWithEmailAndPassword(validData));
+    await dispatch(createUserWithEmailAndPassword(validData));
     setIsLoading(false);
   };
 
@@ -47,9 +48,13 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    validateSignIn({
-      data: { email: inputs.email.value, password: inputs.password.value },
-      onSuccess: (validData) => handleSignIn(validData),
+    validateSignUp({
+      data: {
+        email: inputs.email.value,
+        password: inputs.password.value,
+        passwordConfirm: inputs.passwordConfirm.value,
+      },
+      onSuccess: (validData) => handleSignUp(validData),
       onError: (errors) => handleFormError(errors),
     });
   };
@@ -80,8 +85,20 @@ function SignIn() {
           onChange={handleInputChange}
         />
 
+        <Input
+          label="Confirm password"
+          placeholder="Confirm password"
+          value={inputs.passwordConfirm.value}
+          valueKey="passwordConfirm"
+          name="passwordConfirm"
+          errorMessage={inputs.passwordConfirm.errorMessage}
+          isRequired
+          secured
+          onChange={handleInputChange}
+        />
+
         <Button
-          label="Login"
+          label="Regitration"
           type="submit"
           className={styles.button}
           isLoading={isLoading}
@@ -89,8 +106,7 @@ function SignIn() {
       </form>
 
       <p className={styles.navigateText}>
-        Haven&#39;t an account yet?{" "}
-        <CustomLink label="Register" to="/sign-up" />
+        Have an account? <CustomLink label="Sign In" to="/sign-in" />
       </p>
     </div>
   );

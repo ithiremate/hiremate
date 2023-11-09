@@ -5,20 +5,51 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../singletons/api";
 import TOAST from "../../utils/constants/toast";
 import { updateUser } from "../slices/sessionSlice";
-import { showToast } from "../slices/toastSlice";
+import { addToast } from "../slices/toastSlice";
 
 const ERRORS = {
   "auth/invalid-login-credentials": "Invalid credentials",
   "auth/too-many-requests": "Too many requests",
+  "auth/email-already-in-use": "Email already in use",
+  "auth/user-disabled": "User disabled",
   default: "Something went wrong",
 };
 
 export const subscribeOnSessionChanges = createAsyncThunk(
   "session/subscribeOnSessionChanges",
   (_, { dispatch }) => {
-    api.session.subscribe((user) => {
+    api.session.subscribeOnSessionChanges((user) => {
       dispatch(updateUser(user));
     });
+  },
+);
+
+export const sendEmailVerification = createAsyncThunk(
+  "session/sendEmailVerification",
+  async (user, { dispatch }) => {
+    try {
+      await api.session.sendEmailVerification(user);
+
+      await dispatch(
+        addToast({
+          type: TOAST.SUCCESS_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: `Link sent to ${user.email}`,
+        }),
+      );
+    } catch (error) {
+      await dispatch(
+        addToast({
+          type: TOAST.ERROR_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: ERRORS[error.code] ?? ERRORS.default,
+        }),
+      );
+
+      console.error("signInWithEmailAndPassword error: ", error);
+
+      throw error;
+    }
   },
 );
 
@@ -27,16 +58,59 @@ export const signInWithEmailAndPassword = createAsyncThunk(
   async ({ email, password }, { dispatch }) => {
     try {
       await api.session.signInWithEmailAndPassword(email, password);
-    } catch (error) {
-      dispatch(
-        showToast({
-          type: TOAST.ERROR_TYPE,
-          message: ERRORS[error.code] ?? ERRORS.default,
+
+      await dispatch(
+        addToast({
+          type: TOAST.SUCCESS_TYPE,
           duration: TOAST.DEFAULT_DURATION,
+          message: "Successfully signed in",
+        }),
+      );
+    } catch (error) {
+      await dispatch(
+        addToast({
+          type: TOAST.ERROR_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: ERRORS[error.code] ?? ERRORS.default,
         }),
       );
 
       console.error("signInWithEmailAndPassword error: ", error);
+
+      throw error;
+    }
+  },
+);
+
+export const createUserWithEmailAndPassword = createAsyncThunk(
+  "session/createUserWithEmailAndPassword",
+  async ({ email, password }, { dispatch }) => {
+    try {
+      const userCredential = await api.session.createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+
+      await dispatch(
+        addToast({
+          type: TOAST.SUCCESS_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: "Account successfully created",
+        }),
+      );
+
+      await dispatch(sendEmailVerification(userCredential.user));
+      await dispatch(signInWithEmailAndPassword({ email, password }));
+    } catch (error) {
+      await dispatch(
+        addToast({
+          type: TOAST.ERROR_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: ERRORS[error.code] ?? ERRORS.default,
+        }),
+      );
+
+      console.error("createUserWithEmailAndPassword error: ", error);
 
       throw error;
     }

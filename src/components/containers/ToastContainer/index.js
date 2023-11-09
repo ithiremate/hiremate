@@ -1,14 +1,15 @@
+/* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-import { hideToast } from "../../../store/slices/toastSlice";
+import { hideToasts } from "../../../store/slices/toastSlice";
 
 import Toast from "./molecules/Toast";
 
 import styles from "./index.module.scss";
 
 const SWITCH_TOAST_DURATION = 500;
-const DEFAULT_ACTIVE_TOASST = {
+const DEFAULT_ACTIVE_TOAST = {
   isVisible: false,
   message: "",
   type: "",
@@ -17,16 +18,16 @@ const DEFAULT_ACTIVE_TOASST = {
 
 function ToastContainer({ children }) {
   const dispatch = useDispatch();
-  const toastState = useSelector((state) => state.toast);
+  const stateToasts = useSelector((state) => state.toast.toasts);
 
   const [toastQueue, setToastQueue] = useState([]);
-  const [activeToast, setActiveToast] = useState(DEFAULT_ACTIVE_TOASST);
+  const [activeToast, setActiveToast] = useState(DEFAULT_ACTIVE_TOAST);
 
   const hideActiveToast = () => {
     setActiveToast((prevToast) => ({ ...prevToast, isVisible: false }));
 
     setTimeout(() => {
-      setActiveToast(DEFAULT_ACTIVE_TOASST);
+      setActiveToast(DEFAULT_ACTIVE_TOAST);
     }, SWITCH_TOAST_DURATION);
   };
 
@@ -34,24 +35,25 @@ function ToastContainer({ children }) {
     if (toastQueue.length > 0) {
       const nextToast = toastQueue[0];
 
-      setActiveToast(nextToast);
+      setActiveToast({ ...nextToast, isVisible: true });
 
       setTimeout(() => {
         setToastQueue((prevQueue) => prevQueue.slice(1));
 
         hideActiveToast();
-        dispatch(hideToast());
       }, nextToast.duration);
+    }
+
+    if (toastQueue.length === 0) {
+      dispatch(hideToasts());
     }
   };
 
   useEffect(() => {
-    if (toastState.message) {
-      const newToast = { ...toastState, isVisible: true };
-
-      setToastQueue([...toastQueue, newToast]);
+    if (stateToasts.length) {
+      setToastQueue(stateToasts);
     }
-  }, [toastState.message]);
+  }, [stateToasts]);
 
   useEffect(() => {
     if (!activeToast.message) {

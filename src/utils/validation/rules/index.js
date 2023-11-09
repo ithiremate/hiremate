@@ -1,7 +1,9 @@
-import createSession from "./createSession";
+import signIn from "./signIn";
+import signUp from "./signUp";
 
 const rules = {
-  createSession,
+  signIn,
+  signUp,
 };
 
 export default rules;

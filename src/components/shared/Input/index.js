@@ -14,7 +14,7 @@ function Input({
   valueKey,
   name,
   type,
-  isValid,
+  errorMessage,
   isRequired,
   readOnly,
   secured,
@@ -51,7 +51,7 @@ function Input({
           id={id}
           type={inputType}
           className={classNames(styles.field, styles[`field_${currentTheme}`], {
-            [styles[`field_error_${currentTheme}`]]: !isValid,
+            [styles[`field_error_${currentTheme}`]]: !!errorMessage,
             [styles.field_with_icon]: secured,
           })}
           placeholder={placeholder}
@@ -65,11 +65,19 @@ function Input({
         {secured && (
           <SvgButton
             className={styles.icon}
-            icon={inputType === "password" ? "unlock" : "lock"}
+            icon={inputType === "password" ? "lock" : "unlock"}
             onClick={handleIconClick}
           />
         )}
       </div>
+
+      <span
+        className={classNames(
+          styles.errorMessage,
+          styles[`errorMessage_${currentTheme}`],
+        )}>
+        {errorMessage}
+      </span>
     </div>
   );
 }
@@ -81,7 +89,7 @@ Input.propTypes = {
   valueKey: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
-  isValid: PropTypes.bool,
+  errorMessage: PropTypes.string,
   isRequired: PropTypes.bool,
   readOnly: PropTypes.bool,
   secured: PropTypes.bool,
@@ -95,7 +103,7 @@ Input.defaultProps = {
   valueKey: "",
   name: "",
   type: "text",
-  isValid: true,
+  errorMessage: "",
   isRequired: false,
   readOnly: false,
   secured: false,

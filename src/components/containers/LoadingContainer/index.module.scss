@@ -14,7 +14,7 @@
     width: 280px;
 }
 
-@include mobile-base {
+@include mobile-md {
     .logo {
         width: unset;
         max-width: $mobile-base-width;

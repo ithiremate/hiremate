@@ -6,7 +6,7 @@ function AuthLayout({ children }) {
   return (
     <main className={styles.container}>
       <section className={styles.content}>
-        <Logo type="default" className={styles.logo} />
+        <Logo type="default" />
 
         {children}
       </section>
