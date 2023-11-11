@@ -17,10 +17,34 @@
     "react/jsx-fragments": "off",
     "react/jsx-no-useless-fragment": "off",
     "no-return-assign": "off",
+    "react/prefer-arrow-callback": ["off"],
+    "react/function-component-definition": [
+      "error",
+      { "namedComponents": "function-declaration" }
+    ],
     "react/prop-types": [
       "error",
       {
         "ignore": ["children"]
+      }
+    ],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": ["case", "default"], "next": "*" },
+      {
+        "blankLine": "always",
+        "prev": "import",
+        "next": ["const", "let", "var", "function"]
+      },
+      {
+        "blankLine": "always",
+        "prev": ["const", "let", "var"],
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": ["const", "let", "var"],
+        "next": ["const", "let", "var"]
       }
     ]
   },

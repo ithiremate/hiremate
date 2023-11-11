@@ -16,7 +16,7 @@ function Toast({ isVisible, message, type }) {
         styles[`container_${currentTheme}_${type}`],
         { [styles.container_visible]: isVisible },
       )}>
-      <span className={styles.message}>{message}</span>
+      <p className={styles.message}>{message}</p>
     </div>
   );
 }

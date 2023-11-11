@@ -34,7 +34,7 @@ export const sendEmailVerification = createAsyncThunk(
         addToast({
           type: TOAST.SUCCESS_TYPE,
           duration: TOAST.DEFAULT_DURATION,
-          message: `Link sent to ${user.email}`,
+          message: "Verification link sent",
         }),
       );
     } catch (error) {

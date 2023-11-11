@@ -2,15 +2,19 @@
 @import "../../../../../styles/mixins.scss";
 
 .container {
-    max-width: 300px;
-    padding: 6px 12px;
+    width: max-content;
+    max-width: 80vw;
+    padding: 6px 40px;
     box-sizing: border-box;
     position: fixed;
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%) scale(0.8);
     opacity: 0;
-    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    pointer-events: none;
+    transition:
+        transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        opacity 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
     &_visible {
         transform: translateX(-50%) scale(1);
@@ -55,8 +59,11 @@
 }
 
 .message {
-    white-space: nowrap;
+    text-align: center;
+    word-break: normal;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @include mobile-md {
