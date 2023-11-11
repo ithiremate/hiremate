@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import {
   HashRouter as Router,
   Navigate,
@@ -8,12 +10,22 @@ import {
 import routes from "./utils/constants/routes";
 
 function Navigation() {
+  const { user } = useSelector((state) => state.session);
+
+  const navigationRoutes = useMemo(() => {
+    if (user) {
+      return routes.wizardRoutes;
+    }
+
+    return routes.publicRoutes;
+  }, [user]);
+
   return (
     <Router>
       <Routes>
-        {Object.keys(routes.publicRoutes).map((routeKey) => {
+        {Object.keys(navigationRoutes).map((routeKey) => {
           const { element: Element, layout: Layout } =
-            routes.publicRoutes[routeKey];
+            navigationRoutes[routeKey];
 
           return (
             <Route

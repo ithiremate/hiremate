@@ -1,9 +1,13 @@
 // LAYOUTS
-import AuthLayout from "../../components/layouts/AuthLayout";
+import AuthLayout from "../../components/layouts/Auth";
+import WizardLayout from "../../components/layouts/Wizard";
 
 // PUBLIC PAGES
 import SignIn from "../../components/pages/SignIn";
 import SignUp from "../../components/pages/SignUp";
+
+// WIZARD PAGES
+import Wizard from "../../components/pages/Wizard";
 
 // PUBLIC ROUTES
 const ROOT = "/";
@@ -16,6 +20,16 @@ const PUBLIC_ROUTES = {
   [SIGN_UP]: { element: SignUp, layout: AuthLayout },
 };
 
-const routes = { publicRoutes: PUBLIC_ROUTES, ROOT, SIGN_IN, SIGN_UP };
+const WIZARD_ROUTES = {
+  [ROOT]: { element: Wizard, layout: WizardLayout },
+};
+
+const routes = {
+  publicRoutes: PUBLIC_ROUTES,
+  wizardRoutes: WIZARD_ROUTES,
+  ROOT,
+  SIGN_IN,
+  SIGN_UP,
+};
 
 export default routes;

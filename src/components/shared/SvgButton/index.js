@@ -12,6 +12,7 @@ function SvgButton({ icon, className, onClick }) {
   return (
     <button
       type="button"
+      tabIndex={-1}
       aria-label={icon}
       className={classNames(
         styles.button,

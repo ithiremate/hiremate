@@ -22,7 +22,8 @@
         border-color: $text-primary-light;
         background: $background-light;
 
-        &:hover {
+        &:hover,
+        &:focus {
             color: $background-light;
             background: $text-primary-light;
         }
@@ -39,7 +40,8 @@
         border-color: $text-primary-dark;
         background: $background-dark;
 
-        &:hover {
+        &:hover,
+        &:focus {
             color: $background-dark;
             background: $text-primary-dark;
         }
