@@ -11,15 +11,14 @@ import routes from "./utils/constants/routes";
 
 function Navigation() {
   const { sessionUser } = useSelector((state) => state.session);
-  const { dbUser } = useSelector((state) => state.user);
 
   const navigationRoutes = useMemo(() => {
-    if (sessionUser && dbUser) {
+    if (sessionUser) {
       return routes.wizardRoutes;
     }
 
     return routes.publicRoutes;
-  }, [sessionUser, dbUser]);
+  }, [sessionUser]);
 
   return (
     <Router>
