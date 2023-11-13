@@ -6,7 +6,10 @@ import LoadingContainer from "../../containers/LoadingContainer";
 
 function RootGuard({ children }) {
   const isAppInitialized = useSelector(
-    (state) => !!state.theme.isInitialized && !!state.session.isInitialized,
+    (state) =>
+      !!state.theme.isInitialized &&
+      !!state.session.isInitialized &&
+      !!state.user.isInitialized,
   );
 
   return (

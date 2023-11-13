@@ -1,5 +1,6 @@
 import ApiClient from "./ApiClient";
 import SessionAPI from "./Session";
+import UserAPI from "./User";
 
 export default function apiConstruct({ onError }) {
   const apiClient = new ApiClient({
@@ -9,5 +10,6 @@ export default function apiConstruct({ onError }) {
   return {
     apiClient,
     session: new SessionAPI({ apiClient }),
+    user: new UserAPI({ apiClient }),
   };
 }

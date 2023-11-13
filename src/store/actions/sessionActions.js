@@ -4,22 +4,16 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import api from "../../singletons/api";
 import TOAST from "../../utils/constants/toast";
-import { updateUser } from "../slices/sessionSlice";
+import FB from "../../utils/constants/fb";
+import { setSessionUser } from "../slices/sessionSlice";
 import { addToast } from "../slices/toastSlice";
-
-const ERRORS = {
-  "auth/invalid-login-credentials": "Invalid credentials",
-  "auth/too-many-requests": "Too many requests",
-  "auth/email-already-in-use": "Email already in use",
-  "auth/user-disabled": "User disabled",
-  default: "Something went wrong",
-};
+import { createUserInDb } from "./userActions";
 
 export const subscribeOnSessionChanges = createAsyncThunk(
   "session/subscribeOnSessionChanges",
   (_, { dispatch }) => {
     api.session.subscribeOnSessionChanges((user) => {
-      dispatch(updateUser(user));
+      dispatch(setSessionUser(user));
     });
   },
 );
@@ -42,7 +36,7 @@ export const sendEmailVerification = createAsyncThunk(
         addToast({
           type: TOAST.ERROR_TYPE,
           duration: TOAST.DEFAULT_DURATION,
-          message: ERRORS[error.code] ?? ERRORS.default,
+          message: FB.ERRORS[error.code] ?? FB.ERRORS.default,
         }),
       );
 
@@ -71,7 +65,7 @@ export const signInWithEmailAndPassword = createAsyncThunk(
         addToast({
           type: TOAST.ERROR_TYPE,
           duration: TOAST.DEFAULT_DURATION,
-          message: ERRORS[error.code] ?? ERRORS.default,
+          message: FB.ERRORS[error.code] ?? FB.ERRORS.default,
         }),
       );
 
@@ -92,6 +86,10 @@ export const createUserWithEmailAndPassword = createAsyncThunk(
       );
 
       await dispatch(
+        createUserInDb({ ...userCredential.user, profileCompleted: false }),
+      );
+
+      await dispatch(
         addToast({
           type: TOAST.SUCCESS_TYPE,
           duration: TOAST.DEFAULT_DURATION,
@@ -106,7 +104,7 @@ export const createUserWithEmailAndPassword = createAsyncThunk(
         addToast({
           type: TOAST.ERROR_TYPE,
           duration: TOAST.DEFAULT_DURATION,
-          message: ERRORS[error.code] ?? ERRORS.default,
+          message: FB.ERRORS[error.code] ?? FB.ERRORS.default,
         }),
       );
 

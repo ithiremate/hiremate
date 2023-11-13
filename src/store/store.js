@@ -3,11 +3,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import theme from "./slices/themeSlice";
 import session from "./slices/sessionSlice";
 import toast from "./slices/toastSlice";
+import user from "./slices/userSlice";
 
 const reducers = {
   theme,
   session,
   toast,
+  user,
 };
 
 const combinedReducer = combineReducers(reducers);

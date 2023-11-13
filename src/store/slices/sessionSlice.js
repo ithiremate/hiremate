@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
+  sessionUser: null,
   isInitialized: false,
 };
 
@@ -9,13 +9,13 @@ const sessionSlice = createSlice({
   name: "session",
   initialState,
   reducers: {
-    updateUser: (state, action) => {
-      state.user = action.payload;
+    setSessionUser: (state, action) => {
+      state.sessionUser = action.payload;
       state.isInitialized = true;
     },
   },
 });
 
-export const { updateUser } = sessionSlice.actions;
+export const { setSessionUser } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

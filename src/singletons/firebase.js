@@ -1,5 +1,6 @@
 import * as appFunctions from "firebase/app";
 import * as authFunctions from "firebase/auth";
+import * as dbFunctions from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,11 +14,13 @@ const firebaseConfig = {
 
 const app = appFunctions.initializeApp(firebaseConfig);
 const auth = authFunctions.getAuth(app);
+const db = dbFunctions.getFirestore(app);
 
 const firebase = {
   app,
   auth,
-  functions: { auth: authFunctions },
+  db,
+  functions: { auth: authFunctions, db: dbFunctions },
 };
 
 export default firebase;

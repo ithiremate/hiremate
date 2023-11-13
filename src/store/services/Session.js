@@ -13,6 +13,13 @@ export default class SessionAPI extends Base {
     });
   }
 
+  createUserWithEmailAndPassword(email, password) {
+    return this.apiClient.request({
+      query: (auth) =>
+        fb.functions.auth.createUserWithEmailAndPassword(auth, email, password),
+    });
+  }
+
   sendEmailVerification(user) {
     return this.apiClient.request({
       query: () => fb.functions.auth.sendEmailVerification(user),
@@ -30,13 +37,6 @@ export default class SessionAPI extends Base {
 
         return currentUser;
       },
-    });
-  }
-
-  createUserWithEmailAndPassword(email, password) {
-    return this.apiClient.request({
-      query: (auth) =>
-        fb.functions.auth.createUserWithEmailAndPassword(auth, email, password),
     });
   }
 }
