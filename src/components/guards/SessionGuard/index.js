@@ -21,9 +21,7 @@ function SessionGuard({ children }) {
           subscribeOnUserChanges(),
         );
 
-        return () => {
-          unsubscribeUser();
-        };
+        return unsubscribeUser;
       })();
     }
   }, [isInitialized, sessionUser]);

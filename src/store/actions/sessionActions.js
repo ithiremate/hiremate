@@ -8,12 +8,17 @@ import FB from "../../utils/constants/fb";
 import { setSessionUser } from "../slices/sessionSlice";
 import { addToast } from "../slices/toastSlice";
 import { createUserInDb } from "./userActions";
+import { setDbUser } from "../slices/userSlice";
 
 export const subscribeOnSessionChanges = createAsyncThunk(
   "session/subscribeOnSessionChanges",
   (_, { dispatch }) => {
     api.session.subscribeOnSessionChanges((user) => {
       dispatch(setSessionUser(user));
+
+      if (!user) {
+        dispatch(setDbUser(user));
+      }
     });
   },
 );
@@ -85,9 +90,7 @@ export const createUserWithEmailAndPassword = createAsyncThunk(
         password,
       );
 
-      await dispatch(
-        createUserInDb({ ...userCredential.user, profileCompleted: false }),
-      );
+      await dispatch(createUserInDb(userCredential.user));
 
       await dispatch(
         addToast({

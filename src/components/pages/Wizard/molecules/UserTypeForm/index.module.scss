@@ -1,0 +1,80 @@
+@import "../../../../../styles/variables.scss";
+@import "../../../../../styles/mixins.scss";
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 0;
+    box-sizing: border-box;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.subtitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    @include font-lg;
+
+    &_light {
+        color: rgba($color: $text-primary-light, $alpha: 0.5);
+
+        &:before,
+        &:after {
+            background: rgba($color: $text-primary-light, $alpha: 0.5);
+        }
+    }
+
+    &_dark {
+        color: rgba($color: $text-primary-dark, $alpha: 0.5);
+
+        &:before,
+        &:after {
+            background: rgba($color: $text-primary-dark, $alpha: 0.5);
+        }
+    }
+
+    &:before,
+    &:after {
+        content: "";
+        width: 100%;
+        height: 2px;
+        display: block;
+    }
+}
+
+@include mobile-md {
+    .form,
+    .subtitle {
+        gap: 40px;
+    }
+
+    .subtitle {
+        @include font-xl;
+    }
+
+    .button {
+        padding: 40px 0;
+        @include font-2xl;
+    }
+}

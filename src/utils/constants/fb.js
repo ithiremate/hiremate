@@ -10,6 +10,11 @@ const COLLECTION_TYPES = {
   USERS: "users",
 };
 
-const FB = { ERRORS, COLLECTION_TYPES };
+const USER_TYPES = {
+  CUSTOMER: "customer",
+  TALENT: "talent",
+};
+
+const FB = { ERRORS, COLLECTION_TYPES, USER_TYPES };
 
 export default FB;
