@@ -98,7 +98,7 @@ function SignIn() {
         />
 
         <Button
-          label="Regitration"
+          label="registration"
           type="submit"
           className={styles.button}
           isLoading={isLoading}
