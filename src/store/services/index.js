@@ -1,15 +1,23 @@
 import ApiClient from "./ApiClient";
 import SessionAPI from "./Session";
 import UserAPI from "./User";
+import LocationAPI from "./Location";
 
-export default function apiConstruct({ onError }) {
-  const apiClient = new ApiClient({
+export default function apiConstruct({ locationApiUrl, onError }) {
+  const firebaseApiClient = new ApiClient({
+    onError,
+  });
+
+  const locationApiClient = new ApiClient({
+    locationApiUrl,
     onError,
   });
 
   return {
-    apiClient,
-    session: new SessionAPI({ apiClient }),
-    user: new UserAPI({ apiClient }),
+    firebaseApiClient,
+    locationApiClient,
+    session: new SessionAPI({ firebaseApiClient }),
+    user: new UserAPI({ firebaseApiClient }),
+    location: new LocationAPI({ locationApiClient }),
   };
 }

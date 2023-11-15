@@ -1,0 +1,72 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.container {
+    position: relative;
+}
+
+.results {
+    width: 100%;
+    max-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 78px;
+    z-index: 1;
+    padding: 0 10px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    overflow-y: hidden;
+
+    &_visible {
+        max-height: 200px;
+        padding: 0;
+        opacity: 1;
+        overflow-y: scroll;
+    }
+
+    &_light {
+        background: $background-dark;
+    }
+
+    &_dark {
+        background: $background-light;
+    }
+}
+
+.loader {
+    margin: 20px 0;
+}
+
+.location {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    &_light {
+        color: $text-primary-dark;
+
+        &:not(&:last-of-type) {
+            border-bottom: 2px solid $background-light;
+            margin-bottom: 2px;
+        }
+    }
+
+    &_dark {
+        color: $text-primary-light;
+
+        &:not(&:last-of-type) {
+            border-bottom: 2px solid $background-dark;
+        }
+
+        &:hover:not(&:active) {
+            color: $text-primary-dark;
+            background: $background-dark;
+        }
+    }
+}

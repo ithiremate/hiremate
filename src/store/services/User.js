@@ -5,7 +5,7 @@ import FB from "../../utils/constants/fb";
 
 export default class UserAPI extends Base {
   subscribeOnUserChanges(cb) {
-    return this.apiClient.request({
+    return this.firebaseApiClient.firebaseRequest({
       query: async (auth) => {
         const docRef = fb.functions.db.doc(
           fb.db,
@@ -20,7 +20,7 @@ export default class UserAPI extends Base {
   }
 
   createUserInDb(currentUser) {
-    return this.apiClient.request({
+    return this.firebaseApiClient.firebaseRequest({
       query: async () => {
         const userRef = await fb.functions.db.setDoc(
           fb.functions.db.doc(
@@ -37,7 +37,7 @@ export default class UserAPI extends Base {
   }
 
   updateUserFieldInDb(user, uid) {
-    return this.apiClient.request({
+    return this.firebaseApiClient.firebaseRequest({
       query: async () => {
         const userRef = await fb.functions.db.updateDoc(
           fb.functions.db.doc(fb.db, FB.COLLECTION_TYPES.USERS, uid),

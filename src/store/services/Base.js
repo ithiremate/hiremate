@@ -1,10 +1,11 @@
 class Base {
-  constructor({ apiClient }) {
-    if (!apiClient) {
-      throw new Error("[apiClient] required");
+  constructor({ firebaseApiClient, locationApiClient }) {
+    if (!firebaseApiClient && !locationApiClient) {
+      throw new Error("[firebaseApiClient] or [locationApiClient] required");
     }
 
-    this.apiClient = apiClient;
+    this.firebaseApiClient = firebaseApiClient;
+    this.locationApiClient = locationApiClient;
   }
 }
 

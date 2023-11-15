@@ -4,7 +4,7 @@ import fb from "../../singletons/firebase";
 
 export default class SessionAPI extends Base {
   subscribeOnSessionChanges(cb) {
-    return this.apiClient.request({
+    return this.firebaseApiClient.firebaseRequest({
       query: (auth) => {
         const currentUser = fb.functions.auth.onAuthStateChanged(auth, cb);
 
@@ -14,20 +14,20 @@ export default class SessionAPI extends Base {
   }
 
   createUserWithEmailAndPassword(email, password) {
-    return this.apiClient.request({
+    return this.firebaseApiClient.firebaseRequest({
       query: (auth) =>
         fb.functions.auth.createUserWithEmailAndPassword(auth, email, password),
     });
   }
 
   sendEmailVerification(user) {
-    return this.apiClient.request({
+    return this.firebaseApiClient.firebaseRequest({
       query: () => fb.functions.auth.sendEmailVerification(user),
     });
   }
 
   signInWithEmailAndPassword(email, password) {
-    return this.apiClient.request({
+    return this.firebaseApiClient.firebaseRequest({
       query: (auth) => {
         const currentUser = fb.functions.auth.signInWithEmailAndPassword(
           auth,
