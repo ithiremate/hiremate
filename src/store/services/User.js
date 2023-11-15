@@ -36,12 +36,12 @@ export default class UserAPI extends Base {
     });
   }
 
-  updateUserFieldInDb(valueKey, value, uid) {
+  updateUserFieldInDb(user, uid) {
     return this.apiClient.request({
       query: async () => {
         const userRef = await fb.functions.db.updateDoc(
           fb.functions.db.doc(fb.db, FB.COLLECTION_TYPES.USERS, uid),
-          { [valueKey]: value },
+          user,
         );
 
         return userRef;

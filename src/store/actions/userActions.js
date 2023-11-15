@@ -33,25 +33,10 @@ export const createUserInDb = createAsyncThunk(
   "user/createUserInDb",
   async (currentUser, { dispatch }) => {
     try {
-      const {
-        displayName,
-        email,
-        emailVerified,
-        phoneNumber,
-        photoURL,
-        profileCompleted = false,
-        uid,
-        userType = null,
-      } = currentUser;
+      const { email, uid } = currentUser;
 
       await api.user.createUserInDb({
-        displayName,
         email,
-        emailVerified,
-        phoneNumber,
-        photoURL,
-        profileCompleted,
-        userType,
         uid,
       });
     } catch (error) {
@@ -72,11 +57,19 @@ export const createUserInDb = createAsyncThunk(
 
 export const updateUserFieldInDb = createAsyncThunk(
   "user/updateUserInDb",
-  async ({ valueKey, value }, { dispatch, getState }) => {
+  async (user, { dispatch, getState }) => {
     try {
       const { uid } = getState().user.dbUser;
 
-      await api.user.updateUserFieldInDb(valueKey, value, uid);
+      await api.user.updateUserFieldInDb(user, uid);
+
+      await dispatch(
+        addToast({
+          type: TOAST.SUCCESS_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: "Info updated",
+        }),
+      );
     } catch (error) {
       await dispatch(
         addToast({

@@ -88,3 +88,11 @@ export function validateSignIn(args) {
 export function validateSignUp(args) {
   return validate({ rule: rules.signUp, ...args });
 }
+
+export function validateCustomerWizard(args) {
+  return validate({ rule: rules.customerWizard, ...args });
+}
+
+export function validateTalentWizard(args) {
+  return validate({ rule: rules.talentWizard, ...args });
+}

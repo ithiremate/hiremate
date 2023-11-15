@@ -20,17 +20,17 @@ function SignIn() {
     passwordConfirm: { value: "", errorMessage: "" },
   });
 
+  const handleSignUp = async (validData) => {
+    setIsLoading(true);
+    await dispatch(createUserWithEmailAndPassword(validData));
+    setIsLoading(false);
+  };
+
   const handleInputChange = ({ value, valueKey }) => {
     setInputs((prev) => ({
       ...prev,
       [valueKey]: { errorMessage: "", value },
     }));
-  };
-
-  const handleSignUp = async (validData) => {
-    setIsLoading(true);
-    await dispatch(createUserWithEmailAndPassword(validData));
-    setIsLoading(false);
   };
 
   const handleFormError = (errors) => {

@@ -22,7 +22,6 @@ function Title({ user }) {
 Title.propTypes = {
   user: PropTypes.shape({
     userType: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
-    profileCompleted: PropTypes.bool,
   }).isRequired,
 };
 

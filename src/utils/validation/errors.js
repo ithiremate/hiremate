@@ -1,7 +1,10 @@
 export const REQUIRED_ERRORS = {
-  email: "Email is required",
-  password: "Password is required",
+  email: "Please enter your email",
+  password: "Please enter password",
   passwordConfirm: "Password confirmation is required",
+  companyName: "Please enter your Company name",
+  location: "Please enter location",
+  username: "Please choose your username",
 };
 
 export const TOO_SHORT_ERRORS = {

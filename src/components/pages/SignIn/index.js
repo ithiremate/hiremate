@@ -19,17 +19,17 @@ function SignIn() {
     password: { value: "", errorMessage: "" },
   });
 
+  const handleSignIn = async (validData) => {
+    setIsLoading(true);
+    await dispatch(signInWithEmailAndPassword(validData));
+    setIsLoading(false);
+  };
+
   const handleInputChange = ({ value, valueKey }) => {
     setInputs((prev) => ({
       ...prev,
       [valueKey]: { errorMessage: "", value },
     }));
-  };
-
-  const handleSignIn = async (validData) => {
-    setIsLoading(true);
-    await dispatch(signInWithEmailAndPassword(validData));
-    setIsLoading(false);
   };
 
   const handleFormError = (errors) => {

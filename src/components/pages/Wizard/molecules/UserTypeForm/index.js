@@ -2,28 +2,29 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import classNames from "classnames";
 
+import { updateUserFieldInDb } from "../../../../../store/actions/userActions";
+import FB from "../../../../../utils/constants/fb";
+
 import Button from "../../../../shared/Button";
 
 import styles from "./index.module.scss";
-import { updateUserFieldInDb } from "../../../../../store/actions/userActions";
-import FB from "../../../../../utils/constants/fb";
 
 function UserTypeForm({ currentTheme }) {
   const dispatch = useDispatch();
 
-  const handleSugmit = (type) => (e) => {
+  const handleSubmit = (userType) => (e) => {
     e.preventDefault();
 
-    dispatch(updateUserFieldInDb({ valueKey: "userType", value: type }));
+    dispatch(updateUserFieldInDb({ userType }));
   };
 
   return (
-    <form onSubmit={handleSugmit()} className={styles.form}>
+    <form className={styles.form}>
       <Button
         className={styles.button}
         label="looking to hire"
         type="submit"
-        onClick={handleSugmit(FB.USER_TYPES.CUSTOMER)}
+        onClick={handleSubmit(FB.USER_TYPES.CUSTOMER)}
       />
 
       <p
@@ -38,7 +39,7 @@ function UserTypeForm({ currentTheme }) {
         className={styles.button}
         label="searching for work"
         type="submit"
-        onClick={handleSugmit(FB.USER_TYPES.TALENT)}
+        onClick={handleSubmit(FB.USER_TYPES.TALENT)}
       />
     </form>
   );

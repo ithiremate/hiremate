@@ -14,7 +14,7 @@ function Navigation() {
   const { dbUser } = useSelector((state) => state.user);
 
   const navigationRoutes = useMemo(() => {
-    if (dbUser && !dbUser.profileCompleted) {
+    if (dbUser && !dbUser.wizardCompleted) {
       return routes.wizardRoutes;
     }
 
