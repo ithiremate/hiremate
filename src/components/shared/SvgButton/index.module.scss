@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: none;
+    background-color: transparent;
     border: 0;
     outline: 0;
     cursor: pointer;
@@ -14,10 +14,11 @@
     border-radius: 50%;
     box-sizing: border-box;
     transition: all 0.3s ease-in-out;
+    will-change: background-color;
 
     &_light {
         &:hover {
-            background: $text-primary-light;
+            background-color: $text-primary-light;
 
             .icon {
                 &_light {
@@ -31,7 +32,7 @@
 
     &_dark {
         &:hover {
-            background: $text-primary-dark;
+            background-color: $text-primary-dark;
 
             .icon {
                 &_dark {
@@ -49,6 +50,7 @@
 
     path {
         transition: all 0.3s ease-in-out;
+        will-change: fill;
     }
 
     &_light {

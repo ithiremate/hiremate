@@ -12,7 +12,7 @@ function Logo({ type, className }) {
   return (
     <SvgIcon
       type={`logo_${currentTheme}_${type}`}
-      className={classNames(styles.logo, className)}
+      className={classNames(styles.logo, styles[`logo_${type}`], className)}
     />
   );
 }

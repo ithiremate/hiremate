@@ -15,10 +15,14 @@ function Navigation() {
 
   const navigationRoutes = useMemo(() => {
     if (dbUser && !dbUser.wizardCompleted) {
-      return routes.wizardRoutes;
+      return routes.wizard;
     }
 
-    return routes.publicRoutes;
+    if (dbUser && dbUser.wizardCompleted) {
+      return routes.private;
+    }
+
+    return routes.public;
   }, [sessionUser, dbUser]);
 
   return (

@@ -71,3 +71,26 @@
         @content;
     }
 }
+
+// LAYOUTS
+@mixin main-layout-adaptive-container {
+    padding: 0 40px;
+
+    @include mobile-lg {
+        & {
+            padding: 0 80px;
+        }
+    }
+
+    @include laptop {
+        & {
+            padding: 0 160px;
+        }
+    }
+
+    @include desktop {
+        & {
+            padding: 0 320px;
+        }
+    }
+}

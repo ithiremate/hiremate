@@ -11,6 +11,8 @@ import { ReactComponent as LogoDarkFull } from "../../../assets/icons/logo_dark_
 // BASE
 import { ReactComponent as Lock } from "../../../assets/icons/lock.svg";
 import { ReactComponent as Unlock } from "../../../assets/icons/unlock.svg";
+import { ReactComponent as Menu } from "../../../assets/icons/menu.svg";
+import { ReactComponent as Cross } from "../../../assets/icons/cross.svg";
 
 function SvgIcon({ type, className }) {
   const LOGO = {
@@ -25,6 +27,8 @@ function SvgIcon({ type, className }) {
   const BASE = {
     lock: Lock,
     unlock: Unlock,
+    menu: Menu,
+    cross: Cross,
   };
 
   const SVG_BY_TYPE = {
