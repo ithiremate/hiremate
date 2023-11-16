@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
 
@@ -9,9 +10,14 @@ import SvgButton from "../../shared/SvgButton";
 import styles from "./index.module.scss";
 
 function Header({ onMenuToggle }) {
+  const navigate = useNavigate();
   const { currentTheme } = useSelector((state) => state.theme);
 
   const [isMenuVisible, setIsMenuVissible] = useState(false);
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
 
   const handleMenuToggle = (isVisible) => () => {
     setIsMenuVissible(isVisible);
@@ -24,7 +30,7 @@ function Header({ onMenuToggle }) {
         styles.container,
         styles[`container_${currentTheme}`],
       )}>
-      <Logo type="small" />
+      <Logo type="small" className={styles.logo} onClick={handleLogoClick} />
 
       <SvgButton
         icon="menu"

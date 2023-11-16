@@ -14,12 +14,16 @@
     transition: all 0.3s ease-in-out;
 
     &_light {
-        background: rgba($color: $background-dark, $alpha: 0.1);
+        background: $background-light-secondary;
     }
 
     &_dark {
-        background: rgba($color: $background-light, $alpha: 0.1);
+        background: $background-dark-secondary;
     }
+}
+
+.logo {
+    cursor: pointer;
 }
 
 .menuIcon {
@@ -44,6 +48,12 @@
         svg {
             transform: skew(0deg) scale(1);
         }
+    }
+}
+
+@include mobile-lg {
+    .menuIcon {
+        right: 80px;
     }
 }
 

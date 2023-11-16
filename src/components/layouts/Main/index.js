@@ -1,13 +1,14 @@
 import { useState } from "react";
+
 import Header from "../../base/Header";
+import SideMenu from "../../base/SideMenu";
 
 import styles from "./index.module.scss";
 
 function MainLayout({ children }) {
-  // eslint-disable-next-line no-unused-vars
   const [isMenuVisible, setIsMenuVissible] = useState(false);
 
-  const handleMenuToggle = (isVisible) => () => {
+  const handleMenuToggle = (isVisible) => {
     setIsMenuVissible(isVisible);
   };
 
@@ -15,7 +16,11 @@ function MainLayout({ children }) {
     <div className={styles.container}>
       <Header onMenuToggle={handleMenuToggle} />
 
-      <main className={styles.content}>{children}</main>
+      <main className={styles.content}>
+        <SideMenu isVisible={isMenuVisible} />
+
+        {children}
+      </main>
     </div>
   );
 }

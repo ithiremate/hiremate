@@ -14,7 +14,7 @@ import { ReactComponent as Unlock } from "../../../assets/icons/unlock.svg";
 import { ReactComponent as Menu } from "../../../assets/icons/menu.svg";
 import { ReactComponent as Cross } from "../../../assets/icons/cross.svg";
 
-function SvgIcon({ type, className }) {
+function SvgIcon({ type, onClick, className }) {
   const LOGO = {
     logo_light_small: LogoLightSmall,
     logo_dark_small: LogoDarkSmall,
@@ -38,15 +38,17 @@ function SvgIcon({ type, className }) {
 
   const Component = SVG_BY_TYPE[type] ?? "svg";
 
-  return <Component className={className} />;
+  return <Component className={className} onClick={onClick} />;
 }
 
 SvgIcon.propTypes = {
   type: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   className: PropTypes.string,
 };
 
 SvgIcon.defaultProps = {
+  onClick: () => {},
   className: "",
 };
 
