@@ -2,24 +2,24 @@
 @import "../../../styles/mixins.scss";
 
 .container {
-    width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .content {
-    width: 100%;
-    max-width: $mobile-md-width;
-    height: 100%;
-    padding: 0 40px;
-    box-sizing: border-box;
-    transition: all 0.3s ease-in-out;
+  width: 100%;
+  max-width: $mobile-md-width;
+  height: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
 }
 
 @include mobile-lg {
-    .content {
-        padding: 0;
-    }
+  .content {
+    padding: 0;
+  }
 }

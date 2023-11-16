@@ -1,67 +1,67 @@
 @import "../../../styles/variables.scss";
 
 .button {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    padding: 6px;
-    border-radius: 50%;
-    box-sizing: border-box;
-    transition: all 0.3s ease-in-out;
-    will-change: background-color;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+  will-change: background-color;
 
-    &_light {
-        &:hover {
-            background-color: $text-primary-light;
+  &_light {
+    &:hover {
+      background-color: $text-primary-light;
 
-            .icon {
-                &_light {
-                    path {
-                        fill: $background-light;
-                    }
-                }
-            }
+      .icon {
+        &_light {
+          path {
+            fill: $background-light;
+          }
         }
+      }
     }
+  }
 
-    &_dark {
-        &:hover {
-            background-color: $text-primary-dark;
+  &_dark {
+    &:hover {
+      background-color: $text-primary-dark;
 
-            .icon {
-                &_dark {
-                    path {
-                        fill: $background-dark;
-                    }
-                }
-            }
+      .icon {
+        &_dark {
+          path {
+            fill: $background-dark;
+          }
         }
+      }
     }
+  }
 }
 
 .icon {
-    width: 20px;
+  width: 20px;
 
+  path {
+    transition: all 0.3s ease-in-out;
+    will-change: fill;
+  }
+
+  &_light {
     path {
-        transition: all 0.3s ease-in-out;
-        will-change: fill;
+      fill: $text-primary-light;
     }
+  }
 
-    &_light {
-        path {
-            fill: $text-primary-light;
-        }
+  &_dark {
+    path {
+      fill: $text-primary-dark;
     }
-
-    &_dark {
-        path {
-            fill: $text-primary-dark;
-        }
-    }
+  }
 }

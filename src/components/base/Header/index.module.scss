@@ -2,63 +2,63 @@
 @import "../../../styles/mixins.scss";
 
 .container {
-    width: 100%;
-    height: $header-height;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    box-sizing: border-box;
-    @include main-layout-adaptive-container;
-    transition: all 0.3s ease-in-out;
+  width: 100%;
+  height: $header-height;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  box-sizing: border-box;
+  @include main-layout-adaptive-container;
+  transition: all 0.3s ease-in-out;
 
-    &_light {
-        background: $background-light-secondary;
-    }
+  &_light {
+    background: $background-light-secondary;
+  }
 
-    &_dark {
-        background: $background-dark-secondary;
-    }
+  &_dark {
+    background: $background-dark-secondary;
+  }
 }
 
 .logo {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .menuIcon {
-    width: 36px;
-    height: 36px;
-    position: absolute;
-    right: 40px;
-    opacity: 0;
-    pointer-events: none;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  right: 40px;
+  opacity: 0;
+  pointer-events: none;
+
+  svg {
+    min-width: 28px;
+    min-height: 28px;
+    transform: skew(-45deg) scale(0.2);
+    transition: all 0.3s ease-in-out;
+  }
+
+  &_visible {
+    opacity: 1;
+    pointer-events: all;
 
     svg {
-        min-width: 28px;
-        min-height: 28px;
-        transform: skew(-45deg) scale(0.2);
-        transition: all 0.3s ease-in-out;
+      transform: skew(0deg) scale(1);
     }
-
-    &_visible {
-        opacity: 1;
-        pointer-events: all;
-
-        svg {
-            transform: skew(0deg) scale(1);
-        }
-    }
+  }
 }
 
 @include mobile-lg {
-    .menuIcon {
-        right: 80px;
-    }
+  .menuIcon {
+    right: 80px;
+  }
 }
 
 @include tablet {
-    .menuIcon {
-        display: none;
-    }
+  .menuIcon {
+    display: none;
+  }
 }

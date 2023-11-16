@@ -2,73 +2,73 @@
 @import "../../../../../styles/mixins.scss";
 
 .container {
-    width: max-content;
-    max-width: 80vw;
-    padding: 6px 40px;
-    box-sizing: border-box;
-    position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%) scale(0.8);
-    opacity: 0;
-    pointer-events: none;
-    transition:
-        transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-        opacity 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  width: max-content;
+  max-width: 80vw;
+  padding: 6px 40px;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+    opacity 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
-    &_visible {
-        transform: translateX(-50%) scale(1);
-        opacity: 1;
+  &_visible {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+
+  &_light {
+    &_success {
+      background: $green-light;
+
+      .message {
+        color: $background-light;
+      }
     }
 
-    &_light {
-        &_success {
-            background: $green-light;
+    &_error {
+      background: $red-light;
 
-            .message {
-                color: $background-light;
-            }
-        }
+      .message {
+        color: $background-light;
+      }
+    }
+  }
 
-        &_error {
-            background: $red-light;
+  &_dark {
+    &_success {
+      background: $green-dark;
 
-            .message {
-                color: $background-light;
-            }
-        }
+      .message {
+        color: $background-dark;
+      }
     }
 
-    &_dark {
-        &_success {
-            background: $green-dark;
+    &_error {
+      background: $red-dark;
 
-            .message {
-                color: $background-dark;
-            }
-        }
-
-        &_error {
-            background: $red-dark;
-
-            .message {
-                color: $background-dark;
-            }
-        }
+      .message {
+        color: $background-dark;
+      }
     }
+  }
 }
 
 .message {
-    text-align: center;
-    word-break: normal;
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  text-align: center;
+  word-break: normal;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @include mobile-md {
-    .container {
-        max-width: unset;
-        padding: 6px 40px;
-    }
+  .container {
+    max-width: unset;
+    padding: 6px 40px;
+  }
 }

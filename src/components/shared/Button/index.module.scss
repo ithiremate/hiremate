@@ -2,76 +2,76 @@
 @import "../../../styles/mixins.scss";
 
 .button {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    outline: 0;
-    border: 2px solid transparent;
-    border-radius: 0;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 10px 0;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    @include font-base;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  outline: 0;
+  border: 2px solid transparent;
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  @include font-base;
 
-    &_light {
-        color: $text-primary-light;
-        border-color: $text-primary-light;
-        background: $background-light;
+  &_light {
+    color: $text-primary-light;
+    border-color: $text-primary-light;
+    background: $background-light;
 
-        &:hover,
-        &:focus {
-            color: $background-light;
-            background: $text-primary-light;
-        }
-
-        &:active {
-            color: $text-primary-light;
-            border-color: $text-primary-light;
-            background: $background-light;
-        }
+    &:hover,
+    &:focus {
+      color: $background-light;
+      background: $text-primary-light;
     }
 
-    &_dark {
-        color: $text-primary-dark;
-        border-color: $text-primary-dark;
-        background: $background-dark;
+    &:active {
+      color: $text-primary-light;
+      border-color: $text-primary-light;
+      background: $background-light;
+    }
+  }
 
-        &:hover,
-        &:focus {
-            color: $background-dark;
-            background: $text-primary-dark;
-        }
+  &_dark {
+    color: $text-primary-dark;
+    border-color: $text-primary-dark;
+    background: $background-dark;
 
-        &:active {
-            color: $text-primary-dark;
-            border-color: $text-primary-dark;
-            background: $background-dark;
-        }
+    &:hover,
+    &:focus {
+      color: $background-dark;
+      background: $text-primary-dark;
     }
 
-    &:disabled,
-    &_loading {
-        &_light,
-        &_light:hover,
-        &_light:active {
-            cursor: not-allowed;
-            color: $text-primary-light;
-            border-color: $text-primary-light;
-            background: $background-light;
-        }
-
-        &_dark,
-        &_dark:hover,
-        &_dark:active {
-            cursor: not-allowed;
-            color: $text-primary-dark;
-            border-color: $text-primary-dark;
-            background: $background-dark;
-        }
+    &:active {
+      color: $text-primary-dark;
+      border-color: $text-primary-dark;
+      background: $background-dark;
     }
+  }
+
+  &:disabled,
+  &_loading {
+    &_light,
+    &_light:hover,
+    &_light:active {
+      cursor: not-allowed;
+      color: $text-primary-light;
+      border-color: $text-primary-light;
+      background: $background-light;
+    }
+
+    &_dark,
+    &_dark:hover,
+    &_dark:active {
+      cursor: not-allowed;
+      color: $text-primary-dark;
+      border-color: $text-primary-dark;
+      background: $background-dark;
+    }
+  }
 }
