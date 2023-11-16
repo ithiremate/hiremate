@@ -16,7 +16,7 @@ function CustomerForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     companyName: { value: "", errorMessage: "" },
-    location: { value: "", errorMessage: "" },
+    location: { value: { display_name: "" }, errorMessage: "" },
     username: { value: "", errorMessage: "" },
   });
 
@@ -34,6 +34,13 @@ function CustomerForm() {
     setInputs((prev) => ({
       ...prev,
       [valueKey]: { errorMessage: "", value },
+    }));
+  };
+
+  const handleLocationChange = ({ value }) => {
+    setInputs((prev) => ({
+      ...prev,
+      location: { ...prev.location, value: { display_name: value } },
     }));
   };
 
@@ -79,12 +86,13 @@ function CustomerForm() {
       <LocationInput
         label="Company Location"
         placeholder="Enter Company location"
-        value={inputs.location.value}
+        value={inputs.location.value.display_name}
         valueKey="location"
         name="location"
         errorMessage={inputs.location.errorMessage}
         isRequired
-        onChange={handleInputChange}
+        onChange={handleLocationChange}
+        onChose={handleInputChange}
       />
 
       <Input

@@ -5,20 +5,21 @@ import { updateUserFieldInDb } from "../../../../../store/actions/userActions";
 import { validateTalentWizard } from "../../../../../utils/validation";
 
 import Input from "../../../../shared/Input";
+import LocationInput from "../../../../shared/LocationInput";
 import Button from "../../../../shared/Button";
 
 import styles from "./index.module.scss";
 
-function TalentForm() {
+function CustomerForm() {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
-    location: { value: "", errorMessage: "" },
+    location: { value: { display_name: "" }, errorMessage: "" },
     username: { value: "", errorMessage: "" },
   });
 
-  const updateUserInfo = async (validData) => {
+  const updateTalentInfo = async (validData) => {
     setIsLoading(true);
 
     await dispatch(
@@ -32,6 +33,13 @@ function TalentForm() {
     setInputs((prev) => ({
       ...prev,
       [valueKey]: { errorMessage: "", value },
+    }));
+  };
+
+  const handleLocationChange = ({ value }) => {
+    setInputs((prev) => ({
+      ...prev,
+      location: { ...prev.location, value: { display_name: value } },
     }));
   };
 
@@ -55,22 +63,23 @@ function TalentForm() {
         location: inputs.location.value,
         username: inputs.username.value,
       },
-      onSuccess: (validData) => updateUserInfo(validData),
+      onSuccess: (validData) => updateTalentInfo(validData),
       onError: (errors) => handleFormError(errors),
     });
   };
 
   return (
     <form onSubmit={handleSubmit()} className={styles.form}>
-      <Input
+      <LocationInput
         label="Location"
         placeholder="Enter location"
-        value={inputs.location.value}
+        value={inputs.location.value.display_name}
         valueKey="location"
         name="location"
         errorMessage={inputs.location.errorMessage}
         isRequired
-        onChange={handleInputChange}
+        onChange={handleLocationChange}
+        onChose={handleInputChange}
       />
 
       <Input
@@ -94,4 +103,4 @@ function TalentForm() {
   );
 }
 
-export default TalentForm;
+export default CustomerForm;

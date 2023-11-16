@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 
 import { searchLocation } from "../../../store/actions/locationActions";
@@ -22,6 +22,7 @@ function LocationInput({
   isRequired,
   readOnly,
   onChange,
+  onChose,
 }) {
   const { currentTheme } = useSelector((state) => state.theme);
 
@@ -55,7 +56,7 @@ function LocationInput({
   const handleLocationClick = (location) => () => {
     setChosenResult(location);
     setResults([]);
-    onChange({ value: location.display_name, valueKey });
+    onChose({ value: location, valueKey });
   };
 
   useEffect(() => {
@@ -96,19 +97,30 @@ function LocationInput({
             reverted
           />
         ) : (
-          results.map((location) => {
+          results.map((location, index) => {
             const { place_id, display_name } = location;
+            const isLast = index === results.length - 1;
 
             return (
-              <div
-                key={place_id}
-                onClick={handleLocationClick(location)}
-                className={classNames(
-                  styles.location,
-                  styles[`location_${currentTheme}`],
-                )}>
-                <p className={styles.name}>{display_name}</p>
-              </div>
+              <Fragment key={place_id}>
+                <div
+                  onClick={handleLocationClick(location)}
+                  className={classNames(
+                    styles.location,
+                    styles[`location_${currentTheme}`],
+                  )}>
+                  <p className={styles.name}>{display_name}</p>
+                </div>
+
+                {!isLast && (
+                  <div
+                    className={classNames(
+                      styles.separator,
+                      styles[`separator_${currentTheme}`],
+                    )}
+                  />
+                )}
+              </Fragment>
             );
           })
         )}
@@ -127,6 +139,7 @@ LocationInput.propTypes = {
   isRequired: PropTypes.bool,
   readOnly: PropTypes.bool,
   onChange: PropTypes.func,
+  onChose: PropTypes.func,
 };
 
 LocationInput.defaultProps = {
@@ -139,6 +152,7 @@ LocationInput.defaultProps = {
   isRequired: false,
   readOnly: false,
   onChange: () => {},
+  onChose: () => {},
 };
 
 export default LocationInput;
