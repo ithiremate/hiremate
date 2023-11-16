@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -9,19 +8,12 @@ import SvgButton from "../../shared/SvgButton";
 
 import styles from "./index.module.scss";
 
-function Header({ onMenuToggle }) {
+function Header({ isMenuVisible, onMenuToggle }) {
   const navigate = useNavigate();
   const { currentTheme } = useSelector((state) => state.theme);
 
-  const [isMenuVisible, setIsMenuVissible] = useState(false);
-
   const handleLogoClick = () => {
     navigate("/");
-  };
-
-  const handleMenuToggle = (isVisible) => () => {
-    setIsMenuVissible(isVisible);
-    onMenuToggle(isVisible);
   };
 
   return (
@@ -34,7 +26,7 @@ function Header({ onMenuToggle }) {
 
       <SvgButton
         icon="menu"
-        onClick={handleMenuToggle(true)}
+        onClick={onMenuToggle(true)}
         className={classNames(styles.menuIcon, {
           [styles.menuIcon_visible]: !isMenuVisible,
         })}
@@ -42,7 +34,7 @@ function Header({ onMenuToggle }) {
 
       <SvgButton
         icon="cross"
-        onClick={handleMenuToggle(false)}
+        onClick={onMenuToggle(false)}
         className={classNames(styles.menuIcon, {
           [styles.menuIcon_visible]: isMenuVisible,
         })}
@@ -52,6 +44,7 @@ function Header({ onMenuToggle }) {
 }
 
 Header.propTypes = {
+  isMenuVisible: PropTypes.bool.isRequired,
   onMenuToggle: PropTypes.func.isRequired,
 };
 

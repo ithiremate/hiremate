@@ -56,7 +56,7 @@ export const createUserInDb = createAsyncThunk(
 );
 
 export const updateUserFieldInDb = createAsyncThunk(
-  "user/updateUserInDb",
+  "user/updateUserFieldInDb",
   async (user, { dispatch, getState }) => {
     try {
       const { uid } = getState().user.dbUser;

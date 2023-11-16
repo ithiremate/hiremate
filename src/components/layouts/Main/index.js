@@ -8,16 +8,16 @@ import styles from "./index.module.scss";
 function MainLayout({ children }) {
   const [isMenuVisible, setIsMenuVissible] = useState(false);
 
-  const handleMenuToggle = (isVisible) => {
+  const handleMenuToggle = (isVisible) => () => {
     setIsMenuVissible(isVisible);
   };
 
   return (
     <div className={styles.container}>
-      <Header onMenuToggle={handleMenuToggle} />
+      <Header isMenuVisible={isMenuVisible} onMenuToggle={handleMenuToggle} />
 
       <main className={styles.content}>
-        <SideMenu isVisible={isMenuVisible} />
+        <SideMenu isVisible={isMenuVisible} onClose={handleMenuToggle(false)} />
 
         {children}
       </main>

@@ -1,11 +1,11 @@
 @import "../../../styles/variables.scss";
 
 .container {
-    width: 100%;
+    width: $side-menu-width;
     height: 100vh;
     position: fixed;
     top: $header-height;
-    left: -100%;
+    left: -$side-menu-width;
     transition: all 0.3s ease-in-out;
 
     &_light {
