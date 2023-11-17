@@ -15,6 +15,11 @@ const USER_TYPES = {
   TALENT: "talent",
 };
 
-const FB = { ERRORS, COLLECTION_TYPES, USER_TYPES };
+const USER_CONNECTION_STATUSES = {
+  ONLINE: "online",
+  OFFLINE: "offline",
+};
+
+const FB = { ERRORS, COLLECTION_TYPES, USER_TYPES, USER_CONNECTION_STATUSES };
 
 export default FB;

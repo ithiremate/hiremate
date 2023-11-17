@@ -2,6 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import dayjs from "dayjs";
 
 import api from "../../singletons/api";
 import { setDbUser, initEmptyDbUser } from "../slices/userSlice";
@@ -57,28 +58,13 @@ export const createUserInDb = createAsyncThunk(
 
 export const updateUserFieldInDb = createAsyncThunk(
   "user/updateUserFieldInDb",
-  async (user, { dispatch, getState }) => {
+  async (user, { getState }) => {
     try {
       const { uid } = getState().user.dbUser;
+      const updatedAt = dayjs().toISOString();
 
-      await api.user.updateUserFieldInDb(user, uid);
-
-      await dispatch(
-        addToast({
-          type: TOAST.SUCCESS_TYPE,
-          duration: TOAST.DEFAULT_DURATION,
-          message: "Info updated",
-        }),
-      );
+      await api.user.updateUserFieldInDb({ ...user, updatedAt }, uid);
     } catch (error) {
-      await dispatch(
-        addToast({
-          type: TOAST.ERROR_TYPE,
-          duration: TOAST.DEFAULT_DURATION,
-          message: FB.ERRORS[error.code] ?? FB.ERRORS.default,
-        }),
-      );
-
       console.error("updateUserFieldInDb error: ", error);
 
       throw error;

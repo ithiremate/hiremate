@@ -1,12 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import FB from "../../../utils/constants/fb";
 import { subscribeOnSessionChanges } from "../../../store/actions/sessionActions";
-import { subscribeOnUserChanges } from "../../../store/actions/userActions";
+
+import {
+  subscribeOnUserChanges,
+  updateUserFieldInDb,
+} from "../../../store/actions/userActions";
 
 function SessionGuard({ children }) {
   const dispatch = useDispatch();
   const { isInitialized, sessionUser } = useSelector((state) => state.session);
+  const { dbUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     setTimeout(() => {
@@ -25,6 +31,37 @@ function SessionGuard({ children }) {
       })();
     }
   }, [isInitialized, sessionUser]);
+
+  useEffect(() => {
+    const shouldUpdateConnectionStatus =
+      dbUser && dbUser.connectionStatus !== FB.USER_CONNECTION_STATUSES.ONLINE;
+
+    if (shouldUpdateConnectionStatus) {
+      dispatch(
+        updateUserFieldInDb({
+          connectionStatus: FB.USER_CONNECTION_STATUSES.ONLINE,
+        }),
+      );
+
+      window.addEventListener("unload", () => {
+        dispatch(
+          updateUserFieldInDb({
+            connectionStatus: FB.USER_CONNECTION_STATUSES.OFFLINE,
+          }),
+        );
+      });
+    }
+
+    return () => {
+      window.removeEventListener("unload", () => {
+        dispatch(
+          updateUserFieldInDb({
+            connectionStatus: FB.USER_CONNECTION_STATUSES.OFFLINE,
+          }),
+        );
+      });
+    };
+  }, [dbUser]);
 
   return children;
 }
