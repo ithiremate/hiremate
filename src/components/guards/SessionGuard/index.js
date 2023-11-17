@@ -33,20 +33,20 @@ function SessionGuard({ children }) {
   }, [isInitialized, sessionUser]);
 
   useEffect(() => {
-    const shouldUpdateConnectionStatus =
-      dbUser && dbUser.connectionStatus !== FB.USER_CONNECTION_STATUSES.ONLINE;
+    const shouldUpdatePresenseStatus =
+      dbUser && dbUser.presenseStatus !== FB.USER_CONNECTION_STATUSES.ONLINE;
 
-    if (shouldUpdateConnectionStatus) {
+    if (shouldUpdatePresenseStatus) {
       dispatch(
         updateUserFieldInDb({
-          connectionStatus: FB.USER_CONNECTION_STATUSES.ONLINE,
+          presenseStatus: FB.USER_CONNECTION_STATUSES.ONLINE,
         }),
       );
 
       window.addEventListener("unload", () => {
         dispatch(
           updateUserFieldInDb({
-            connectionStatus: FB.USER_CONNECTION_STATUSES.OFFLINE,
+            presenseStatus: FB.USER_CONNECTION_STATUSES.OFFLINE,
           }),
         );
       });
