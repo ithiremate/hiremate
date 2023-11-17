@@ -1,0 +1,36 @@
+@import "../../../styles/variables.scss";
+
+.container {
+    width: 76px;
+    height: 76px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: relative;
+
+    svg {
+        width: 50%;
+        height: 50%;
+    }
+
+    &_light {
+        background: $text-primary-light;
+
+        svg {
+            path {
+                fill: $text-primary-dark;
+            }
+        }
+    }
+
+    &_dark {
+        background: $text-primary-dark;
+
+        svg {
+            path {
+                fill: $text-primary-light;
+            }
+        }
+    }
+}

@@ -1,12 +1,21 @@
 @import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
 
 .container {
   width: $side-menu-width;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
   position: fixed;
-  top: $header-height;
+  top: 0;
   left: -$side-menu-width;
+  z-index: 3;
+  padding: 20px;
+  box-sizing: border-box;
   transition: all 0.3s ease-in-out;
+  will-change: left;
 
   &_light {
     background: $background-light-secondary;
@@ -18,5 +27,44 @@
 
   &_visible {
     left: 0;
+  }
+}
+
+.logo {
+  margin-bottom: 40px;
+  cursor: pointer;
+}
+
+.backdrop {
+  width: calc(100vw - $side-menu-width);
+  height: calc(100vh - $header-height);
+  position: fixed;
+  top: $header-height;
+  right: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease-in-out;
+  will-change: opacity;
+
+  &_visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+@include tablet {
+  .container {
+    top: 0;
+    left: 0;
+  }
+
+  .backdrop {
+    display: none;
+  }
+
+  .logo {
+    display: block;
   }
 }

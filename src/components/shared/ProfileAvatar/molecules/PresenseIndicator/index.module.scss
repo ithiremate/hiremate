@@ -1,0 +1,52 @@
+@import "../../../../../styles/variables.scss";
+
+.container {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    transform: translate(-100%, -100%);
+    padding: 6px;
+    box-sizing: border-box;
+
+    &_light {
+        background: $background-light-secondary;
+    }
+
+    &_dark {
+        background: $background-dark-secondary;
+    }
+}
+
+.indicator {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    background: blue;
+    border-radius: 50%;
+
+    &_online {
+        &_light {
+            background: $green-light;
+        }
+
+        &_dark {
+            background: $green-dark;
+        }
+    }
+
+    &_offline {
+        &_light {
+            background: $red-light;
+        }
+
+        &_dark {
+            background: $red-dark;
+        }
+    }
+}

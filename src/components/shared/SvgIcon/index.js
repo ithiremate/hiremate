@@ -13,6 +13,7 @@ import { ReactComponent as Lock } from "../../../assets/icons/lock.svg";
 import { ReactComponent as Unlock } from "../../../assets/icons/unlock.svg";
 import { ReactComponent as Menu } from "../../../assets/icons/menu.svg";
 import { ReactComponent as Cross } from "../../../assets/icons/cross.svg";
+import { ReactComponent as User } from "../../../assets/icons/user.svg";
 
 function SvgIcon({ type, onClick, className }) {
   const LOGO = {
@@ -29,6 +30,7 @@ function SvgIcon({ type, onClick, className }) {
     unlock: Unlock,
     menu: Menu,
     cross: Cross,
+    user: User,
   };
 
   const SVG_BY_TYPE = {
