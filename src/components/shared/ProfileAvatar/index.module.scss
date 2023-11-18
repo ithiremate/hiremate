@@ -1,4 +1,5 @@
 @import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
 
 .container {
     width: 76px;
@@ -8,6 +9,7 @@
     align-items: center;
     border-radius: 50%;
     position: relative;
+    @include transition(width, height);
 
     svg {
         width: 50%;
@@ -32,5 +34,12 @@
                 fill: $text-primary-light;
             }
         }
+    }
+}
+
+@include tablet {
+    .container {
+        width: 90px;
+        height: 90px;
     }
 }

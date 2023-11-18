@@ -41,6 +41,19 @@
   cursor: pointer;
 }
 
+.profileAvatarContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.greeting {
+  font-weight: 600;
+  @include transition(font-size);
+}
+
 .backdrop {
   width: 100vw;
   height: calc(100vh - $header-height);
@@ -74,11 +87,15 @@
     left: 0;
   }
 
-  .backdrop {
-    display: none;
-  }
-
   .logo {
     display: block;
+  }
+
+  .greeting {
+    @include font-lg;
+  }
+
+  .backdrop {
+    display: none;
   }
 }

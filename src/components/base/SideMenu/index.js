@@ -18,6 +18,7 @@ import styles from "./index.module.scss";
 function SideMenu({ isVisible, onClose }) {
   const navigate = useNavigate();
   const { currentTheme } = useSelector((state) => state.theme);
+  const { dbUser } = useSelector((state) => state.user);
 
   const menuRef = useRef(null);
 
@@ -44,7 +45,11 @@ function SideMenu({ isVisible, onClose }) {
           onClick={handleLogoClick}
         />
 
-        <ProfileAvatar />
+        <div className={styles.profileAvatarContainer}>
+          <ProfileAvatar />
+
+          <p className={styles.greeting}>Hello {dbUser.companyName}</p>
+        </div>
       </div>
 
       <div
