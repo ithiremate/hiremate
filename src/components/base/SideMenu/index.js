@@ -8,6 +8,8 @@ import classNames from "classnames";
 
 import useClickOutside from "../../../hooks/useClickOutside";
 
+import { ROOT } from "../../../utils/constants/routes";
+
 import Logo from "../../shared/Logo";
 import ProfileAvatar from "../../shared/ProfileAvatar";
 
@@ -20,7 +22,7 @@ function SideMenu({ isVisible, onClose }) {
   const menuRef = useRef(null);
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate(ROOT);
   };
 
   useClickOutside(menuRef, onClose);

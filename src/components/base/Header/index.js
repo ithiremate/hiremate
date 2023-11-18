@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
 
+import { ROOT } from "../../../utils/constants/routes";
+
 import Logo from "../../shared/Logo";
 import SvgButton from "../../shared/SvgButton";
 
@@ -13,7 +15,7 @@ function Header({ isMenuVisible, onMenuToggle }) {
   const { currentTheme } = useSelector((state) => state.theme);
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate(ROOT);
   };
 
   return (

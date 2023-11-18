@@ -7,7 +7,8 @@ import {
   Routes,
 } from "react-router-dom";
 
-import routes from "./utils/constants/routes";
+import routes from "./utils/constants/router";
+import { ROOT } from "./utils/constants/routes";
 
 function Navigation() {
   const { sessionUser } = useSelector((state) => state.session);
@@ -45,7 +46,7 @@ function Navigation() {
           );
         })}
 
-        <Route path="*" element={<Navigate to={routes.ROOT} />} />
+        <Route path="*" element={<Navigate to={ROOT} />} />
       </Routes>
     </Router>
   );
