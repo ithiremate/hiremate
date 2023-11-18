@@ -75,6 +75,7 @@
 // LAYOUTS
 @mixin main-layout-adaptive-container {
   padding: 0 40px;
+  @include transition(padding);
 
   @include mobile-lg {
     & {
@@ -93,4 +94,16 @@
       padding: 0 320px;
     }
   }
+}
+
+// OTHER
+@mixin transition($properties...) {
+  $transition: ();
+
+  @each $property in $properties {
+    $transition: append($transition, $property 0.3s ease-in-out, comma);
+  }
+
+  transition: $transition;
+  will-change: $properties;
 }

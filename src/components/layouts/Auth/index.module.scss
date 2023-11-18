@@ -18,7 +18,11 @@
   gap: 40px;
   padding: 0 40px;
   box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
+  @include transition(padding);
+}
+
+.logo {
+  width: 80%;
 }
 
 @include mobile-md {

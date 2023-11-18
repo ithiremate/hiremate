@@ -4,18 +4,28 @@
 .container {
   width: $side-menu-width;
   height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  left: -$side-menu-width;
+  @include transition(left);
+
+  &_visible {
+    left: 0;
+  }
+}
+
+.content {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  position: fixed;
-  top: 0;
-  left: -$side-menu-width;
-  z-index: 3;
   padding: 20px;
   box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
-  will-change: left;
+  position: relative;
+  z-index: 3;
 
   &_light {
     background: $background-light-secondary;
@@ -23,10 +33,6 @@
 
   &_dark {
     background: $background-dark-secondary;
-  }
-
-  &_visible {
-    left: 0;
   }
 }
 
@@ -36,21 +42,29 @@
 }
 
 .backdrop {
-  width: calc(100vw - $side-menu-width);
+  width: 100vw;
   height: calc(100vh - $header-height);
   position: fixed;
   top: $header-height;
   right: 0;
-  z-index: 1;
-  opacity: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
   pointer-events: none;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease-in-out;
-  will-change: opacity;
+  background-color: transparent;
+  backdrop-filter: blur(2px);
+  @include transition(background-color);
 
   &_visible {
-    opacity: 1;
     pointer-events: all;
+
+    &_light {
+      background-color: rgba($color: $background-dark, $alpha: 0.5);
+    }
+
+    &_dark {
+      background-color: rgba($color: $background-light, $alpha: 0.5);
+    }
   }
 }
 

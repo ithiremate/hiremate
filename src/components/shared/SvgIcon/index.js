@@ -1,4 +1,6 @@
 import PropTypes from "prop-types";
+import classNames from "classnames";
+import { useSelector } from "react-redux";
 
 // LOGO
 import { ReactComponent as LogoLightSmall } from "../../../assets/icons/logo_light_small.svg";
@@ -15,7 +17,11 @@ import { ReactComponent as Menu } from "../../../assets/icons/menu.svg";
 import { ReactComponent as Cross } from "../../../assets/icons/cross.svg";
 import { ReactComponent as User } from "../../../assets/icons/user.svg";
 
-function SvgIcon({ type, onClick, className }) {
+import styles from "./index.module.scss";
+
+function SvgIcon({ type, onClick, className, fill }) {
+  const { currentTheme } = useSelector((state) => state.theme);
+
   const LOGO = {
     logo_light_small: LogoLightSmall,
     logo_dark_small: LogoDarkSmall,
@@ -40,18 +46,28 @@ function SvgIcon({ type, onClick, className }) {
 
   const Component = SVG_BY_TYPE[type] ?? "svg";
 
-  return <Component className={className} onClick={onClick} />;
+  return (
+    <Component
+      className={classNames(
+        { [styles[`icon_${currentTheme}`]]: fill },
+        className,
+      )}
+      onClick={onClick}
+    />
+  );
 }
 
 SvgIcon.propTypes = {
   type: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   className: PropTypes.string,
+  fill: PropTypes.bool,
 };
 
 SvgIcon.defaultProps = {
   onClick: () => {},
   className: "",
+  fill: true,
 };
 
 export default SvgIcon;

@@ -42,15 +42,15 @@ function SessionGuard({ children }) {
           presenseStatus: FB.USER_CONNECTION_STATUSES.ONLINE,
         }),
       );
-
-      window.addEventListener("unload", () => {
-        dispatch(
-          updateUserFieldInDb({
-            presenseStatus: FB.USER_CONNECTION_STATUSES.OFFLINE,
-          }),
-        );
-      });
     }
+
+    window.addEventListener("unload", () => {
+      dispatch(
+        updateUserFieldInDb({
+          presenseStatus: FB.USER_CONNECTION_STATUSES.OFFLINE,
+        }),
+      );
+    });
 
     return () => {
       window.removeEventListener("unload", () => {

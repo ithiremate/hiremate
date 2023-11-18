@@ -17,7 +17,7 @@
   width: 100%;
   flex: 1;
   box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
+  @include transition(padding);
 }
 
 @include mobile-lg {

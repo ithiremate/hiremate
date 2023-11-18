@@ -28,19 +28,28 @@ function SideMenu({ isVisible, onClose }) {
   return (
     <div
       ref={menuRef}
-      className={classNames(
-        styles.container,
-        styles[`container_${currentTheme}`],
-        { [styles.container_visible]: isVisible },
-      )}>
-      <Logo type="default" className={styles.logo} onClick={handleLogoClick} />
+      className={classNames(styles.container, {
+        [styles.container_visible]: isVisible,
+      })}>
+      <div
+        className={classNames(
+          styles.content,
+          styles[`content_${currentTheme}`],
+        )}>
+        <Logo
+          type="default"
+          className={styles.logo}
+          onClick={handleLogoClick}
+        />
 
-      <ProfileAvatar />
+        <ProfileAvatar />
+      </div>
 
       <div
         onClick={onClose}
         className={classNames(styles.backdrop, {
           [styles.backdrop_visible]: isVisible,
+          [styles[`backdrop_visible_${currentTheme}`]]: isVisible,
         })}
       />
     </div>

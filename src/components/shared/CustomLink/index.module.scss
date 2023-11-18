@@ -1,8 +1,9 @@
 @import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
 
 .link {
   text-decoration: none;
-  transition: all 0.3s ease-in-out;
+  @include transition(color);
 
   &_light {
     color: $red-light;

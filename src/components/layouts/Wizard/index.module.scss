@@ -15,7 +15,7 @@
   height: 100%;
   padding: 0 40px;
   box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
+  @include transition(padding);
 }
 
 @include mobile-lg {

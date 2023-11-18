@@ -14,6 +14,7 @@ function Logo({ type, onClick, className }) {
       type={`logo_${currentTheme}_${type}`}
       className={classNames(styles.logo, styles[`logo_${type}`], className)}
       onClick={onClick}
+      fill={false}
     />
   );
 }

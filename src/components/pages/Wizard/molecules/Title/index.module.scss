@@ -3,7 +3,7 @@
 
 .title {
   margin-bottom: 40px;
-  transition: all 0.3s ease-in-out;
+  @include transition(margin-bottom, font-size);
   @include font-2xl;
 }
 

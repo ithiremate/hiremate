@@ -12,7 +12,6 @@
   z-index: 1;
   box-sizing: border-box;
   @include main-layout-adaptive-container;
-  transition: all 0.3s ease-in-out;
 
   &_light {
     background: $background-light-secondary;
@@ -25,8 +24,7 @@
 
 .logo {
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  will-change: opacity;
+  @include transition(opacity);
 }
 
 .menuIcon {
@@ -41,7 +39,7 @@
     min-width: 28px;
     min-height: 28px;
     transform: skew(-45deg) scale(0.2);
-    transition: all 0.3s ease-in-out;
+    @include transition(opacity, transform);
   }
 
   &_visible {

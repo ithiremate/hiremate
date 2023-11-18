@@ -15,46 +15,45 @@
   font-weight: 600;
   padding: 10px 0;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  @include transition(color, background-color, border-color);
   @include font-base;
 
   &_light {
     color: $text-primary-light;
     border-color: $text-primary-light;
-    background: $background-light;
+    background-color: $background-light;
 
     &:hover,
     &:focus {
       color: $background-light;
-      background: $text-primary-light;
+      background-color: $text-primary-light;
     }
 
     &:active {
       color: $text-primary-light;
       border-color: $text-primary-light;
-      background: $background-light;
+      background-color: $background-light;
     }
   }
 
   &_dark {
     color: $text-primary-dark;
     border-color: $text-primary-dark;
-    background: $background-dark;
+    background-color: $background-dark;
 
     &:hover,
     &:focus {
       color: $background-dark;
-      background: $text-primary-dark;
+      background-color: $text-primary-dark;
     }
 
     &:active {
       color: $text-primary-dark;
       border-color: $text-primary-dark;
-      background: $background-dark;
+      background-color: $background-dark;
     }
   }
 
-  &:disabled,
   &_loading {
     &_light,
     &_light:hover,
@@ -62,7 +61,7 @@
       cursor: not-allowed;
       color: $text-primary-light;
       border-color: $text-primary-light;
-      background: $background-light;
+      background-color: $background-light;
     }
 
     &_dark,
@@ -71,7 +70,7 @@
       cursor: not-allowed;
       color: $text-primary-dark;
       border-color: $text-primary-dark;
-      background: $background-dark;
+      background-color: $background-dark;
     }
   }
 }

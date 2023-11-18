@@ -1,4 +1,5 @@
 @import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
 
 .button {
   width: 30px;
@@ -13,8 +14,7 @@
   padding: 6px;
   border-radius: 50%;
   box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
-  will-change: background-color;
+  @include transition(background-color, fill);
 
   &_light {
     &:hover {
@@ -49,8 +49,7 @@
   width: 20px;
 
   path {
-    transition: all 0.3s ease-in-out;
-    will-change: fill;
+    @include transition(fill);
   }
 
   &_light {

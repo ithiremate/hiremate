@@ -12,9 +12,7 @@
   transform: translateX(-50%) scale(0.8);
   opacity: 0;
   pointer-events: none;
-  transition:
-    transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-    opacity 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  @include transition(transform, opacity);
 
   &_visible {
     transform: translateX(-50%) scale(1);

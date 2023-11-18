@@ -1,0 +1,20 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.icon {
+    path {
+        @include transition(fill);
+    }
+
+    &_light {
+        path {
+            fill: $text-primary-light;
+        }
+    }
+
+    &_dark {
+        path {
+            fill: $text-primary-dark;
+        }
+    }
+}
