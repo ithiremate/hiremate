@@ -10,30 +10,30 @@ import SignUp from "../../components/pages/SignUp";
 // WIZARD PAGES
 import Wizard from "../../components/pages/Wizard";
 
-// PRIVATE PAGES
-import Dashboard from "../../components/pages/DashBoard";
+// CUSTOMER PAGES
+import Dashboard from "../../components/pages/customer/DashBoard";
 
 // ROUTES
 import { ROOT, SIGN_IN, SIGN_UP } from "./routes";
 
-const PUBLIC_ROUTES = {
+const PUBLIC_ROUTER = {
   [ROOT]: { element: SignIn, layout: AuthLayout },
   [SIGN_IN]: { element: SignIn, layout: AuthLayout },
   [SIGN_UP]: { element: SignUp, layout: AuthLayout },
 };
 
-const WIZARD_ROUTES = {
+const WIZARD_ROUTER = {
   [ROOT]: { element: Wizard, layout: WizardLayout },
 };
 
-const PRIVATE_ROUTES = {
+const CUSTOMER_ROUTER = {
   [ROOT]: { element: Dashboard, layout: MainLayout },
 };
 
-const routes = {
-  public: PUBLIC_ROUTES,
-  wizard: WIZARD_ROUTES,
-  private: PRIVATE_ROUTES,
+const router = {
+  public: PUBLIC_ROUTER,
+  wizard: WIZARD_ROUTER,
+  customer: CUSTOMER_ROUTER,
 };
 
-export default routes;
+export default router;

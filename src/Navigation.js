@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
 import {
   HashRouter as Router,
   Navigate,
@@ -7,31 +5,17 @@ import {
   Routes,
 } from "react-router-dom";
 
-import routes from "./utils/constants/router";
+import useCurrentRoutes from "./hooks/useCurrentRoutes";
 import { ROOT } from "./utils/constants/routes";
 
 function Navigation() {
-  const { sessionUser } = useSelector((state) => state.session);
-  const { dbUser } = useSelector((state) => state.user);
-
-  const navigationRoutes = useMemo(() => {
-    if (dbUser && !dbUser.wizardCompleted) {
-      return routes.wizard;
-    }
-
-    if (dbUser && dbUser.wizardCompleted) {
-      return routes.private;
-    }
-
-    return routes.public;
-  }, [sessionUser, dbUser]);
+  const currentRoutes = useCurrentRoutes();
 
   return (
     <Router>
       <Routes>
-        {Object.keys(navigationRoutes).map((routeKey) => {
-          const { element: Element, layout: Layout } =
-            navigationRoutes[routeKey];
+        {Object.keys(currentRoutes).map((routeKey) => {
+          const { element: Element, layout: Layout } = currentRoutes[routeKey];
 
           return (
             <Route
