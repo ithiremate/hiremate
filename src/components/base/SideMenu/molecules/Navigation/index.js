@@ -51,10 +51,7 @@ function Navigation({ routes }) {
                   className={classNames(
                     styles.link,
                     styles[`link_${currentTheme}`],
-                    {
-                      [styles.link_full]: !nested,
-                      [styles.link_withoutIcon]: !icon,
-                    },
+                    { [styles.link_withoutIcon]: !icon },
                   )}
                 />
 
