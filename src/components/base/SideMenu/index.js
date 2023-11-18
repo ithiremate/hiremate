@@ -6,12 +6,14 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 
-import useClickOutside from "../../../hooks/useClickOutside";
-
 import { ROOT } from "../../../utils/constants/routes";
+
+import useClickOutside from "../../../hooks/useClickOutside";
+import useSideMenuRoutes from "../../../hooks/useSideMenuRotes";
 
 import Logo from "../../shared/Logo";
 import ProfileAvatar from "../../shared/ProfileAvatar";
+import Navigation from "./molecules/Navigation";
 
 import styles from "./index.module.scss";
 
@@ -19,7 +21,7 @@ function SideMenu({ isVisible, onClose }) {
   const navigate = useNavigate();
   const { currentTheme } = useSelector((state) => state.theme);
   const { dbUser } = useSelector((state) => state.user);
-
+  const sideMenuRoutes = useSideMenuRoutes();
   const menuRef = useRef(null);
 
   const handleLogoClick = () => {
@@ -50,6 +52,8 @@ function SideMenu({ isVisible, onClose }) {
 
           <p className={styles.greeting}>Hello {dbUser.companyName}</p>
         </div>
+
+        <Navigation routes={sideMenuRoutes} />
       </div>
 
       <div

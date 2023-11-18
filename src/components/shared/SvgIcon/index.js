@@ -16,6 +16,11 @@ import { ReactComponent as Unlock } from "../../../assets/icons/unlock.svg";
 import { ReactComponent as Menu } from "../../../assets/icons/menu.svg";
 import { ReactComponent as Cross } from "../../../assets/icons/cross.svg";
 import { ReactComponent as User } from "../../../assets/icons/user.svg";
+import { ReactComponent as Chevron } from "../../../assets/icons/chevron.svg";
+
+// SIDE MENU
+import { ReactComponent as Case } from "../../../assets/icons/case.svg";
+import { ReactComponent as Grid } from "../../../assets/icons/grid.svg";
 
 import styles from "./index.module.scss";
 
@@ -37,11 +42,18 @@ function SvgIcon({ type, onClick, className, fill }) {
     menu: Menu,
     cross: Cross,
     user: User,
+    chevron: Chevron,
+  };
+
+  const SIDE_MENU = {
+    case: Case,
+    grid: Grid,
   };
 
   const SVG_BY_TYPE = {
     ...LOGO,
     ...BASE,
+    ...SIDE_MENU,
   };
 
   const Component = SVG_BY_TYPE[type] ?? "svg";

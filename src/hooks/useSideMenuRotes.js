@@ -1,30 +1,26 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-import router from "../utils/constants/router";
+import { CUSTOMER_SIDE_MENU } from "../utils/constants/routes";
 import FB from "../utils/constants/fb";
 
-function useCurrentRoutes() {
+function useSideMenuRoutes() {
   const { sessionUser } = useSelector((state) => state.session);
   const { dbUser } = useSelector((state) => state.user);
 
-  const navigationRoutes = useMemo(() => {
-    if (dbUser && !dbUser.wizardCompleted) {
-      return router.wizard;
-    }
-
+  const sideMenuRoutes = useMemo(() => {
     if (
       dbUser &&
       dbUser.wizardCompleted &&
       dbUser.userType === FB.USER_TYPES.CUSTOMER
     ) {
-      return router.customer;
+      return CUSTOMER_SIDE_MENU;
     }
 
-    return router.public;
+    return {};
   }, [sessionUser, dbUser]);
 
-  return navigationRoutes;
+  return sideMenuRoutes;
 }
 
-export default useCurrentRoutes;
+export default useSideMenuRoutes;

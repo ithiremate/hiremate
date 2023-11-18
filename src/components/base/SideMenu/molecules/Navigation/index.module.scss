@@ -1,0 +1,104 @@
+@import "../../../../../styles/variables.scss";
+@import "../../../../../styles/mixins.scss";
+
+.container {
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.linkContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &_empty {
+        margin-bottom: 20px;
+    }
+}
+
+.linkTitleContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.3s ease-in-out;
+
+    &_withNested {
+        &:hover {
+            .icon,
+            .link {
+                &_light {
+                    color: $red-light;
+
+                    path {
+                        fill: $red-light;
+                    }
+                }
+
+                &_dark {
+                    color: $red-dark;
+
+                    path {
+                        fill: $red-dark;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.link {
+    &_full {
+        width: 100%;
+    }
+
+    &_withoutIcon {
+        padding-left: 30px;
+        box-sizing: border-box;
+    }
+}
+
+.iconContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon {
+    path {
+        @include transition(fill);
+    }
+
+    &_active {
+        &_light {
+            path {
+                fill: $red-light;
+            }
+        }
+
+        &_dark {
+            path {
+                fill: $red-dark;
+            }
+        }
+    }
+}
+
+.nested {
+    width: 100%;
+    max-height: 0;
+    margin-top: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    @include transition(max-height);
+
+    &_visible {
+        max-height: 50px;
+    }
+}

@@ -1,0 +1,47 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  @include transition(color);
+
+  &_light {
+    color: $text-primary-light;
+
+    &:hover,
+    &_active {
+      color: $red-light;
+
+      .icon {
+        path {
+          fill: $red-light;
+        }
+      }
+    }
+  }
+
+  &_dark {
+    color: $text-primary-dark;
+
+    &:hover,
+    &_active {
+      color: $red-dark;
+
+      .icon {
+        path {
+          fill: $red-dark;
+        }
+      }
+    }
+  }
+}
+
+.icon {
+  path {
+    @include transition(fill);
+  }
+}

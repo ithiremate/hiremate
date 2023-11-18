@@ -5,17 +5,18 @@ import {
   Routes,
 } from "react-router-dom";
 
-import useCurrentRoutes from "./hooks/useCurrentRoutes";
+import useNavigationRoutes from "./hooks/useNavigationRoutes";
 import { ROOT } from "./utils/constants/routes";
 
 function Navigation() {
-  const currentRoutes = useCurrentRoutes();
+  const navigationRoutes = useNavigationRoutes();
 
   return (
     <Router>
       <Routes>
-        {Object.keys(currentRoutes).map((routeKey) => {
-          const { element: Element, layout: Layout } = currentRoutes[routeKey];
+        {Object.keys(navigationRoutes).map((routeKey) => {
+          const { element: Element, layout: Layout } =
+            navigationRoutes[routeKey];
 
           return (
             <Route
