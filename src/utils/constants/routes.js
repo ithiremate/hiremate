@@ -12,8 +12,4 @@ export const CUSTOMER_SIDE_MENU = {
     title: "Dashboard",
     icon: "grid",
   },
-  [JOBS]: {
-    title: "My Jobs",
-    icon: "case",
-  },
 };
