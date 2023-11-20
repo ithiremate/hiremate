@@ -32,6 +32,7 @@ function LinkComponent({
           {
             [styles.linkContainer_active]: isActive,
             [styles.linkContainer_expanded]: isExpanded,
+            [styles.linkContainer_withoutIcon]: !icon,
             [styles[`linkContainer_${currentTheme}_active`]]: isActive,
           },
         )}>
@@ -51,6 +52,7 @@ function LinkComponent({
       icon={icon}
       to={to}
       className={classNames(styles.link, styles[`link_${currentTheme}`], {
+        [styles.link_withoutIcon]: !icon,
         [styles[`link_${currentTheme}_active`]]: isActive,
       })}
     />
@@ -78,7 +80,7 @@ function Navigation({ routes }) {
       <div className={styles.content}>
         {Object.entries(internalRoutes).map(([routePath, routeContent]) => {
           const { title, icon, nested } = routeContent;
-          const isActive = !!matchPath(pathname, routePath);
+          const isActive = !!matchPath(routePath, pathname);
           const isExpanded = !!internalRoutes[routePath].isExpanded;
 
           return (
@@ -134,9 +136,13 @@ LinkComponent.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   currentTheme: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   to: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+};
+
+LinkComponent.defaultProps = {
+  icon: "",
 };
 
 export default Navigation;

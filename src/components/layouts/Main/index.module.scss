@@ -10,10 +10,16 @@
   align-items: center;
   padding-top: $header-height;
   box-sizing: border-box;
-  @include main-layout-adaptive-container;
 }
 
 .content {
   width: 100%;
   flex: 1;
+}
+
+@include tablet {
+  .content {
+    padding-left: $side-menu-width;
+    box-sizing: border-box;
+  }
 }

@@ -72,10 +72,20 @@
             transform: rotate(180deg);
         }
     }
+
+    &_withoutIcon {
+        padding-left: 54px;
+    }
 }
 
 .icon {
     @include transition(transform);
+}
+
+.link {
+    &_withoutIcon {
+        padding-left: 54px;
+    }
 }
 
 .nested {
@@ -85,6 +95,6 @@
     @include transition(max-height);
 
     &_expanded {
-        max-height: 100px;
+        max-height: 310px;
     }
 }
