@@ -4,7 +4,7 @@
 .container {
   width: $side-menu-width;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: fixed;
   top: 0;
   z-index: 1;
@@ -13,14 +13,6 @@
 
   &_visible {
     left: 0;
-  }
-
-  &_light {
-    background: $background-light-secondary;
-  }
-
-  &_dark {
-    background: $background-dark-secondary;
   }
 }
 
@@ -35,6 +27,14 @@
   box-sizing: border-box;
   position: relative;
   z-index: 3;
+
+  &_light {
+    background: $background-light-secondary;
+  }
+
+  &_dark {
+    background: $background-dark-secondary;
+  }
 }
 
 .logo {
@@ -50,7 +50,6 @@
   gap: 10px;
   position: sticky;
   top: 0;
-  z-index: 1;
   padding: 20px 0;
   box-sizing: border-box;
 

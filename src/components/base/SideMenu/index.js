@@ -40,7 +40,11 @@ function SideMenu({ isVisible, onClose }) {
           [styles.container_visible]: isVisible,
         },
       )}>
-      <div className={classNames(styles.content)}>
+      <div
+        className={classNames(
+          styles.content,
+          styles[`content_${currentTheme}`],
+        )}>
         <Logo
           type="default"
           className={styles.logo}

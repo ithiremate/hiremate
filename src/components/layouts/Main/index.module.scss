@@ -16,12 +16,4 @@
 .content {
   width: 100%;
   flex: 1;
-  box-sizing: border-box;
-  @include transition(padding);
-}
-
-@include mobile-lg {
-  .content {
-    padding: 0;
-  }
 }
