@@ -35,34 +35,52 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  * {
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: $background-light-secondary;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: rgba($color: $background-dark-secondary, $alpha: 0.8);
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background: $background-dark-secondary;
-    }
-  }
 }
 
 .root_theme {
   &_light {
     color: $text-primary-light;
     background: $background-light;
+
+    * {
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $background-light-secondary;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba($color: $background-dark-secondary, $alpha: 0.8);
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: $background-dark-secondary;
+      }
+    }
   }
 
   &_dark {
     color: $text-primary-dark;
     background: $background-dark;
+
+    * {
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $background-dark-secondary;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba($color: $background-light-secondary, $alpha: 0.8);
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: $background-light-secondary;
+      }
+    }
   }
 }
