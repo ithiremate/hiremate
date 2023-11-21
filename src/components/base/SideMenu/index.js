@@ -58,7 +58,7 @@ function SideMenu({ isVisible, onClose }) {
           )}>
           <ProfileAvatar />
 
-          <p className={styles.greeting}>Hello {dbUser.companyName}</p>
+          <p className={styles.greeting}>Hi, {dbUser.companyName}</p>
         </div>
 
         <Navigation routes={sideMenuRoutes} />

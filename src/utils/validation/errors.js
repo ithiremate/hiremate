@@ -5,6 +5,7 @@ export const REQUIRED_ERRORS = {
   companyName: "Please enter your Company name",
   location: "Please enter location",
   username: "Please choose your username",
+  jobTitle: "Please enter job title",
 };
 
 export const TOO_SHORT_ERRORS = {

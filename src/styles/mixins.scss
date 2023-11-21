@@ -75,6 +75,7 @@
 // LAYOUTS
 @mixin main-layout-adaptive-container {
   padding: 0 40px;
+  box-sizing: border-box;
   @include transition(padding);
 
   @include mobile-lg {
@@ -93,6 +94,22 @@
     & {
       padding: 0 320px;
     }
+  }
+}
+
+@mixin main-page-adaptive-container {
+  padding: 40px;
+  box-sizing: border-box;
+  @include transition(padding);
+
+  @include mobile-lg {
+    & {
+      padding: 40px 80px;
+    }
+  }
+
+  @include tablet {
+    padding: 40px;
   }
 }
 

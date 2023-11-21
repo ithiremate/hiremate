@@ -40,7 +40,11 @@ function CustomerForm() {
   const handleLocationChange = ({ value }) => {
     setInputs((prev) => ({
       ...prev,
-      location: { ...prev.location, value: { display_name: value } },
+      location: {
+        ...prev.location,
+        errorMessage: "",
+        value: { display_name: value },
+      },
     }));
   };
 
@@ -48,7 +52,9 @@ function CustomerForm() {
     const updatedInputs = structuredClone(inputs);
 
     Object.keys(errors).forEach((errorKey) => {
-      if (updatedInputs[errorKey]) {
+      if (updatedInputs[errorKey] && errorKey === "location") {
+        updatedInputs[errorKey].errorMessage = "Please enter Company location";
+      } else if (updatedInputs[errorKey]) {
         updatedInputs[errorKey].errorMessage = errors[errorKey];
       }
     });

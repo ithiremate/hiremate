@@ -82,11 +82,12 @@
   z-index: 2;
   pointer-events: none;
   background-color: transparent;
-  backdrop-filter: blur(2px);
-  @include transition(background-color);
+  backdrop-filter: none;
+  @include transition(backdrop-filter, background-color);
 
   &_visible {
     pointer-events: all;
+    backdrop-filter: blur(2px);
 
     &_light {
       background-color: rgba($color: $background-dark, $alpha: 0.5);

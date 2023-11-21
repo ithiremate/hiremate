@@ -5,6 +5,8 @@ export const SIGN_UP = `${ROOT}sign-up`;
 
 // CUSTOMER ROUTES
 export const JOBS = `${ROOT}jobs/:jobStatus`;
+export const JOBS_ALL = `/jobs/all`;
+export const JOBS_NEW = `/jobs/new`;
 export const JOBS_ACTIVE = `/jobs/active`;
 export const JOBS_PENDING = `/jobs/pending`;
 export const JOBS_CLOSED = `/jobs/closed`;
@@ -22,31 +24,13 @@ export const CUSTOMER_SIDE_MENU = {
   },
   [JOBS]: {
     title: "Jobs",
-    icon: "grid",
+    icon: "case",
     nested: {
-      [JOBS_ACTIVE]: {
-        title: "Active Jobs",
+      [JOBS_ALL]: {
+        title: "All Jobs",
       },
-      [JOBS_PENDING]: {
-        title: "Pending Jobs",
-      },
-      [JOBS_CLOSED]: {
-        title: "Closed Jobs",
-      },
-      [JOBS_OFFER_EXTENDED]: {
-        title: "Offer Extended",
-      },
-      [JOBS_OFFER_ACCEPTED]: {
-        title: "Offer Accepted",
-      },
-      [JOBS_OFFER_DECLINED]: {
-        title: "Offer Declined",
-      },
-      [JOBS_ON_HOLD]: {
-        title: "On Hold",
-      },
-      [JOBS_ARCHIVED]: {
-        title: "Archived Jobs",
+      [JOBS_NEW]: {
+        title: "Post New Job",
       },
     },
   },

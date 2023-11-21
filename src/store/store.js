@@ -4,12 +4,14 @@ import theme from "./slices/themeSlice";
 import session from "./slices/sessionSlice";
 import toast from "./slices/toastSlice";
 import user from "./slices/userSlice";
+import jobs from "./slices/jobsSlice";
 
 const reducers = {
   theme,
   session,
   toast,
   user,
+  jobs,
 };
 
 const combinedReducer = combineReducers(reducers);

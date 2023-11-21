@@ -8,6 +8,7 @@ const ERRORS = {
 
 const COLLECTION_TYPES = {
   USERS: "users",
+  JOBS: "jobs",
 };
 
 const USER_TYPES = {

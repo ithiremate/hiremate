@@ -96,3 +96,7 @@ export function validateCustomerWizard(args) {
 export function validateTalentWizard(args) {
   return validate({ rule: rules.talentWizard, ...args });
 }
+
+export function validatePostJob(args) {
+  return validate({ rule: rules.postJob, ...args });
+}

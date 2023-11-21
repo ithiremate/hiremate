@@ -15,7 +15,7 @@ function RootGuard({ children }) {
   return (
     <ThemeGuard>
       <SessionGuard>
-        <LoadingContainer isLoading={!isAppInitialized}>
+        <LoadingContainer isLoading={!isAppInitialized} showLogo>
           {children}
         </LoadingContainer>
       </SessionGuard>

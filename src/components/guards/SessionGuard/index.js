@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import FB from "../../../utils/constants/fb";
 import { subscribeOnSessionChanges } from "../../../store/actions/sessionActions";
+import { subscribeOnJobsChanges } from "../../../store/actions/jobsActions";
 
 import {
   subscribeOnUserChanges,
@@ -31,6 +32,18 @@ function SessionGuard({ children }) {
       })();
     }
   }, [isInitialized, sessionUser]);
+
+  useEffect(() => {
+    if (isInitialized && dbUser && dbUser.userType === FB.USER_TYPES.CUSTOMER) {
+      (async () => {
+        const { payload: unsubscribeJobs } = await dispatch(
+          subscribeOnJobsChanges(),
+        );
+
+        return unsubscribeJobs;
+      })();
+    }
+  }, [isInitialized, dbUser]);
 
   useEffect(() => {
     const shouldUpdatePresenseStatus =
