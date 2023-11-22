@@ -1,17 +1,20 @@
 import { useState } from "react";
 
+import { validatePostJob } from "../../../../utils/validation";
+
 import Input from "../../../shared/Input";
 import LocationInput from "../../../shared/LocationInput";
+import CustomRangeSlider from "../../../shared/CustomRangeSlider";
 import Button from "../../../shared/Button";
 
 import styles from "./index.module.scss";
-import { validatePostJob } from "../../../../utils/validation";
 
 function PostJob() {
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     jobTitle: { value: "", errorMessage: "" },
     jobLocation: { value: { display_name: "" }, errorMessage: "" },
+    salary: { value: [0, 1000], errorMessage: "" },
   });
 
   const postJob = async (validData) => {
@@ -45,9 +48,14 @@ function PostJob() {
   const handleFormError = (errors) => {
     const updatedInputs = structuredClone(inputs);
 
+    console.log(errors);
+
     Object.keys(errors).forEach((errorKey) => {
       if (updatedInputs[errorKey] && errorKey === "jobLocation") {
         updatedInputs[errorKey].errorMessage = "Please enter job location";
+      } else if (updatedInputs[errorKey] && errorKey === "salary") {
+        updatedInputs[errorKey].errorMessage =
+          "Please provide positive integer";
       } else if (updatedInputs[errorKey]) {
         updatedInputs[errorKey].errorMessage = errors[errorKey];
       }
@@ -63,6 +71,7 @@ function PostJob() {
       data: {
         jobTitle: inputs.jobTitle.value,
         jobLocation: inputs.jobLocation.value,
+        salary: inputs.salary.value,
       },
       onSuccess: (validData) => postJob(validData),
       onError: (errors) => handleFormError(errors),
@@ -97,6 +106,17 @@ function PostJob() {
               isRequired
               onChange={handleLocationChange}
               onChose={handleInputChange}
+            />
+
+            <CustomRangeSlider
+              label="Salary"
+              value={inputs.salary.value}
+              valueKey="salary"
+              errorMessage={inputs.salary.errorMessage}
+              min={0}
+              max={50000}
+              isRequired
+              onChange={handleInputChange}
             />
           </div>
 

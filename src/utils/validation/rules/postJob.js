@@ -1,5 +1,6 @@
 const postJob = {
   jobTitle: ["required", "trim", "string"],
+  salary: { list_of: ["required", "positive_integer"] },
   jobLocation: {
     nested_object: {
       addresstype: ["required", "trim", "string"],

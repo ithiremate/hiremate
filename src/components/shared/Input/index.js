@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import classNames from "classnames";
 
-import styles from "./index.module.scss";
 import SvgButton from "../SvgButton";
+
+import styles from "./index.module.scss";
 
 function Input({
   label,
