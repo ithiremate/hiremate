@@ -2,7 +2,7 @@
 @import "../../../styles/mixins.scss";
 
 .link {
-  text-decoration: none;
+  text-decoration: none !important;
   @include transition(color);
 
   &_light {

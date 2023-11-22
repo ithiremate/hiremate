@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import POST_JOB from "../../../../utils/constants/postJob";
 import { validatePostJob } from "../../../../utils/validation";
 
 import Input from "../../../shared/Input";
@@ -14,7 +15,10 @@ function PostJob() {
   const [inputs, setInputs] = useState({
     jobTitle: { value: "", errorMessage: "" },
     jobLocation: { value: { display_name: "" }, errorMessage: "" },
-    salary: { value: [0, 1000], errorMessage: "" },
+    salary: {
+      value: [POST_JOB.SALARY_RANGE.MIN, POST_JOB.SALARY_RANGE.MAX],
+      errorMessage: "",
+    },
   });
 
   const postJob = async (validData) => {
@@ -47,8 +51,6 @@ function PostJob() {
 
   const handleFormError = (errors) => {
     const updatedInputs = structuredClone(inputs);
-
-    console.log(errors);
 
     Object.keys(errors).forEach((errorKey) => {
       if (updatedInputs[errorKey] && errorKey === "jobLocation") {
@@ -113,8 +115,8 @@ function PostJob() {
               value={inputs.salary.value}
               valueKey="salary"
               errorMessage={inputs.salary.errorMessage}
-              min={0}
-              max={50000}
+              min={POST_JOB.SALARY_RANGE.MIN}
+              max={POST_JOB.SALARY_RANGE.MAX}
               isRequired
               onChange={handleInputChange}
             />

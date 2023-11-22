@@ -6,7 +6,7 @@
   align-items: center;
   gap: 10px;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: none !important;
   @include transition(color);
 
   &_light {
