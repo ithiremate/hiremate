@@ -6,6 +6,8 @@ export const REQUIRED_ERRORS = {
   location: "Please enter location",
   username: "Please choose your username",
   jobTitle: "Please enter job title",
+  salaryFrom: "Please enter salary",
+  salaryTo: "Please enter salary",
 };
 
 export const TOO_SHORT_ERRORS = {
@@ -15,4 +17,9 @@ export const TOO_SHORT_ERRORS = {
 
 export const NOT_EQUAL_ERRORS = {
   passwordConfirm: "Passwords not equal",
+};
+
+export const WRONG_FORMAT_ERRORS = {
+  salaryFrom: "Please enter positive value",
+  salaryTo: "Please enter positive value",
 };

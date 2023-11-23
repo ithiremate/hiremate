@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { Fragment } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
@@ -5,7 +6,7 @@ import classNames from "classnames";
 
 import styles from "./index.module.scss";
 
-function InputGroup({ addon, className, onChange, inputs }) {
+function InputGroup({ addon, label, isRequired, className, onChange, inputs }) {
   const { currentTheme } = useSelector((state) => state.theme);
 
   const handleChange = (valueKey) => (e) => {
@@ -14,43 +15,77 @@ function InputGroup({ addon, className, onChange, inputs }) {
 
   return (
     <div className={classNames(styles.container, className)}>
-      {inputs.map((input, index) => {
-        const { placeholder, value, valueKey, name, type, min, max } = input;
+      <label
+        className={classNames(styles.label, styles[`label_${currentTheme}`])}>
+        {label}
+        {isRequired && (
+          <span className={styles[`asterisk_${currentTheme}`]}>*</span>
+        )}
+      </label>
 
-        return (
-          <Fragment key={valueKey}>
-            {index > 0 && (
-              <div
-                className={classNames(
-                  styles.addon,
-                  styles[`addon_${currentTheme}`],
-                )}>
-                <span>{addon}</span>
-              </div>
-            )}
+      <div className={styles.fieldsContainer}>
+        {inputs.map((input, index) => {
+          const {
+            placeholder,
+            value,
+            valueKey,
+            errorMessage,
+            name,
+            type,
+            min,
+            max,
+          } = input;
 
-            <input
-              className={classNames(
-                styles.field,
-                styles[`field_${currentTheme}`],
+          return (
+            <Fragment key={valueKey}>
+              {index > 0 && (
+                <div
+                  className={classNames(
+                    styles.addon,
+                    styles[`addon_${currentTheme}`],
+                  )}>
+                  <span>{addon}</span>
+                </div>
               )}
-              placeholder={placeholder}
-              value={value}
-              name={name}
-              type={type}
-              min={min}
-              max={max}
-              onChange={handleChange(valueKey)}
-            />
-          </Fragment>
-        );
-      })}
+
+              <div className={styles.fieldContainer}>
+                <input
+                  className={classNames(
+                    styles.field,
+                    styles[`field_${currentTheme}`],
+                    {
+                      [styles[`field_error_${currentTheme}`]]: !!errorMessage,
+                    },
+                  )}
+                  placeholder={placeholder}
+                  value={value}
+                  name={name}
+                  type={type}
+                  min={min}
+                  max={max}
+                  onChange={handleChange(valueKey)}
+                />
+
+                <span
+                  className={classNames(
+                    styles.errorMessage,
+                    styles[`errorMessage_${currentTheme}`],
+                  )}>
+                  {errorMessage}
+                </span>
+              </div>
+            </Fragment>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
 InputGroup.propTypes = {
   addon: PropTypes.string,
+  label: PropTypes.string,
+  isRequired: PropTypes.bool,
   className: PropTypes.string,
   onChange: PropTypes.func,
   inputs: PropTypes.arrayOf(
@@ -58,6 +93,7 @@ InputGroup.propTypes = {
       placeholder: PropTypes.string,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       valueKey: PropTypes.string,
+      errorMessage: PropTypes.string,
       name: PropTypes.string,
       type: PropTypes.string,
       min: PropTypes.number,
@@ -68,6 +104,8 @@ InputGroup.propTypes = {
 
 InputGroup.defaultProps = {
   addon: "",
+  label: "",
+  isRequired: false,
   className: "",
   onChange: () => {},
   inputs: [
@@ -75,6 +113,7 @@ InputGroup.defaultProps = {
       placeholder: "",
       value: "",
       valueKey: "",
+      errorMessage: "",
       name: "",
       type: "text",
       min: 0,

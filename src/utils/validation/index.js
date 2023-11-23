@@ -2,7 +2,13 @@
 /* eslint-disable no-use-before-define */
 import LIVR from "livr";
 import extraRules from "livr-extra-rules";
-import { NOT_EQUAL_ERRORS, REQUIRED_ERRORS, TOO_SHORT_ERRORS } from "./errors";
+
+import {
+  NOT_EQUAL_ERRORS,
+  REQUIRED_ERRORS,
+  TOO_SHORT_ERRORS,
+  WRONG_FORMAT_ERRORS,
+} from "./errors";
 
 import rules from "./rules";
 
@@ -56,6 +62,12 @@ export function decodeErrorCode(code, field = "") {
 
     case "FIELDS_NOT_EQUAL": {
       const errorMessage = field && NOT_EQUAL_ERRORS[field];
+
+      return errorMessage || "Value is invalid";
+    }
+
+    case "NOT_POSITIVE_INTEGER": {
+      const errorMessage = field && WRONG_FORMAT_ERRORS[field];
 
       return errorMessage || "Value is invalid";
     }

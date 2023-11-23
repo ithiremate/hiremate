@@ -1,11 +1,10 @@
 import { useState } from "react";
 
-import POST_JOB from "../../../../utils/constants/postJob";
 import { validatePostJob } from "../../../../utils/validation";
 
 import Input from "../../../shared/Input";
 import LocationInput from "../../../shared/LocationInput";
-import CustomRangeSlider from "../../../shared/CustomRangeSlider";
+import InputGroup from "../../../shared/InputGroup";
 import Button from "../../../shared/Button";
 
 import styles from "./index.module.scss";
@@ -15,10 +14,8 @@ function PostJob() {
   const [inputs, setInputs] = useState({
     jobTitle: { value: "", errorMessage: "" },
     jobLocation: { value: { display_name: "" }, errorMessage: "" },
-    salary: {
-      value: [POST_JOB.SALARY_RANGE.MIN, POST_JOB.SALARY_RANGE.MAX],
-      errorMessage: "",
-    },
+    salaryFrom: { value: "", errorMessage: "" },
+    salaryTo: { value: "", errorMessage: "" },
   });
 
   const postJob = async (validData) => {
@@ -55,9 +52,6 @@ function PostJob() {
     Object.keys(errors).forEach((errorKey) => {
       if (updatedInputs[errorKey] && errorKey === "jobLocation") {
         updatedInputs[errorKey].errorMessage = "Please enter job location";
-      } else if (updatedInputs[errorKey] && errorKey === "salary") {
-        updatedInputs[errorKey].errorMessage =
-          "Please provide positive integer";
       } else if (updatedInputs[errorKey]) {
         updatedInputs[errorKey].errorMessage = errors[errorKey];
       }
@@ -73,7 +67,8 @@ function PostJob() {
       data: {
         jobTitle: inputs.jobTitle.value,
         jobLocation: inputs.jobLocation.value,
-        salary: inputs.salary.value,
+        salaryFrom: inputs.salaryFrom.value,
+        salaryTo: inputs.salaryTo.value,
       },
       onSuccess: (validData) => postJob(validData),
       onError: (errors) => handleFormError(errors),
@@ -110,15 +105,29 @@ function PostJob() {
               onChose={handleInputChange}
             />
 
-            <CustomRangeSlider
+            <InputGroup
+              addon="to"
               label="Salary"
-              value={inputs.salary.value}
-              valueKey="salary"
-              errorMessage={inputs.salary.errorMessage}
-              min={POST_JOB.SALARY_RANGE.MIN}
-              max={POST_JOB.SALARY_RANGE.MAX}
-              isRequired
               onChange={handleInputChange}
+              isRequired
+              inputs={[
+                {
+                  placeholder: "Salary from",
+                  value: inputs.salaryFrom.value,
+                  valueKey: "salaryFrom",
+                  errorMessage: inputs.salaryFrom.errorMessage,
+                  name: "salaryFrom",
+                  type: "number",
+                },
+                {
+                  placeholder: "Salary to",
+                  value: inputs.salaryTo.value,
+                  valueKey: "salaryTo",
+                  errorMessage: inputs.salaryTo.errorMessage,
+                  name: "salaryTo",
+                  type: "number",
+                },
+              ]}
             />
           </div>
 

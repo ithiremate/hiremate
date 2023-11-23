@@ -2,23 +2,48 @@
 @import "../../../styles/mixins.scss";
 
 .container {
-  width: 100%;
-  max-width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+}
 
-  * {
-    flex-shrink: 0;
+.label {
+  @include font-lg;
+
+  &_light {
+    color: $text-primary-light;
+  }
+
+  &_dark {
+    color: $text-primary-dark;
   }
 }
 
+.asterisk {
+  &_light {
+    color: $red-light;
+  }
+
+  &_dark {
+    color: $red-dark;
+  }
+}
+
+.fieldsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.fieldContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .field {
-  width: 100px;
+  width: 100%;
   height: 50px;
-  display: inline;
-  flex: 1;
-  // flex: 0 0 auto;
   padding: 0 14px;
   box-sizing: border-box;
   outline: 0;
@@ -35,6 +60,11 @@
     &::placeholder {
       color: rgba($color: $text-primary-light, $alpha: 0.6);
     }
+
+    &:read-only {
+      background: rgba($color: $text-primary-light, $alpha: 0.2);
+      cursor: not-allowed;
+    }
   }
 
   &_dark {
@@ -45,11 +75,28 @@
     &::placeholder {
       color: rgba($color: $text-primary-dark, $alpha: 0.6);
     }
+
+    &:read-only {
+      background: rgba($color: $text-primary-dark, $alpha: 0.2);
+      cursor: not-allowed;
+    }
+  }
+
+  &_error {
+    &_light {
+      color: $red-light;
+      border: 2px solid $red-light;
+    }
+
+    &_dark {
+      color: $red-dark;
+      border: 2px solid $red-dark;
+    }
   }
 }
 
 .addon {
-  height: 100%;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,5 +117,19 @@
     background: $background-dark-secondary;
     border-top: 2px solid $text-primary-dark;
     border-bottom: 2px solid $text-primary-dark;
+  }
+}
+
+.errorMessage {
+  display: inline-block;
+  height: 21px;
+  @include font-sm;
+
+  &_light {
+    color: $red-light;
+  }
+
+  &_dark {
+    color: $red-dark;
   }
 }

@@ -6,7 +6,6 @@ import { store } from "./store/store";
 
 import App from "./App";
 
-import "rsuite/dist/rsuite.min.css";
 import "./styles/index.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
