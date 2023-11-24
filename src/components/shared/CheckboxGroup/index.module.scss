@@ -1,0 +1,36 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.label {
+    @include font-lg;
+
+    &_light {
+        color: $text-primary-light;
+    }
+
+    &_dark {
+        color: $text-primary-dark;
+    }
+}
+
+.asterisk {
+    &_light {
+        color: $red-light;
+    }
+
+    &_dark {
+        color: $red-dark;
+    }
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

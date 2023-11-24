@@ -1,8 +1,9 @@
-const SALARY_RANGE = {
-  MIN: 1,
-  MAX: 10000,
+const EMPLOYMENT_TYPES = {
+  FULL_TIME: "fullTime",
+  PART_TIME: "partTime",
+  PROJECT: "project",
 };
 
-const POST_JOB = { SALARY_RANGE };
+const POST_JOB = { EMPLOYMENT_TYPES };
 
 export default POST_JOB;

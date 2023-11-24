@@ -4,7 +4,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
 }
 
 .label {
@@ -36,6 +36,7 @@
 }
 
 .fieldContainer {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;

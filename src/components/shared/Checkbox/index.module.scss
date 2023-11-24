@@ -1,0 +1,38 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    @include transition(color);
+
+    svg {
+        path {
+            @include transition(fill);
+        }
+    }
+
+    &_error {
+        &_light {
+            color: $red-light;
+
+            svg {
+                path {
+                    fill: $red-light;
+                }
+            }
+        }
+
+        &_dark {
+            color: $red-dark;
+
+            svg {
+                path {
+                    fill: $red-dark;
+                }
+            }
+        }
+    }
+}

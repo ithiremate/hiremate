@@ -17,6 +17,8 @@ import { ReactComponent as Menu } from "../../../assets/icons/menu.svg";
 import { ReactComponent as Cross } from "../../../assets/icons/cross.svg";
 import { ReactComponent as User } from "../../../assets/icons/user.svg";
 import { ReactComponent as Chevron } from "../../../assets/icons/chevron.svg";
+import { ReactComponent as Checked } from "../../../assets/icons/checked.svg";
+import { ReactComponent as Unchecked } from "../../../assets/icons/unchecked.svg";
 
 // SIDE MENU
 import { ReactComponent as Case } from "../../../assets/icons/case.svg";
@@ -43,6 +45,8 @@ function SvgIcon({ type, onClick, className, fill }) {
     cross: Cross,
     user: User,
     chevron: Chevron,
+    checked: Checked,
+    unchecked: Unchecked,
   };
 
   const SIDE_MENU = {

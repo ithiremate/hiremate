@@ -1,10 +1,12 @@
 import { useState } from "react";
 
+import POST_JOB from "../../../../utils/constants/postJob";
 import { validatePostJob } from "../../../../utils/validation";
 
 import Input from "../../../shared/Input";
 import LocationInput from "../../../shared/LocationInput";
 import InputGroup from "../../../shared/InputGroup";
+import CheckboxGroup from "../../../shared/CheckboxGroup";
 import Button from "../../../shared/Button";
 
 import styles from "./index.module.scss";
@@ -16,6 +18,12 @@ function PostJob() {
     jobLocation: { value: { display_name: "" }, errorMessage: "" },
     salaryFrom: { value: "", errorMessage: "" },
     salaryTo: { value: "", errorMessage: "" },
+    employmentType: {
+      [POST_JOB.EMPLOYMENT_TYPES.FULL_TIME]: false,
+      [POST_JOB.EMPLOYMENT_TYPES.PART_TIME]: false,
+      [POST_JOB.EMPLOYMENT_TYPES.PROJECT]: false,
+      errorMessage: "",
+    },
   });
 
   const postJob = async (validData) => {
@@ -46,6 +54,19 @@ function PostJob() {
     }));
   };
 
+  const handleCheckboxChange =
+    (objectKey) =>
+    ({ value, valueKey }) => {
+      setInputs((prev) => ({
+        ...prev,
+        [objectKey]: {
+          ...prev[objectKey],
+          [valueKey]: value,
+          errorMessage: "",
+        },
+      }));
+    };
+
   const handleFormError = (errors) => {
     const updatedInputs = structuredClone(inputs);
 
@@ -63,12 +84,21 @@ function PostJob() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const employmentType = [];
+
+    Object.values(POST_JOB.EMPLOYMENT_TYPES).forEach((type) => {
+      if (inputs.employmentType[type]) {
+        employmentType.push(type);
+      }
+    });
+
     validatePostJob({
       data: {
         jobTitle: inputs.jobTitle.value,
         jobLocation: inputs.jobLocation.value,
         salaryFrom: inputs.salaryFrom.value,
         salaryTo: inputs.salaryTo.value,
+        employmentType,
       },
       onSuccess: (validData) => postJob(validData),
       onError: (errors) => handleFormError(errors),
@@ -128,6 +158,33 @@ function PostJob() {
                   type: "number",
                 },
               ]}
+            />
+
+            <CheckboxGroup
+              label="Type of employment"
+              errorMessage={inputs.employmentType.errorMessage}
+              onChange={handleCheckboxChange("employmentType")}
+              inputs={[
+                {
+                  label: "Full-time",
+                  isChecked:
+                    inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.FULL_TIME],
+                  valueKey: POST_JOB.EMPLOYMENT_TYPES.FULL_TIME,
+                },
+                {
+                  label: "Part-time",
+                  isChecked:
+                    inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.PART_TIME],
+                  valueKey: POST_JOB.EMPLOYMENT_TYPES.PART_TIME,
+                },
+                {
+                  label: "Project",
+                  isChecked:
+                    inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.PROJECT],
+                  valueKey: POST_JOB.EMPLOYMENT_TYPES.PROJECT,
+                },
+              ]}
+              isRequired
             />
           </div>
 
