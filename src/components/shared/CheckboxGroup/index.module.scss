@@ -34,3 +34,17 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.errorMessage {
+    display: inline-block;
+    height: 21px;
+    @include font-sm;
+
+    &_light {
+        color: $red-light;
+    }
+
+    &_dark {
+        color: $red-dark;
+    }
+}

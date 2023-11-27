@@ -1,40 +1,27 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import classNames from "classnames";
 
-import SvgButton from "../SvgButton";
-
 import styles from "./index.module.scss";
 
-function Input({
+function TextArea({
   label,
   placeholder,
   value,
   valueKey,
   name,
-  type,
   errorMessage,
   isRequired,
   readOnly,
-  secured,
   onChange,
 }) {
   const { currentTheme } = useSelector((state) => state.theme);
-
-  const [inputType, setInputType] = useState(secured ? "password" : type);
 
   const id = nanoid();
 
   const handleChange = (e) => {
     onChange({ value: e.target.value, valueKey });
-  };
-
-  const handleIconClick = () => {
-    const nextInputType = inputType === "password" ? type : "password";
-
-    setInputType(nextInputType);
   };
 
   return (
@@ -48,30 +35,18 @@ function Input({
         )}
       </label>
 
-      <div className={styles.fieldContainer}>
-        <input
-          id={id}
-          type={inputType}
-          className={classNames(styles.field, styles[`field_${currentTheme}`], {
-            [styles[`field_error_${currentTheme}`]]: !!errorMessage,
-            [styles.field_with_icon]: secured,
-          })}
-          placeholder={placeholder}
-          value={value}
-          name={name}
-          readOnly={readOnly}
-          autoComplete={secured ? "off" : "on"}
-          onChange={handleChange}
-        />
-
-        {secured && (
-          <SvgButton
-            className={styles.icon}
-            icon={inputType === "password" ? "lock" : "unlock"}
-            onClick={handleIconClick}
-          />
-        )}
-      </div>
+      <textarea
+        id={id}
+        className={classNames(styles.field, styles[`field_${currentTheme}`], {
+          [styles[`field_error_${currentTheme}`]]: !!errorMessage,
+        })}
+        placeholder={placeholder}
+        value={value}
+        name={name}
+        rows={10}
+        readOnly={readOnly}
+        onChange={handleChange}
+      />
 
       <span
         className={classNames(
@@ -84,32 +59,28 @@ function Input({
   );
 }
 
-Input.propTypes = {
+TextArea.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,
   valueKey: PropTypes.string,
   name: PropTypes.string,
-  type: PropTypes.string,
   errorMessage: PropTypes.string,
   isRequired: PropTypes.bool,
   readOnly: PropTypes.bool,
-  secured: PropTypes.bool,
   onChange: PropTypes.func,
 };
 
-Input.defaultProps = {
+TextArea.defaultProps = {
   label: "",
   placeholder: "",
   value: "",
   valueKey: "",
   name: "",
-  type: "text",
   errorMessage: "",
   isRequired: false,
   readOnly: false,
-  secured: false,
   onChange: () => {},
 };
 
-export default Input;
+export default TextArea;

@@ -8,6 +8,7 @@ export const REQUIRED_ERRORS = {
   jobTitle: "Please enter job title",
   salaryFrom: "Please enter salary",
   salaryTo: "Please enter salary",
+  jobDescription: "Please enter description",
 };
 
 export const TOO_SHORT_ERRORS = {
@@ -22,4 +23,9 @@ export const NOT_EQUAL_ERRORS = {
 export const WRONG_FORMAT_ERRORS = {
   salaryFrom: "Please enter positive value",
   salaryTo: "Please enter positive value",
+};
+
+export const CONTENT_ERRORS = {
+  employmentType: "At least one must be chosen",
+  workNature: "At least one must be chosen",
 };

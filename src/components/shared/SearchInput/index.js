@@ -12,7 +12,7 @@ import LoadingIndicator from "../LoadingIndicator";
 
 import styles from "./index.module.scss";
 
-function LocationInput({
+function SearchInput({
   label,
   placeholder,
   value,
@@ -21,6 +21,7 @@ function LocationInput({
   errorMessage,
   isRequired,
   readOnly,
+  searchType,
   onChange,
   onChose,
 }) {
@@ -43,20 +44,22 @@ function LocationInput({
   const initSearch = () => {
     setIsLoading(true);
 
-    let locations = [];
+    let searchResults = [];
 
     setTimeout(async () => {
-      locations = await searchLocation(value);
+      if (searchType === "location") {
+        searchResults = await searchLocation(value);
 
-      setResults(locations);
-      setIsLoading(false);
+        setResults(searchResults);
+        setIsLoading(false);
+      }
     }, 1000);
   };
 
-  const handleLocationClick = (location) => () => {
-    setChosenResult(location);
+  const handleResultClick = (item) => () => {
+    setChosenResult(item);
     setResults([]);
-    onChose({ value: location, valueKey });
+    onChose({ value: item, valueKey });
   };
 
   useEffect(() => {
@@ -97,17 +100,17 @@ function LocationInput({
             reverted
           />
         ) : (
-          results.map((location, index) => {
-            const { place_id, display_name } = location;
+          results.map((item, index) => {
+            const { place_id, display_name } = item;
             const isLast = index === results.length - 1;
 
             return (
               <Fragment key={place_id}>
                 <div
-                  onClick={handleLocationClick(location)}
+                  onClick={handleResultClick(item)}
                   className={classNames(
-                    styles.location,
-                    styles[`location_${currentTheme}`],
+                    styles.item,
+                    styles[`item_${currentTheme}`],
                   )}>
                   <p className={styles.name}>{display_name}</p>
                 </div>
@@ -129,7 +132,7 @@ function LocationInput({
   );
 }
 
-LocationInput.propTypes = {
+SearchInput.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,
@@ -138,11 +141,12 @@ LocationInput.propTypes = {
   errorMessage: PropTypes.string,
   isRequired: PropTypes.bool,
   readOnly: PropTypes.bool,
+  searchType: PropTypes.oneOf(["location"]),
   onChange: PropTypes.func,
   onChose: PropTypes.func,
 };
 
-LocationInput.defaultProps = {
+SearchInput.defaultProps = {
   label: "",
   placeholder: "",
   value: "",
@@ -151,8 +155,9 @@ LocationInput.defaultProps = {
   errorMessage: "",
   isRequired: false,
   readOnly: false,
+  searchType: "location",
   onChange: () => {},
   onChose: () => {},
 };
 
-export default LocationInput;
+export default SearchInput;

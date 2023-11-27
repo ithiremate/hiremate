@@ -5,7 +5,7 @@ import { updateUserFieldInDb } from "../../../../../store/actions/userActions";
 import { validateTalentWizard } from "../../../../../utils/validation";
 
 import Input from "../../../../shared/Input";
-import LocationInput from "../../../../shared/LocationInput";
+import SearchInput from "../../../../shared/SearchInput";
 import Button from "../../../../shared/Button";
 
 import styles from "./index.module.scss";
@@ -76,7 +76,7 @@ function CustomerForm() {
 
   return (
     <form onSubmit={handleSubmit()} className={styles.form}>
-      <LocationInput
+      <SearchInput
         label="Location"
         placeholder="Enter location"
         value={inputs.location.value.display_name}

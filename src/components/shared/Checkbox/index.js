@@ -8,7 +8,14 @@ import SvgIcon from "../SvgIcon";
 
 import styles from "./index.module.scss";
 
-function Checkbox({ label, isChecked, valueKey, errorMessage, onChange }) {
+function Checkbox({
+  label,
+  isChecked,
+  valueKey,
+  isError,
+  errorMessage,
+  onChange,
+}) {
   const { currentTheme } = useSelector((state) => state.theme);
 
   const [value, setValue] = useState(isChecked);
@@ -25,7 +32,7 @@ function Checkbox({ label, isChecked, valueKey, errorMessage, onChange }) {
       <label
         htmlFor={id}
         className={classNames(styles.label, {
-          [styles[`label_error_${currentTheme}`]]: errorMessage,
+          [styles[`label_error_${currentTheme}`]]: errorMessage || isError,
         })}>
         <SvgIcon type={value ? "checked" : "unchecked"} />
         {label}
@@ -46,6 +53,7 @@ Checkbox.propTypes = {
   label: PropTypes.string,
   isChecked: PropTypes.bool,
   valueKey: PropTypes.string,
+  isError: PropTypes.bool,
   errorMessage: PropTypes.string,
   onChange: PropTypes.func,
 };
@@ -54,6 +62,7 @@ Checkbox.defaultProps = {
   label: "",
   isChecked: false,
   valueKey: "",
+  isError: false,
   errorMessage: "",
   onChange: () => {},
 };

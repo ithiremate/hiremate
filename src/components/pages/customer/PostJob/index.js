@@ -4,9 +4,10 @@ import POST_JOB from "../../../../utils/constants/postJob";
 import { validatePostJob } from "../../../../utils/validation";
 
 import Input from "../../../shared/Input";
-import LocationInput from "../../../shared/LocationInput";
+import SearchInput from "../../../shared/SearchInput";
 import InputGroup from "../../../shared/InputGroup";
 import CheckboxGroup from "../../../shared/CheckboxGroup";
+import TextArea from "../../../shared/TextArea";
 import Button from "../../../shared/Button";
 
 import styles from "./index.module.scss";
@@ -24,6 +25,13 @@ function PostJob() {
       [POST_JOB.EMPLOYMENT_TYPES.PROJECT]: false,
       errorMessage: "",
     },
+    workNature: {
+      [POST_JOB.WORK_NATURE_TYPES.ON_SITE]: false,
+      [POST_JOB.WORK_NATURE_TYPES.REMOTE]: false,
+      [POST_JOB.WORK_NATURE_TYPES.HYBRID]: false,
+      errorMessage: "",
+    },
+    jobDescription: { value: "", errorMessage: "" },
   });
 
   const postJob = async (validData) => {
@@ -85,6 +93,7 @@ function PostJob() {
     e.preventDefault();
 
     const employmentType = [];
+    const workNature = [];
 
     Object.values(POST_JOB.EMPLOYMENT_TYPES).forEach((type) => {
       if (inputs.employmentType[type]) {
@@ -92,13 +101,21 @@ function PostJob() {
       }
     });
 
+    Object.values(POST_JOB.WORK_NATURE_TYPES).forEach((type) => {
+      if (inputs.workNature[type]) {
+        workNature.push(type);
+      }
+    });
+
     validatePostJob({
       data: {
         jobTitle: inputs.jobTitle.value,
+        jobDescription: inputs.jobDescription.value,
         jobLocation: inputs.jobLocation.value,
         salaryFrom: inputs.salaryFrom.value,
         salaryTo: inputs.salaryTo.value,
         employmentType,
+        workNature,
       },
       onSuccess: (validData) => postJob(validData),
       onError: (errors) => handleFormError(errors),
@@ -123,7 +140,7 @@ function PostJob() {
               onChange={handleInputChange}
             />
 
-            <LocationInput
+            <SearchInput
               label="Location"
               placeholder="Job Location"
               value={inputs.jobLocation.value.display_name}
@@ -160,30 +177,75 @@ function PostJob() {
               ]}
             />
 
-            <CheckboxGroup
-              label="Type of employment"
-              errorMessage={inputs.employmentType.errorMessage}
-              onChange={handleCheckboxChange("employmentType")}
-              inputs={[
-                {
-                  label: "Full-time",
-                  isChecked:
-                    inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.FULL_TIME],
-                  valueKey: POST_JOB.EMPLOYMENT_TYPES.FULL_TIME,
-                },
-                {
-                  label: "Part-time",
-                  isChecked:
-                    inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.PART_TIME],
-                  valueKey: POST_JOB.EMPLOYMENT_TYPES.PART_TIME,
-                },
-                {
-                  label: "Project",
-                  isChecked:
-                    inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.PROJECT],
-                  valueKey: POST_JOB.EMPLOYMENT_TYPES.PROJECT,
-                },
-              ]}
+            <div className={styles.doubleRows}>
+              <CheckboxGroup
+                label="Type of employment"
+                isError={!!inputs.employmentType.errorMessage}
+                errorMessage={inputs.employmentType.errorMessage}
+                onChange={handleCheckboxChange("employmentType")}
+                inputs={[
+                  {
+                    label: "Full-time",
+                    isChecked:
+                      inputs.employmentType[
+                        POST_JOB.EMPLOYMENT_TYPES.FULL_TIME
+                      ],
+                    valueKey: POST_JOB.EMPLOYMENT_TYPES.FULL_TIME,
+                  },
+                  {
+                    label: "Part-time",
+                    isChecked:
+                      inputs.employmentType[
+                        POST_JOB.EMPLOYMENT_TYPES.PART_TIME
+                      ],
+                    valueKey: POST_JOB.EMPLOYMENT_TYPES.PART_TIME,
+                  },
+                  {
+                    label: "Project",
+                    isChecked:
+                      inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.PROJECT],
+                    valueKey: POST_JOB.EMPLOYMENT_TYPES.PROJECT,
+                  },
+                ]}
+                isRequired
+              />
+
+              <CheckboxGroup
+                label="Nature of work"
+                isError={!!inputs.workNature.errorMessage}
+                errorMessage={inputs.workNature.errorMessage}
+                onChange={handleCheckboxChange("workNature")}
+                inputs={[
+                  {
+                    label: "On-site",
+                    isChecked:
+                      inputs.workNature[POST_JOB.WORK_NATURE_TYPES.ON_SITE],
+                    valueKey: POST_JOB.WORK_NATURE_TYPES.ON_SITE,
+                  },
+                  {
+                    label: "Remote",
+                    isChecked:
+                      inputs.workNature[POST_JOB.WORK_NATURE_TYPES.REMOTE],
+                    valueKey: POST_JOB.WORK_NATURE_TYPES.REMOTE,
+                  },
+                  {
+                    label: "Hybrid",
+                    isChecked:
+                      inputs.workNature[POST_JOB.WORK_NATURE_TYPES.HYBRID],
+                    valueKey: POST_JOB.WORK_NATURE_TYPES.HYBRID,
+                  },
+                ]}
+                isRequired
+              />
+            </div>
+
+            <TextArea
+              label="Description"
+              placeholder="Job Description"
+              value={inputs.jobDescription.value}
+              valueKey="jobDescription"
+              errorMessage={inputs.jobDescription.errorMessage}
+              onChange={handleInputChange}
               isRequired
             />
           </div>

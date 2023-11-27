@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
@@ -6,7 +5,14 @@ import classNames from "classnames";
 import styles from "./index.module.scss";
 import Checkbox from "../Checkbox";
 
-function CheckboxGroup({ label, isRequired, errorMessage, onChange, inputs }) {
+function CheckboxGroup({
+  label,
+  isRequired,
+  isError,
+  errorMessage,
+  onChange,
+  inputs,
+}) {
   const { currentTheme } = useSelector((state) => state.theme);
 
   return (
@@ -28,12 +34,20 @@ function CheckboxGroup({ label, isRequired, errorMessage, onChange, inputs }) {
               key={valueKey}
               label={inputLabel}
               isChecked={isChecked}
-              errorMessage={errorMessage}
+              isError={isError}
               onChange={() => onChange({ value: !isChecked, valueKey })}
             />
           );
         })}
       </div>
+
+      <span
+        className={classNames(
+          styles.errorMessage,
+          styles[`errorMessage_${currentTheme}`],
+        )}>
+        {errorMessage}
+      </span>
     </div>
   );
 }
@@ -41,6 +55,7 @@ function CheckboxGroup({ label, isRequired, errorMessage, onChange, inputs }) {
 CheckboxGroup.propTypes = {
   label: PropTypes.string,
   isRequired: PropTypes.bool,
+  isError: PropTypes.bool,
   errorMessage: PropTypes.string,
   onChange: PropTypes.func,
   inputs: PropTypes.arrayOf(
@@ -55,6 +70,7 @@ CheckboxGroup.propTypes = {
 CheckboxGroup.defaultProps = {
   label: "",
   isRequired: false,
+  isError: false,
   errorMessage: "",
   onChange: () => {},
   inputs: [

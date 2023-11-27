@@ -3,6 +3,23 @@
 
 * {
   font-family: "Titillium Web", sans-serif;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
 
 html,
@@ -41,46 +58,10 @@ span {
   &_light {
     color: $text-primary-light;
     background: $background-light;
-
-    * {
-      &::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: $background-light-secondary;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background: rgba($color: $background-dark-secondary, $alpha: 0.8);
-      }
-
-      &::-webkit-scrollbar-thumb:hover {
-        background: $background-dark-secondary;
-      }
-    }
   }
 
   &_dark {
     color: $text-primary-dark;
     background: $background-dark;
-
-    * {
-      &::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: $background-dark-secondary;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background: rgba($color: $background-light-secondary, $alpha: 0.8);
-      }
-
-      &::-webkit-scrollbar-thumb:hover {
-        background: $background-light-secondary;
-      }
-    }
   }
 }

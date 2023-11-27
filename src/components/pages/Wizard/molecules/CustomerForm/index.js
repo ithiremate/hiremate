@@ -5,7 +5,7 @@ import { updateUserFieldInDb } from "../../../../../store/actions/userActions";
 import { validateCustomerWizard } from "../../../../../utils/validation";
 
 import Input from "../../../../shared/Input";
-import LocationInput from "../../../../shared/LocationInput";
+import SearchInput from "../../../../shared/SearchInput";
 import Button from "../../../../shared/Button";
 
 import styles from "./index.module.scss";
@@ -89,7 +89,7 @@ function CustomerForm() {
         onChange={handleInputChange}
       />
 
-      <LocationInput
+      <SearchInput
         label="Company Location"
         placeholder="Enter Company location"
         value={inputs.location.value.display_name}

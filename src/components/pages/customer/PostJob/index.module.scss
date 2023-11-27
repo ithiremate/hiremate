@@ -34,22 +34,20 @@
     gap: 10px;
 }
 
-@include mobile-lg {
-    .inputs {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
-    }
+.doubleRows {
+    display: grid;
+    gap: 10px;
 }
 
 @include laptop {
     .inputs {
-        grid-template-columns: repeat(3, 1fr);
+        width: 50%;
     }
 }
 
 @include desktop {
-    .inputs {
-        grid-template-columns: repeat(4, 1fr);
+    .doubleRows {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
     }
 }

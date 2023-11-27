@@ -8,6 +8,7 @@ import {
   REQUIRED_ERRORS,
   TOO_SHORT_ERRORS,
   WRONG_FORMAT_ERRORS,
+  CONTENT_ERRORS,
 } from "./errors";
 
 import rules from "./rules";
@@ -68,6 +69,12 @@ export function decodeErrorCode(code, field = "") {
 
     case "NOT_POSITIVE_INTEGER": {
       const errorMessage = field && WRONG_FORMAT_ERRORS[field];
+
+      return errorMessage || "Value is invalid";
+    }
+
+    case "CANNOT_BE_EMPTY": {
+      const errorMessage = field && CONTENT_ERRORS[field];
 
       return errorMessage || "Value is invalid";
     }
