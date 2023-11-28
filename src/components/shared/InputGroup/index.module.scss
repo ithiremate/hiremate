@@ -56,7 +56,16 @@
   &_light {
     color: $text-primary-light;
     background: $background-light;
-    border: 2px solid $text-primary-light;
+    border-top: 2px solid $text-primary-light;
+    border-bottom: 2px solid $text-primary-light;
+
+    &_first {
+      border-left: 2px solid $text-primary-light;
+    }
+
+    &_last {
+      border-right: 2px solid $text-primary-light;
+    }
 
     &::placeholder {
       color: rgba($color: $text-primary-light, $alpha: 0.6);
@@ -71,7 +80,16 @@
   &_dark {
     color: $text-primary-dark;
     background: $background-dark;
-    border: 2px solid $text-primary-dark;
+    border-top: 2px solid $text-primary-dark;
+    border-bottom: 2px solid $text-primary-dark;
+
+    &_first {
+      border-left: 2px solid $text-primary-dark;
+    }
+
+    &_last {
+      border-right: 2px solid $text-primary-dark;
+    }
 
     &::placeholder {
       color: rgba($color: $text-primary-dark, $alpha: 0.6);
@@ -86,12 +104,12 @@
   &_error {
     &_light {
       color: $red-light;
-      border: 2px solid $red-light;
+      border-color: $red-light;
     }
 
     &_dark {
       color: $red-dark;
-      border: 2px solid $red-dark;
+      border-color: $red-dark;
     }
   }
 }
@@ -109,15 +127,21 @@
   &_light {
     color: $text-primary-light;
     background: $background-light-secondary;
-    border-top: 2px solid $text-primary-light;
-    border-bottom: 2px solid $text-primary-light;
+    border: 2px solid $text-primary-light;
+
+    &_error {
+      border-color: $red-light;
+    }
   }
 
   &_dark {
     color: $text-primary-dark;
     background: $background-dark-secondary;
-    border-top: 2px solid $text-primary-dark;
-    border-bottom: 2px solid $text-primary-dark;
+    border: 2px solid $text-primary-dark;
+
+    &_error {
+      border-color: $red-dark;
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import classNames from "classnames";
@@ -8,6 +8,11 @@ import styles from "./index.module.scss";
 
 function InputGroup({ addon, label, isRequired, className, onChange, inputs }) {
   const { currentTheme } = useSelector((state) => state.theme);
+
+  const isError = useMemo(
+    () => inputs.some((input) => !!input.errorMessage),
+    [inputs],
+  );
 
   const handleChange = (valueKey) => (e) => {
     onChange({ value: e.target.value, valueKey });
@@ -43,6 +48,7 @@ function InputGroup({ addon, label, isRequired, className, onChange, inputs }) {
                   className={classNames(
                     styles.addon,
                     styles[`addon_${currentTheme}`],
+                    { [styles[`addon_${currentTheme}_error`]]: isError },
                   )}>
                   <span>{addon}</span>
                 </div>
@@ -54,6 +60,9 @@ function InputGroup({ addon, label, isRequired, className, onChange, inputs }) {
                     styles.field,
                     styles[`field_${currentTheme}`],
                     {
+                      [styles[`field_${currentTheme}_first`]]: index === 0,
+                      [styles[`field_${currentTheme}_last`]]:
+                        index === inputs.length - 1,
                       [styles[`field_error_${currentTheme}`]]: !!errorMessage,
                     },
                   )}
