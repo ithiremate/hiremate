@@ -4,11 +4,12 @@ import EmsiSessionAPI from "./EmsiSession";
 import UserAPI from "./User";
 import LocationAPI from "./Location";
 import JobsAPI from "./Jobs";
+import SkillsAPI from "./Skills";
 
 export default function apiConstruct({
   locationApiUrl,
   emsiAuthUrl,
-  emsiApiUrl,
+  emsiSkillsApiUrl,
   onError,
 }) {
   const firebaseApiClient = new ApiClient({
@@ -26,7 +27,7 @@ export default function apiConstruct({
   });
 
   const skillsApiClient = new ApiClient({
-    apiUrl: emsiApiUrl,
+    apiUrl: emsiSkillsApiUrl,
     onError,
   });
 
@@ -40,5 +41,6 @@ export default function apiConstruct({
     user: new UserAPI({ firebaseApiClient }),
     location: new LocationAPI({ locationApiClient }),
     jobs: new JobsAPI({ firebaseApiClient }),
+    skills: new SkillsAPI({ skillsApiClient }),
   };
 }

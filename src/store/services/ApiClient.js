@@ -48,8 +48,11 @@ export default class ApiClient {
     const options = {
       method,
       signal,
+      headers: {
+        ...(this.token ? { Authorization: `Bearer ${this.token}` } : {}),
+        ...(headers ? { ...headers } : {}),
+      },
       ...(body ? { body } : {}),
-      ...(headers ? { headers } : {}),
     };
 
     const timeoutRef = setTimeout(

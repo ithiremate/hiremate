@@ -9,7 +9,7 @@ export const searchLocation = async (query) => {
 
     return locations;
   } catch (error) {
-    console.error("createUserInDb error: ", error);
+    console.error("searchLocation error: ", error);
 
     throw error;
   }
