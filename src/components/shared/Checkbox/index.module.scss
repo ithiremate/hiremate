@@ -2,10 +2,12 @@
 @import "../../../styles/mixins.scss";
 
 .label {
+    width: min-content;
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    white-space: nowrap;
     @include transition(color);
 
     svg {
