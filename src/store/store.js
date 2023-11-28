@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import theme from "./slices/themeSlice";
 import session from "./slices/sessionSlice";
+import emsiSession from "./slices/emsiSessionSlice";
 import toast from "./slices/toastSlice";
 import user from "./slices/userSlice";
 import jobs from "./slices/jobsSlice";
@@ -9,6 +10,7 @@ import jobs from "./slices/jobsSlice";
 const reducers = {
   theme,
   session,
+  emsiSession,
   toast,
   user,
   jobs,

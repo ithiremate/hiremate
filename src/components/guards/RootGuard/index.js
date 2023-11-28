@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 
 import ThemeGuard from "../ThemeGuard";
 import SessionGuard from "../SessionGuard";
+import EmsiSessionGuard from "../EmsiSessionGuard";
 import LoadingContainer from "../../containers/LoadingContainer";
 
 function RootGuard({ children }) {
@@ -15,9 +16,11 @@ function RootGuard({ children }) {
   return (
     <ThemeGuard>
       <SessionGuard>
-        <LoadingContainer isLoading={!isAppInitialized} showLogo>
-          {children}
-        </LoadingContainer>
+        <EmsiSessionGuard>
+          <LoadingContainer isLoading={!isAppInitialized} showLogo>
+            {children}
+          </LoadingContainer>
+        </EmsiSessionGuard>
       </SessionGuard>
     </ThemeGuard>
   );

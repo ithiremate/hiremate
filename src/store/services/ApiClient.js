@@ -3,8 +3,8 @@ import firebase from "../../singletons/firebase";
 const TIMEOUT_ERROR_DURATION = 25000;
 
 export default class ApiClient {
-  constructor({ locationApiUrl, onError = () => {} }) {
-    this.locationApiUrl = locationApiUrl;
+  constructor({ apiUrl, onError = () => {} }) {
+    this.apiUrl = apiUrl;
     this.onError = onError;
   }
 
@@ -13,6 +13,19 @@ export default class ApiClient {
       url,
       method: "GET",
     });
+  }
+
+  async post(url, body, headers) {
+    return this.fetchRequest({
+      url,
+      body,
+      headers,
+      method: "POST",
+    });
+  }
+
+  setToken(token) {
+    this.token = token;
   }
 
   async firebaseRequest({ query, payload = {} }) {
@@ -27,14 +40,16 @@ export default class ApiClient {
     }
   }
 
-  async fetchRequest({ url, method }) {
-    const requestUrl = `${this.locationApiUrl}/${url}`;
+  async fetchRequest({ url, body, headers, method }) {
+    const requestUrl = `${this.apiUrl}${url}`;
     const controller = new AbortController();
     const { signal } = controller;
 
     const options = {
       method,
       signal,
+      ...(body ? { body } : {}),
+      ...(headers ? { headers } : {}),
     };
 
     const timeoutRef = setTimeout(
