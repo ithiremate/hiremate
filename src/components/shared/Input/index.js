@@ -20,6 +20,7 @@ function Input({
   readOnly,
   secured,
   onChange,
+  onFocus,
 }) {
   const { currentTheme } = useSelector((state) => state.theme);
 
@@ -62,6 +63,7 @@ function Input({
           readOnly={readOnly}
           autoComplete={secured ? "off" : "on"}
           onChange={handleChange}
+          onFocus={onFocus}
         />
 
         {secured && (
@@ -96,6 +98,7 @@ Input.propTypes = {
   readOnly: PropTypes.bool,
   secured: PropTypes.bool,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -110,6 +113,7 @@ Input.defaultProps = {
   readOnly: false,
   secured: false,
   onChange: () => {},
+  onFocus: () => {},
 };
 
 export default Input;

@@ -11,12 +11,14 @@ import TextArea from "../../../shared/TextArea";
 import Button from "../../../shared/Button";
 
 import styles from "./index.module.scss";
+import useSearch from "../../../../hooks/useSearch";
 
 function PostJob() {
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     jobTitle: { value: "", errorMessage: "" },
     jobLocation: { value: { display_name: "" }, errorMessage: "" },
+    jobSkills: { value: { name: "" }, chosen: [], errorMessage: "" },
     salaryFrom: { value: "", errorMessage: "" },
     salaryTo: { value: "", errorMessage: "" },
     employmentType: {
@@ -33,6 +35,8 @@ function PostJob() {
     },
     jobDescription: { value: "", errorMessage: "" },
   });
+
+  const { locations, skills, searchHandlers, resetHandlers } = useSearch();
 
   const postJob = async (validData) => {
     console.log(validData);
@@ -60,6 +64,21 @@ function PostJob() {
         value: { display_name: value },
       },
     }));
+
+    searchHandlers.locationSearch(value);
+  };
+
+  const handleSkillsChange = ({ value }) => {
+    setInputs((prev) => ({
+      ...prev,
+      jobSkills: {
+        ...prev.jobSkills,
+        errorMessage: "",
+        value: { name: value },
+      },
+    }));
+
+    searchHandlers.skillsSearch(value);
   };
 
   const handleCheckboxChange =
@@ -74,6 +93,18 @@ function PostJob() {
         },
       }));
     };
+
+  const handleLocationChose = ({ value, valueKey }) => {
+    handleInputChange({ value, valueKey });
+    resetHandlers.locationReset();
+  };
+
+  const handleSkillsChose = ({ items, value, valueKey }) => {
+    setInputs((prev) => ({
+      ...prev,
+      [valueKey]: { errorMessage: "", value, chosen: items },
+    }));
+  };
 
   const handleFormError = (errors) => {
     const updatedInputs = structuredClone(inputs);
@@ -145,11 +176,28 @@ function PostJob() {
               placeholder="Job Location"
               value={inputs.jobLocation.value.display_name}
               valueKey="jobLocation"
-              name="jobLocation"
+              displayKey="display_name"
               errorMessage={inputs.jobLocation.errorMessage}
+              results={locations.results}
+              isLoading={locations.isLoading}
               isRequired
               onChange={handleLocationChange}
-              onChose={handleInputChange}
+              onChose={handleLocationChose}
+            />
+
+            <SearchInput
+              label="Skills"
+              placeholder="Required Skills"
+              value={inputs.jobSkills.value.name}
+              valueKey="jobSkills"
+              displayKey="name"
+              errorMessage={inputs.jobSkills.errorMessage}
+              results={skills.results}
+              isLoading={skills.isLoading}
+              isRequired
+              isMultiple
+              onChange={handleSkillsChange}
+              onChose={handleSkillsChose}
             />
 
             <InputGroup

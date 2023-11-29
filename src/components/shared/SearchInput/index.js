@@ -1,14 +1,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { Fragment, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
+import { nanoid } from "@reduxjs/toolkit";
 
-import { searchLocation } from "../../../store/actions/locationActions";
+import useClickOutside from "../../../hooks/useClickOutside";
 
-import Input from "../Input";
 import LoadingIndicator from "../LoadingIndicator";
+import SvgIcon from "../SvgIcon";
 
 import styles from "./index.module.scss";
 
@@ -17,117 +18,194 @@ function SearchInput({
   placeholder,
   value,
   valueKey,
+  displayKey,
   name,
   errorMessage,
+  results,
   isRequired,
+  isMultiple,
+  isLoading,
   readOnly,
-  searchType,
   onChange,
   onChose,
 }) {
   const { currentTheme } = useSelector((state) => state.theme);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState([]);
-  const [chosenResult, setChosenResult] = useState(null);
+  const [internalValue, setInternalValue] = useState(value);
+  const [internalResults, setInternalResults] = useState(results);
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
+  const [chosenItems, setChosenItems] = useState([]);
 
-  const timeoutRef = useRef(null);
+  const id = nanoid();
 
-  const handleInputChange = ({
-    value: inputValue,
-    valueKey: inputValueKey,
-  }) => {
-    setChosenResult(null);
-    onChange({ value: inputValue, valueKey: inputValueKey });
+  const resultsRef = useRef(null);
+  const timeoutIdRef = useRef(null);
+
+  const handleChange = (e) => {
+    clearTimeout(timeoutIdRef.current);
+
+    setInternalValue(e.target.value);
+
+    timeoutIdRef.current = setTimeout(() => {
+      onChange({ value: e.target.value, valueKey });
+    }, 500);
   };
 
-  const initSearch = () => {
-    setIsLoading(true);
+  const handleChose = (item) => () => {
+    if (isMultiple) {
+      const newChosenItems = [...chosenItems, item];
 
-    let searchResults = [];
-
-    setTimeout(async () => {
-      if (searchType === "location") {
-        searchResults = await searchLocation(value);
-
-        setResults(searchResults);
-        setIsLoading(false);
-      }
-    }, 1000);
+      setChosenItems(newChosenItems);
+      onChose({ items: newChosenItems, value: item, valueKey });
+    } else {
+      onChose({ value: item, valueKey });
+    }
   };
 
-  const handleResultClick = (item) => () => {
-    setChosenResult(item);
-    setResults([]);
-    onChose({ value: item, valueKey });
+  const handleFocus = () => {
+    if (!internalResults.length) {
+      return;
+    }
+
+    setIsResultsVisible(true);
   };
+
+  const handleClickOutside = () => {
+    if (isLoading) {
+      return;
+    }
+
+    setIsResultsVisible(false);
+  };
+
+  const handleRemoveChosen = (item) => () => {
+    const newChosenItems = chosenItems.filter(
+      (el) => el[displayKey] !== item[displayKey],
+    );
+
+    setChosenItems(newChosenItems);
+  };
+
+  useClickOutside(resultsRef, handleClickOutside);
 
   useEffect(() => {
-    if (value && !chosenResult) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(initSearch, 500);
-    } else {
-      setResults([]);
-    }
+    setInternalValue(value);
   }, [value]);
 
+  useEffect(() => {
+    if (isLoading) {
+      setIsResultsVisible(true);
+    }
+
+    if (!isLoading && !results.length) {
+      setIsResultsVisible(false);
+    }
+  }, [isLoading, results]);
+
+  useEffect(() => {
+    const chosenDisplayKeys = chosenItems.map((el) => el[displayKey]);
+    const filteredResults = results.filter(
+      (el) => !chosenDisplayKeys.includes(el[displayKey]),
+    );
+
+    setInternalResults(filteredResults);
+  }, [results, chosenItems]);
+
   return (
-    <div className={styles.container}>
-      <Input
-        label={label}
-        placeholder={placeholder}
-        value={value}
-        valueKey={valueKey}
-        name={name}
-        errorMessage={errorMessage}
-        isRequired={isRequired}
-        readOnly={readOnly}
-        onChange={handleInputChange}
-      />
+    <div ref={resultsRef} className={styles.container}>
+      <label
+        htmlFor={id}
+        className={classNames(styles.label, styles[`label_${currentTheme}`])}>
+        {label}
+        {isRequired && (
+          <span className={styles[`asterisk_${currentTheme}`]}>*</span>
+        )}
+      </label>
 
       <div
         className={classNames(
-          styles.results,
-          styles[`results_${currentTheme}`],
-          { [styles.results_loading]: isLoading },
-          { [styles.results_visible]: isLoading || results.length },
+          styles.fieldContainer,
+          styles[`fieldContainer_${currentTheme}`],
+          {
+            [styles[`fieldContainer_error_${currentTheme}`]]: !!errorMessage,
+          },
         )}>
-        {isLoading ? (
-          <LoadingIndicator
-            className={styles.loader}
-            width={20}
-            height={20}
-            reverted
-          />
-        ) : (
-          results.map((item, index) => {
-            const { place_id, display_name } = item;
-            const isLast = index === results.length - 1;
-
-            return (
-              <Fragment key={place_id}>
+        {isMultiple && !!chosenItems.length && (
+          <div className={styles.chosenItems}>
+            {chosenItems.map((chosen) => {
+              return (
                 <div
-                  onClick={handleResultClick(item)}
+                  key={nanoid()}
+                  className={classNames(
+                    styles.chosenItem,
+                    styles[`chosenItem_${currentTheme}`],
+                  )}>
+                  <p>{chosen[displayKey]}</p>
+
+                  <SvgIcon
+                    type="cross"
+                    onClick={handleRemoveChosen(chosen)}
+                    className={classNames(
+                      styles.closeIcon,
+                      styles[`closeIcon_${currentTheme}`],
+                    )}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <input
+          id={id}
+          className={classNames(styles.field, styles[`field_${currentTheme}`])}
+          placeholder={placeholder}
+          value={internalValue}
+          name={name}
+          readOnly={readOnly}
+          onChange={handleChange}
+          onFocus={handleFocus}
+        />
+
+        <div
+          className={classNames(
+            styles.results,
+            styles[`results_${currentTheme}`],
+            {
+              [styles.results_visible]: isResultsVisible,
+            },
+          )}>
+          {isLoading ? (
+            <LoadingIndicator
+              width={24}
+              height={24}
+              className={styles.loader}
+            />
+          ) : (
+            internalResults.map((item) => {
+              return (
+                <div
+                  key={nanoid()}
+                  onClick={handleChose(item)}
                   className={classNames(
                     styles.item,
                     styles[`item_${currentTheme}`],
                   )}>
-                  <p className={styles.name}>{display_name}</p>
+                  <p>{item[displayKey]}</p>
                 </div>
-
-                {!isLast && (
-                  <div
-                    className={classNames(
-                      styles.separator,
-                      styles[`separator_${currentTheme}`],
-                    )}
-                  />
-                )}
-              </Fragment>
-            );
-          })
-        )}
+              );
+            })
+          )}
+        </div>
       </div>
+
+      <span
+        className={classNames(
+          styles.errorMessage,
+          styles[`errorMessage_${currentTheme}`],
+        )}>
+        {errorMessage}
+      </span>
     </div>
   );
 }
@@ -137,11 +215,14 @@ SearchInput.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   valueKey: PropTypes.string,
+  displayKey: PropTypes.string,
   name: PropTypes.string,
   errorMessage: PropTypes.string,
+  results: PropTypes.arrayOf(PropTypes.shape({})),
   isRequired: PropTypes.bool,
+  isMultiple: PropTypes.bool,
+  isLoading: PropTypes.bool,
   readOnly: PropTypes.bool,
-  searchType: PropTypes.oneOf(["location"]),
   onChange: PropTypes.func,
   onChose: PropTypes.func,
 };
@@ -151,11 +232,14 @@ SearchInput.defaultProps = {
   placeholder: "",
   value: "",
   valueKey: "",
+  displayKey: "",
   name: "",
   errorMessage: "",
+  results: [],
   isRequired: false,
+  isMultiple: false,
+  isLoading: false,
   readOnly: false,
-  searchType: "location",
   onChange: () => {},
   onChose: () => {},
 };

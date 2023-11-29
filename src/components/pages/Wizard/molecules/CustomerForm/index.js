@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { updateUserFieldInDb } from "../../../../../store/actions/userActions";
+import useSearch from "../../../../../hooks/useSearch";
 import { validateCustomerWizard } from "../../../../../utils/validation";
+import { updateUserFieldInDb } from "../../../../../store/actions/userActions";
 
 import Input from "../../../../shared/Input";
 import SearchInput from "../../../../shared/SearchInput";
@@ -19,6 +20,8 @@ function CustomerForm() {
     location: { value: { display_name: "" }, errorMessage: "" },
     username: { value: "", errorMessage: "" },
   });
+
+  const { locations, searchHandlers, resetHandlers } = useSearch();
 
   const updateCompanyInfo = async (validData) => {
     setIsLoading(true);
@@ -46,6 +49,13 @@ function CustomerForm() {
         value: { display_name: value },
       },
     }));
+
+    searchHandlers.locationSearch(value);
+  };
+
+  const handleLocationChose = ({ value, valueKey }) => {
+    handleInputChange({ value, valueKey });
+    resetHandlers.locationReset();
   };
 
   const handleFormError = (errors) => {
@@ -94,11 +104,13 @@ function CustomerForm() {
         placeholder="Enter Company location"
         value={inputs.location.value.display_name}
         valueKey="location"
-        name="location"
+        displayKey="display_name"
         errorMessage={inputs.location.errorMessage}
+        results={locations.results}
+        isLoading={locations.isLoading}
         isRequired
         onChange={handleLocationChange}
-        onChose={handleInputChange}
+        onChose={handleLocationChose}
       />
 
       <Input

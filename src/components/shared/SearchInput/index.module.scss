@@ -2,75 +2,209 @@
 @import "../../../styles/mixins.scss";
 
 .container {
-  position: relative;
-}
-
-.results {
-  width: 100%;
-  max-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  top: 84px;
-  z-index: 1;
-  padding: 0 10px;
-  box-sizing: border-box;
-  @include transition(max-height, padding, opacity);
-  opacity: 0;
-  overflow-y: hidden;
+  gap: 10px;
+}
 
-  &_visible {
-    max-height: 200px;
-    padding: 0;
-    opacity: 1;
-    overflow-y: scroll;
-  }
+.label {
+  @include font-lg;
 
   &_light {
-    background: $background-dark;
+    color: $text-primary-light;
   }
 
   &_dark {
+    color: $text-primary-dark;
+  }
+}
+
+.asterisk {
+  &_light {
+    color: $red-light;
+  }
+
+  &_dark {
+    color: $red-dark;
+  }
+}
+
+.fieldContainer {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  position: relative;
+  @include transition(border, color);
+
+  &_with_icon {
+    padding-right: 48px;
+  }
+
+  &_light {
     background: $background-light;
+    border: 2px solid $text-primary-light;
+  }
+
+  &_dark {
+    background: $background-dark;
+    border: 2px solid $text-primary-dark;
+  }
+
+  &_error {
+    &_light {
+      color: $red-light;
+      border: 2px solid $red-light;
+    }
+
+    &_dark {
+      color: $red-dark;
+      border: 2px solid $red-dark;
+    }
+  }
+}
+
+.field {
+  height: 50px;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  padding: 0 14px;
+  box-sizing: border-box;
+  @include font-base;
+
+  &_light {
+    color: $text-primary-light;
+    background: $background-light;
+
+    &::placeholder {
+      color: rgba($color: $text-primary-light, $alpha: 0.6);
+    }
+  }
+
+  &_dark {
+    color: $text-primary-dark;
+    background: $background-dark;
+
+    &::placeholder {
+      color: rgba($color: $text-primary-dark, $alpha: 0.6);
+    }
   }
 }
 
 .loader {
-  margin: 20px 0;
+  margin: 24px 0;
+}
+
+.results {
+  width: calc(100% + 4px);
+  max-height: 0;
+  opacity: 0;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: -2px;
+  z-index: 1;
+  box-sizing: border-box;
+  @include transition(max-height, opacity);
+
+  &_light {
+    background: $background-light;
+    border: 2px solid $background-dark;
+    border-top-width: 0;
+  }
+
+  &_dark {
+    background: $background-dark;
+    border: 2px solid $background-light;
+    border-top-width: 0;
+  }
+
+  &_visible {
+    max-height: 200px;
+    opacity: 1;
+  }
 }
 
 .item {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  @include transition(color, background-color);
   cursor: pointer;
+  @include transition(background-color);
 
   &_light {
-    color: $text-primary-dark;
-
-    &:not(&:last-of-type) {
-      border-bottom: 2px solid $background-light;
-    }
-
-    &:hover:not(&:active) {
-      color: $text-primary-light;
-      background-color: $background-light;
+    &:hover {
+      background-color: $background-dark;
+      color: $text-primary-dark;
     }
   }
 
   &_dark {
+    &:hover {
+      background-color: $background-light;
+      color: $text-primary-light;
+    }
+  }
+}
+
+.chosenItems {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.chosenItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  box-sizing: border-box;
+
+  &_light {
+    background: $background-dark;
+    color: $text-primary-dark;
+  }
+
+  &_dark {
+    background: $background-light;
     color: $text-primary-light;
+  }
+}
 
-    &:not(&:last-of-type) {
-      border-bottom: 2px solid $background-dark;
-    }
+.closeIcon {
+  cursor: pointer;
 
-    &:hover:not(&:active) {
-      color: $text-primary-dark;
-      background-color: $background-dark;
+  &_light {
+    path {
+      fill: $background-light;
     }
+  }
+
+  &_dark {
+    path {
+      fill: $background-dark;
+    }
+  }
+}
+
+.errorMessage {
+  display: inline-block;
+  height: 21px;
+  @include font-sm;
+
+  &_light {
+    color: $red-light;
+  }
+
+  &_dark {
+    color: $red-dark;
   }
 }
