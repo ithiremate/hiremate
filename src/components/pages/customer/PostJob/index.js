@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import POST_JOB from "../../../../utils/constants/postJob";
+import useSearch from "../../../../hooks/useSearch";
 import { validatePostJob } from "../../../../utils/validation";
+import { postNewJob } from "../../../../store/actions/jobsActions";
 
 import Input from "../../../shared/Input";
 import SearchInput from "../../../shared/SearchInput";
@@ -11,41 +14,27 @@ import TextArea from "../../../shared/TextArea";
 import Button from "../../../shared/Button";
 
 import styles from "./index.module.scss";
-import useSearch from "../../../../hooks/useSearch";
 
 function PostJob() {
+  const dispatch = useDispatch();
+  const { dbUser } = useSelector((state) => state.user);
+
   const [isLoading, setIsLoading] = useState(false);
-  const [inputs, setInputs] = useState({
-    jobTitle: { value: "", errorMessage: "" },
-    jobLocation: { value: { display_name: "" }, errorMessage: "" },
-    jobSkills: { value: { name: "" }, chosen: [], errorMessage: "" },
-    salaryFrom: { value: "", errorMessage: "" },
-    salaryTo: { value: "", errorMessage: "" },
-    employmentType: {
-      [POST_JOB.EMPLOYMENT_TYPES.FULL_TIME]: false,
-      [POST_JOB.EMPLOYMENT_TYPES.PART_TIME]: false,
-      [POST_JOB.EMPLOYMENT_TYPES.PROJECT]: false,
-      errorMessage: "",
-    },
-    workNature: {
-      [POST_JOB.WORK_NATURE_TYPES.ON_SITE]: false,
-      [POST_JOB.WORK_NATURE_TYPES.REMOTE]: false,
-      [POST_JOB.WORK_NATURE_TYPES.HYBRID]: false,
-      errorMessage: "",
-    },
-    jobDescription: { value: "", errorMessage: "" },
-  });
+  const [inputs, setInputs] = useState(POST_JOB.DEFAULT_FORM_FIELDS);
 
   const { locations, skills, searchHandlers, resetHandlers } = useSearch();
 
-  const postJob = async (validData) => {
-    console.log(validData);
+  const resetFields = () => setInputs(POST_JOB.DEFAULT_FORM_FIELDS);
 
+  const postJob = async (validData) => {
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+    await dispatch(
+      postNewJob({ ...validData, companyName: dbUser.companyName }),
+    );
+
+    resetFields();
+    setIsLoading(false);
   };
 
   const handleInputChange = ({ value, valueKey }) => {
@@ -58,8 +47,8 @@ function PostJob() {
   const handleLocationChange = ({ value }) => {
     setInputs((prev) => ({
       ...prev,
-      jobLocation: {
-        ...prev.jobLocation,
+      location: {
+        ...prev.location,
         errorMessage: "",
         value: { display_name: value },
       },
@@ -71,8 +60,8 @@ function PostJob() {
   const handleSkillsChange = ({ value }) => {
     setInputs((prev) => ({
       ...prev,
-      jobSkills: {
-        ...prev.jobSkills,
+      skills: {
+        ...prev.skills,
         errorMessage: "",
         value: { name: value },
       },
@@ -99,10 +88,10 @@ function PostJob() {
     resetHandlers.locationReset();
   };
 
-  const handleSkillsChose = ({ items, value, valueKey }) => {
+  const handleSkillsChose = ({ items, valueKey }) => {
     setInputs((prev) => ({
       ...prev,
-      [valueKey]: { errorMessage: "", value, chosen: items },
+      [valueKey]: { ...prev[valueKey], errorMessage: "", chosen: items },
     }));
   };
 
@@ -110,7 +99,7 @@ function PostJob() {
     const updatedInputs = structuredClone(inputs);
 
     Object.keys(errors).forEach((errorKey) => {
-      if (updatedInputs[errorKey] && errorKey === "jobLocation") {
+      if (updatedInputs[errorKey] && errorKey === "location") {
         updatedInputs[errorKey].errorMessage = "Please enter job location";
       } else if (updatedInputs[errorKey]) {
         updatedInputs[errorKey].errorMessage = errors[errorKey];
@@ -140,11 +129,14 @@ function PostJob() {
 
     validatePostJob({
       data: {
-        jobTitle: inputs.jobTitle.value,
-        jobDescription: inputs.jobDescription.value,
-        jobLocation: inputs.jobLocation.value,
+        title: inputs.title.value,
+        description: inputs.description.value,
+        skills: inputs.skills.chosen,
+        location: inputs.location.value,
         salaryFrom: inputs.salaryFrom.value,
         salaryTo: inputs.salaryTo.value,
+        experienceFrom: inputs.experienceFrom.value,
+        experienceTo: inputs.experienceTo.value,
         employmentType,
         workNature,
       },
@@ -163,10 +155,10 @@ function PostJob() {
             <Input
               label="Title"
               placeholder="Job Title"
-              value={inputs.jobTitle.value}
-              valueKey="jobTitle"
+              value={inputs.title.value}
+              valueKey="title"
               name="jobTitle"
-              errorMessage={inputs.jobTitle.errorMessage}
+              errorMessage={inputs.title.errorMessage}
               isRequired
               onChange={handleInputChange}
             />
@@ -174,10 +166,10 @@ function PostJob() {
             <SearchInput
               label="Location"
               placeholder="Job Location"
-              value={inputs.jobLocation.value.display_name}
-              valueKey="jobLocation"
+              value={inputs.location.value.display_name}
+              valueKey="location"
               displayKey="display_name"
-              errorMessage={inputs.jobLocation.errorMessage}
+              errorMessage={inputs.location.errorMessage}
               results={locations.results}
               isLoading={locations.isLoading}
               isRequired
@@ -186,18 +178,43 @@ function PostJob() {
             />
 
             <SearchInput
-              label="Skills"
-              placeholder="Required Skills"
-              value={inputs.jobSkills.value.name}
-              valueKey="jobSkills"
+              label="Skills / Requirements"
+              placeholder="Skills and Requirements"
+              value={inputs.skills.value.name}
+              valueKey="skills"
               displayKey="name"
-              errorMessage={inputs.jobSkills.errorMessage}
+              errorMessage={inputs.skills.errorMessage}
               results={skills.results}
               isLoading={skills.isLoading}
               isRequired
               isMultiple
               onChange={handleSkillsChange}
               onChose={handleSkillsChose}
+            />
+
+            <InputGroup
+              addon="to"
+              label="Experience"
+              onChange={handleInputChange}
+              isRequired
+              inputs={[
+                {
+                  placeholder: "Experience from",
+                  value: inputs.experienceFrom.value,
+                  valueKey: "experienceFrom",
+                  errorMessage: inputs.experienceFrom.errorMessage,
+                  name: "experienceFrom",
+                  type: "number",
+                },
+                {
+                  placeholder: "Experience to",
+                  value: inputs.experienceTo.value,
+                  valueKey: "experienceTo",
+                  errorMessage: inputs.experienceTo.errorMessage,
+                  name: "experienceTo",
+                  type: "number",
+                },
+              ]}
             />
 
             <InputGroup
@@ -290,9 +307,9 @@ function PostJob() {
             <TextArea
               label="Description"
               placeholder="Job Description"
-              value={inputs.jobDescription.value}
-              valueKey="jobDescription"
-              errorMessage={inputs.jobDescription.errorMessage}
+              value={inputs.description.value}
+              valueKey="description"
+              errorMessage={inputs.description.errorMessage}
               onChange={handleInputChange}
               isRequired
             />

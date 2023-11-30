@@ -5,10 +5,12 @@ export const REQUIRED_ERRORS = {
   companyName: "Please enter your Company name",
   location: "Please enter location",
   username: "Please choose your username",
-  jobTitle: "Please enter job title",
+  title: "Please enter job title",
   salaryFrom: "Please enter salary",
   salaryTo: "Please enter salary",
-  jobDescription: "Please enter description",
+  experienceFrom: "Enter experience",
+  experienceTo: "Enter experience",
+  description: "Please enter description",
 };
 
 export const TOO_SHORT_ERRORS = {
@@ -23,6 +25,8 @@ export const NOT_EQUAL_ERRORS = {
 export const WRONG_FORMAT_ERRORS = {
   salaryFrom: "Please enter positive value",
   salaryTo: "Please enter positive value",
+  experienceFrom: "Enter positive value",
+  experienceTo: "Enter positive value",
 };
 
 export const CONTENT_ERRORS = {

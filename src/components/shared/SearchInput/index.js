@@ -84,6 +84,7 @@ function SearchInput({
     );
 
     setChosenItems(newChosenItems);
+    onChose({ items: newChosenItems, value: item, valueKey });
   };
 
   useClickOutside(resultsRef, handleClickOutside);

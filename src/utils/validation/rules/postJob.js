@@ -1,11 +1,14 @@
 const postJob = {
-  jobTitle: ["required", "trim", "string"],
-  jobDescription: ["required", "trim", "string"],
+  title: ["required", "trim", "string"],
+  description: ["required", "trim", "string"],
   salaryFrom: ["positive_integer", "required"],
   salaryTo: ["positive_integer", "required"],
+  experienceFrom: ["positive_integer", "required"],
+  experienceTo: ["positive_integer", "required"],
   employmentType: "not_empty_list",
   workNature: "not_empty_list",
-  jobLocation: {
+  skills: "not_empty_list",
+  location: {
     nested_object: {
       addresstype: ["required", "trim", "string"],
       display_name: ["required", "trim", "string"],
