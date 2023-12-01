@@ -2,7 +2,7 @@
 @import "../../../styles/mixins.scss";
 
 .container {
-  width: 100%;
+  width: 100vw;
   height: $header-height;
   display: flex;
   justify-content: space-between;
