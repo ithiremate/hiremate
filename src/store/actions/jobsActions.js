@@ -31,9 +31,14 @@ export const postNewJob = createAsyncThunk(
   async (newJob, { dispatch }) => {
     try {
       const id = nanoid();
-      const createdAt = dayjs().toISOString();
+      const now = dayjs().toISOString();
 
-      await api.jobs.postNewJob({ ...newJob, id, createdAt });
+      await api.jobs.postNewJob({
+        ...newJob,
+        id,
+        createdAt: now,
+        updatedAt: now,
+      });
 
       await dispatch(
         addToast({
