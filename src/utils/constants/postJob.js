@@ -16,6 +16,16 @@ const WORK_NATURE_TITLES = {
   [WORK_NATURE_TYPES.HYBRID]: "Hybrid",
 };
 
+const ACTION_TYPES = {
+  POST: "POST",
+  EDIT: "EDIT",
+};
+
+const SUBMIT_BUTTON_TITLES = {
+  [ACTION_TYPES.POST]: "post job",
+  [ACTION_TYPES.EDIT]: "edit job",
+};
+
 const DEFAULT_FORM_FIELDS = {
   title: { value: "", errorMessage: "" },
   location: { value: { display_name: "" }, errorMessage: "" },
@@ -44,6 +54,8 @@ const POST_JOB = {
   WORK_NATURE_TYPES,
   WORK_NATURE_TITLES,
   DEFAULT_FORM_FIELDS,
+  ACTION_TYPES,
+  SUBMIT_BUTTON_TITLES,
 };
 
 export default POST_JOB;

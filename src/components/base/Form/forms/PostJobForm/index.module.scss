@@ -18,12 +18,6 @@
     gap: 10px;
 }
 
-@include laptop {
-    .inputs {
-        width: 50%;
-    }
-}
-
 @include desktop {
     .doubleRows {
         display: grid;

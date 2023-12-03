@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 
 import POST_JOB from "../../../../../utils/constants/postJob";
@@ -15,20 +16,18 @@ import TextArea from "../../../../shared/TextArea";
 
 import styles from "./index.module.scss";
 
-function PostJobForm() {
+function PostJobForm({ actionType, inputs, onSubmit }) {
   const dispatch = useDispatch();
   const { dbUser } = useSelector((state) => state.user);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [inputs, setInputs] = useState(POST_JOB.DEFAULT_FORM_FIELDS);
+  const [internalInputs, setInternalInputs] = useState(inputs);
 
   const { locations, skills, searchHandlers, resetHandlers } = useSearch();
 
-  const resetFields = () => setInputs(POST_JOB.DEFAULT_FORM_FIELDS);
+  const resetFields = () => setInternalInputs(inputs);
 
   const postJob = async (validData) => {
-    setIsLoading(true);
-
     await dispatch(
       postNewJob({ ...validData, companyName: dbUser.companyName }),
     );
@@ -38,14 +37,14 @@ function PostJobForm() {
   };
 
   const handleInputChange = ({ value, valueKey }) => {
-    setInputs((prev) => ({
+    setInternalInputs((prev) => ({
       ...prev,
       [valueKey]: { errorMessage: "", value },
     }));
   };
 
   const handleLocationChange = ({ value }) => {
-    setInputs((prev) => ({
+    setInternalInputs((prev) => ({
       ...prev,
       location: {
         ...prev.location,
@@ -58,7 +57,7 @@ function PostJobForm() {
   };
 
   const handleSkillsChange = ({ value }) => {
-    setInputs((prev) => ({
+    setInternalInputs((prev) => ({
       ...prev,
       skills: {
         ...prev.skills,
@@ -73,7 +72,7 @@ function PostJobForm() {
   const handleCheckboxChange =
     (objectKey) =>
     ({ value, valueKey }) => {
-      setInputs((prev) => ({
+      setInternalInputs((prev) => ({
         ...prev,
         [objectKey]: {
           ...prev[objectKey],
@@ -89,14 +88,14 @@ function PostJobForm() {
   };
 
   const handleSkillsChose = ({ items, valueKey }) => {
-    setInputs((prev) => ({
+    setInternalInputs((prev) => ({
       ...prev,
       [valueKey]: { ...prev[valueKey], errorMessage: "", chosen: items },
     }));
   };
 
   const handleFormError = (errors) => {
-    const updatedInputs = structuredClone(inputs);
+    const updatedInputs = structuredClone(internalInputs);
 
     Object.keys(errors).forEach((errorKey) => {
       if (updatedInputs[errorKey] && errorKey === "location") {
@@ -106,7 +105,7 @@ function PostJobForm() {
       }
     });
 
-    setInputs(updatedInputs);
+    setInternalInputs(updatedInputs);
   };
 
   const handleSubmit = (e) => {
@@ -116,34 +115,44 @@ function PostJobForm() {
     const workNature = [];
 
     Object.values(POST_JOB.EMPLOYMENT_TYPES).forEach((type) => {
-      if (inputs.employmentType[type]) {
+      if (internalInputs.employmentType[type]) {
         employmentType.push(type);
       }
     });
 
     Object.values(POST_JOB.WORK_NATURE_TYPES).forEach((type) => {
-      if (inputs.workNature[type]) {
+      if (internalInputs.workNature[type]) {
         workNature.push(type);
       }
     });
 
     validatePostJob({
       data: {
-        title: inputs.title.value,
-        description: inputs.description.value,
-        skills: inputs.skills.chosen,
-        location: inputs.location.value,
-        salaryFrom: inputs.salaryFrom.value,
-        salaryTo: inputs.salaryTo.value,
-        experienceFrom: inputs.experienceFrom.value,
-        experienceTo: inputs.experienceTo.value,
+        title: internalInputs.title.value,
+        description: internalInputs.description.value,
+        skills: internalInputs.skills.chosen,
+        location: internalInputs.location.value,
+        salaryFrom: internalInputs.salaryFrom.value,
+        salaryTo: internalInputs.salaryTo.value,
+        experienceFrom: internalInputs.experienceFrom.value,
+        experienceTo: internalInputs.experienceTo.value,
         employmentType,
         workNature,
       },
-      onSuccess: (validData) => postJob(validData),
+      onSuccess: (validData) => {
+        setIsLoading(true);
+
+        if (onSubmit) {
+          onSubmit(validData);
+        } else {
+          postJob(validData);
+        }
+      },
       onError: (errors) => handleFormError(errors),
     });
   };
+
+  useEffect(() => setInternalInputs(inputs), [inputs]);
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -151,10 +160,10 @@ function PostJobForm() {
         <Input
           label="Title"
           placeholder="Job Title"
-          value={inputs.title.value}
+          value={internalInputs.title.value}
           valueKey="title"
           name="jobTitle"
-          errorMessage={inputs.title.errorMessage}
+          errorMessage={internalInputs.title.errorMessage}
           isRequired
           onChange={handleInputChange}
         />
@@ -162,10 +171,10 @@ function PostJobForm() {
         <SearchInput
           label="Location"
           placeholder="Job Location"
-          value={inputs.location.value.display_name}
+          value={internalInputs.location.value.display_name}
           valueKey="location"
           displayKey="display_name"
-          errorMessage={inputs.location.errorMessage}
+          errorMessage={internalInputs.location.errorMessage}
           results={locations.results}
           isLoading={locations.isLoading}
           isRequired
@@ -176,10 +185,11 @@ function PostJobForm() {
         <SearchInput
           label="Skills / Requirements"
           placeholder="Skills and Requirements"
-          value={inputs.skills.value.name}
+          value={internalInputs.skills.value.name}
+          chosen={internalInputs.skills.chosen}
           valueKey="skills"
           displayKey="name"
-          errorMessage={inputs.skills.errorMessage}
+          errorMessage={internalInputs.skills.errorMessage}
           results={skills.results}
           isLoading={skills.isLoading}
           isRequired
@@ -196,17 +206,17 @@ function PostJobForm() {
           inputs={[
             {
               placeholder: "Experience from",
-              value: inputs.experienceFrom.value,
+              value: internalInputs.experienceFrom.value,
               valueKey: "experienceFrom",
-              errorMessage: inputs.experienceFrom.errorMessage,
+              errorMessage: internalInputs.experienceFrom.errorMessage,
               name: "experienceFrom",
               type: "number",
             },
             {
               placeholder: "Experience to",
-              value: inputs.experienceTo.value,
+              value: internalInputs.experienceTo.value,
               valueKey: "experienceTo",
-              errorMessage: inputs.experienceTo.errorMessage,
+              errorMessage: internalInputs.experienceTo.errorMessage,
               name: "experienceTo",
               type: "number",
             },
@@ -221,17 +231,17 @@ function PostJobForm() {
           inputs={[
             {
               placeholder: "Salary from",
-              value: inputs.salaryFrom.value,
+              value: internalInputs.salaryFrom.value,
               valueKey: "salaryFrom",
-              errorMessage: inputs.salaryFrom.errorMessage,
+              errorMessage: internalInputs.salaryFrom.errorMessage,
               name: "salaryFrom",
               type: "number",
             },
             {
               placeholder: "Salary to",
-              value: inputs.salaryTo.value,
+              value: internalInputs.salaryTo.value,
               valueKey: "salaryTo",
-              errorMessage: inputs.salaryTo.errorMessage,
+              errorMessage: internalInputs.salaryTo.errorMessage,
               name: "salaryTo",
               type: "number",
             },
@@ -241,26 +251,32 @@ function PostJobForm() {
         <div className={styles.doubleRows}>
           <CheckboxGroup
             label="Type of employment"
-            isError={!!inputs.employmentType.errorMessage}
-            errorMessage={inputs.employmentType.errorMessage}
+            isError={!!internalInputs.employmentType.errorMessage}
+            errorMessage={internalInputs.employmentType.errorMessage}
             onChange={handleCheckboxChange("employmentType")}
             inputs={[
               {
                 label: "Full-time",
                 isChecked:
-                  inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.FULL_TIME],
+                  internalInputs.employmentType[
+                    POST_JOB.EMPLOYMENT_TYPES.FULL_TIME
+                  ],
                 valueKey: POST_JOB.EMPLOYMENT_TYPES.FULL_TIME,
               },
               {
                 label: "Part-time",
                 isChecked:
-                  inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.PART_TIME],
+                  internalInputs.employmentType[
+                    POST_JOB.EMPLOYMENT_TYPES.PART_TIME
+                  ],
                 valueKey: POST_JOB.EMPLOYMENT_TYPES.PART_TIME,
               },
               {
                 label: "Project",
                 isChecked:
-                  inputs.employmentType[POST_JOB.EMPLOYMENT_TYPES.PROJECT],
+                  internalInputs.employmentType[
+                    POST_JOB.EMPLOYMENT_TYPES.PROJECT
+                  ],
                 valueKey: POST_JOB.EMPLOYMENT_TYPES.PROJECT,
               },
             ]}
@@ -269,24 +285,26 @@ function PostJobForm() {
 
           <CheckboxGroup
             label="Nature of work"
-            isError={!!inputs.workNature.errorMessage}
-            errorMessage={inputs.workNature.errorMessage}
+            isError={!!internalInputs.workNature.errorMessage}
+            errorMessage={internalInputs.workNature.errorMessage}
             onChange={handleCheckboxChange("workNature")}
             inputs={[
               {
                 label: "On-site",
                 isChecked:
-                  inputs.workNature[POST_JOB.WORK_NATURE_TYPES.ON_SITE],
+                  internalInputs.workNature[POST_JOB.WORK_NATURE_TYPES.ON_SITE],
                 valueKey: POST_JOB.WORK_NATURE_TYPES.ON_SITE,
               },
               {
                 label: "Remote",
-                isChecked: inputs.workNature[POST_JOB.WORK_NATURE_TYPES.REMOTE],
+                isChecked:
+                  internalInputs.workNature[POST_JOB.WORK_NATURE_TYPES.REMOTE],
                 valueKey: POST_JOB.WORK_NATURE_TYPES.REMOTE,
               },
               {
                 label: "Hybrid",
-                isChecked: inputs.workNature[POST_JOB.WORK_NATURE_TYPES.HYBRID],
+                isChecked:
+                  internalInputs.workNature[POST_JOB.WORK_NATURE_TYPES.HYBRID],
                 valueKey: POST_JOB.WORK_NATURE_TYPES.HYBRID,
               },
             ]}
@@ -297,9 +315,9 @@ function PostJobForm() {
         <TextArea
           label="Description"
           placeholder="Job Description"
-          value={inputs.description.value}
+          value={internalInputs.description.value}
           valueKey="description"
-          errorMessage={inputs.description.errorMessage}
+          errorMessage={internalInputs.description.errorMessage}
           onChange={handleInputChange}
           isRequired
         />
@@ -307,7 +325,7 @@ function PostJobForm() {
 
       <div className={styles.inputs}>
         <Button
-          label="post job"
+          label={POST_JOB.SUBMIT_BUTTON_TITLES[actionType]}
           type="submit"
           className={styles.button}
           isLoading={isLoading}
@@ -316,5 +334,91 @@ function PostJobForm() {
     </form>
   );
 }
+
+PostJobForm.propTypes = {
+  actionType: PropTypes.string,
+  onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf([null])]),
+  inputs: PropTypes.shape({
+    description: PropTypes.shape({
+      value: PropTypes.string,
+      errorMessage: PropTypes.string,
+    }),
+    employmentType: PropTypes.shape({
+      fullTime: PropTypes.bool,
+      partTime: PropTypes.bool,
+      project: PropTypes.bool,
+      errorMessage: PropTypes.string,
+    }),
+    experienceFrom: PropTypes.shape({
+      value: PropTypes.string,
+      errorMessage: PropTypes.string,
+    }),
+    experienceTo: PropTypes.shape({
+      value: PropTypes.string,
+      errorMessage: PropTypes.string,
+    }),
+    location: PropTypes.shape({
+      value: PropTypes.shape({ display_name: PropTypes.string }),
+      errorMessage: PropTypes.string,
+    }),
+    salaryFrom: PropTypes.shape({
+      value: PropTypes.string,
+      errorMessage: PropTypes.string,
+    }),
+    salaryTo: PropTypes.shape({
+      value: PropTypes.string,
+      errorMessage: PropTypes.string,
+    }),
+    skills: PropTypes.shape({
+      value: PropTypes.shape({ name: PropTypes.string }),
+      chosen: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string })),
+      errorMessage: PropTypes.string,
+    }),
+    title: PropTypes.shape({
+      value: PropTypes.string,
+      errorMessage: PropTypes.string,
+    }),
+    workNature: PropTypes.shape({
+      onSite: PropTypes.bool,
+      remote: PropTypes.bool,
+      hybrid: PropTypes.bool,
+      errorMessage: PropTypes.string,
+    }),
+  }),
+};
+
+PostJobForm.defaultProps = {
+  actionType: POST_JOB.ACTION_TYPES.POST,
+  onSubmit: null,
+  inputs: {
+    description: { value: "", errorMessage: "" },
+    employmentType: {
+      fullTime: false,
+      partTime: false,
+      project: false,
+      errorMessage: "",
+    },
+    experienceFrom: { value: "", errorMessage: "" },
+    experienceTo: { value: "", errorMessage: "" },
+    location: {
+      errorMessage: "",
+      value: { display_name: "" },
+    },
+    salaryFrom: { value: "", errorMessage: "" },
+    salaryTo: { value: "", errorMessage: "" },
+    skills: {
+      chosen: [],
+      errorMessage: "",
+      value: { name: "" },
+    },
+    title: { value: "", errorMessage: "" },
+    workNature: {
+      onSite: false,
+      remote: false,
+      hybrid: false,
+      errorMessage: "",
+    },
+  },
+};
 
 export default PostJobForm;

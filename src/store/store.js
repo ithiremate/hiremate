@@ -6,6 +6,7 @@ import emsiSession from "./slices/emsiSessionSlice";
 import toast from "./slices/toastSlice";
 import user from "./slices/userSlice";
 import jobs from "./slices/jobsSlice";
+import modal from "./slices/modalSlice";
 
 const reducers = {
   theme,
@@ -14,6 +15,7 @@ const reducers = {
   toast,
   user,
   jobs,
+  modal,
 };
 
 const combinedReducer = combineReducers(reducers);

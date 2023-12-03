@@ -38,8 +38,8 @@ function Jobs() {
         <h1 className={styles.title}>Jobs</h1>
 
         <div className={styles.jobs}>
-          {list.map(({ id, ...rest }) => (
-            <Job key={id} id={id} {...rest} />
+          {list.map((job) => (
+            <Job key={job.id} id={job.id} job={job} />
           ))}
         </div>
       </div>

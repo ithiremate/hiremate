@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import dayjs from "dayjs";
 
+import MODAL from "../../../../../../utils/constants/modal";
 import POST_JOB from "../../../../../../utils/constants/postJob";
+import { showModal } from "../../../../../../store/slices/modalSlice";
 
 import SvgIcon from "../../../../../shared/SvgIcon";
 import Button from "../../../../../shared/Button";
@@ -70,43 +72,46 @@ const praparePostedTitle = (date) => {
   }
 };
 
-function Job({
-  id,
-  companyImage,
-  title,
-  companyName,
-  location,
-  experienceFrom,
-  experienceTo,
-  workNature,
-  description,
-  createdAt,
-  salaryFrom,
-  salaryTo,
-}) {
+function Job({ job }) {
+  const dispatch = useDispatch();
+
   const { currentTheme } = useSelector((state) => state.theme);
 
-  const tags = prepareTags(location, experienceFrom, experienceTo, workNature);
+  const tags = prepareTags(
+    job.location,
+    job.experienceFrom,
+    job.experienceTo,
+    job.workNature,
+  );
 
-  const postedTitle = praparePostedTitle(createdAt);
+  const postedTitle = praparePostedTitle(job.createdAt);
 
   const salaryTitle =
-    salaryFrom === salaryTo
-      ? `$${salaryFrom / 1000}K/mo`
-      : `$${salaryFrom / 1000}-${salaryTo / 1000}K/mo`;
+    job.salaryFrom === job.salaryTo
+      ? `$${job.salaryFrom / 1000}K/mo`
+      : `$${job.salaryFrom / 1000}-${job.salaryTo / 1000}K/mo`;
+
+  const showEditModal = () => {
+    dispatch(
+      showModal({
+        type: MODAL.MODAL_TYPES.EDIT_JOB,
+        data: job,
+      }),
+    );
+  };
 
   return (
     <div
-      key={id}
+      key={job.id}
       className={classNames(
         styles.container,
         styles[`container_${currentTheme}`],
       )}>
-      <div className={styles.top}>
+      <div className={styles.job}>
         <div className={styles.jobHeader}>
           <div className={styles.left}>
-            {companyImage ? (
-              <img src={companyImage} alt="company" />
+            {job.companyImage ? (
+              <img src={job.companyImage} alt="company" />
             ) : (
               <div
                 className={classNames(
@@ -118,12 +123,12 @@ function Job({
             )}
 
             <div className={styles.titleContainer}>
-              <span className={styles.jobTitle}>{title}</span>
-              <span className={styles.companyName}>{companyName}</span>
+              <span className={styles.jobTitle}>{job.title}</span>
+              <span className={styles.companyName}>{job.companyName}</span>
             </div>
           </div>
 
-          <Button label="view" />
+          <Button label="edit" onClick={showEditModal} />
         </div>
 
         <div className={styles.jobBody}>
@@ -144,7 +149,7 @@ function Job({
           </div>
 
           <div className={styles.descriptionContainer}>
-            <EllipsisText text={description} lines={2} />
+            <EllipsisText text={job.description} lines={2} />
           </div>
         </div>
       </div>
@@ -167,24 +172,28 @@ function Job({
 }
 
 Job.propTypes = {
-  id: PropTypes.string.isRequired,
-  companyImage: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  companyName: PropTypes.string.isRequired,
-  experienceFrom: PropTypes.number.isRequired,
-  experienceTo: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  salaryFrom: PropTypes.number.isRequired,
-  salaryTo: PropTypes.number.isRequired,
-  workNature: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  location: PropTypes.shape({
-    display_name: PropTypes.string.isRequired,
-  }).isRequired,
+  job: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    companyImage: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    companyName: PropTypes.string.isRequired,
+    experienceFrom: PropTypes.number.isRequired,
+    experienceTo: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    salaryFrom: PropTypes.number.isRequired,
+    salaryTo: PropTypes.number.isRequired,
+    workNature: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    location: PropTypes.shape({
+      display_name: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 Job.defaultProps = {
-  companyImage: "",
+  job: {
+    companyImage: "",
+  },
 };
 
 export default Job;

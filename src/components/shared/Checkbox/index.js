@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import classNames from "classnames";
 
@@ -26,6 +26,8 @@ function Checkbox({
     setValue((prev) => !prev);
     onChange({ value: !isChecked, valueKey });
   };
+
+  useEffect(() => setValue(isChecked), [isChecked]);
 
   return (
     <div>

@@ -17,6 +17,7 @@ function SearchInput({
   label,
   placeholder,
   value,
+  chosen,
   valueKey,
   displayKey,
   name,
@@ -34,7 +35,7 @@ function SearchInput({
   const [internalValue, setInternalValue] = useState(value);
   const [internalResults, setInternalResults] = useState(results);
   const [isResultsVisible, setIsResultsVisible] = useState(false);
-  const [chosenItems, setChosenItems] = useState([]);
+  const [chosenItems, setChosenItems] = useState(chosen);
 
   const id = nanoid();
 
@@ -94,6 +95,10 @@ function SearchInput({
   }, [value]);
 
   useEffect(() => {
+    setChosenItems(chosen);
+  }, [chosen]);
+
+  useEffect(() => {
     if (isLoading) {
       setIsResultsVisible(true);
     }
@@ -133,7 +138,7 @@ function SearchInput({
         )}>
         {isMultiple && !!chosenItems.length && (
           <div className={styles.chosenItems}>
-            {chosenItems.map((chosen) => {
+            {chosenItems.map((item) => {
               return (
                 <div
                   key={nanoid()}
@@ -141,11 +146,11 @@ function SearchInput({
                     styles.chosenItem,
                     styles[`chosenItem_${currentTheme}`],
                   )}>
-                  <p>{chosen[displayKey]}</p>
+                  <p>{item[displayKey]}</p>
 
                   <SvgIcon
                     type="cross"
-                    onClick={handleRemoveChosen(chosen)}
+                    onClick={handleRemoveChosen(item)}
                     className={classNames(
                       styles.closeIcon,
                       styles[`closeIcon_${currentTheme}`],
@@ -215,6 +220,7 @@ SearchInput.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,
+  chosen: PropTypes.arrayOf(PropTypes.shape({})),
   valueKey: PropTypes.string,
   displayKey: PropTypes.string,
   name: PropTypes.string,
@@ -232,6 +238,7 @@ SearchInput.defaultProps = {
   label: "",
   placeholder: "",
   value: "",
+  chosen: [],
   valueKey: "",
   displayKey: "",
   name: "",

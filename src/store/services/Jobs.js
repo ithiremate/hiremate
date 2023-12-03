@@ -31,4 +31,17 @@ export default class JobsAPI extends Base {
       },
     });
   }
+
+  editJob(job) {
+    return this.firebaseApiClient.firebaseRequest({
+      query: async (auth) => {
+        const docref = fb.functions.db.doc(
+          fb.db,
+          `${FB.COLLECTION_TYPES.JOBS}/${auth.currentUser.uid}/items/${job.id}`,
+        );
+
+        await fb.functions.db.updateDoc(docref, job);
+      },
+    });
+  }
 }

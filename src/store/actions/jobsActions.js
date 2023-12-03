@@ -62,3 +62,37 @@ export const postNewJob = createAsyncThunk(
     }
   },
 );
+
+export const editExistedJob = createAsyncThunk(
+  "jobs/editExistedJob",
+  async (job, { dispatch }) => {
+    try {
+      const now = dayjs().toISOString();
+
+      await api.jobs.editJob({
+        ...job,
+        updatedAt: now,
+      });
+
+      await dispatch(
+        addToast({
+          type: TOAST.SUCCESS_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: "Job saved",
+        }),
+      );
+    } catch (error) {
+      await dispatch(
+        addToast({
+          type: TOAST.ERROR_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: FB.ERRORS[error.code] ?? FB.ERRORS.default,
+        }),
+      );
+
+      console.error("postNewJob error: ", error);
+
+      throw error;
+    }
+  },
+);
