@@ -37,7 +37,7 @@
     &_active {
         overflow: auto;
         pointer-events: all;
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(4px);
 
         &_light {
             background-color: rgba($color: $background-dark, $alpha: 0.5);
@@ -68,10 +68,12 @@
 
     &_light {
         background-color: $background-light;
+        border: 2px solid $background-dark;
     }
 
     &_dark {
         background-color: $background-dark;
+        border: 2px solid $background-light;
     }
 }
 

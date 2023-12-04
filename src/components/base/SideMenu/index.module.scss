@@ -87,7 +87,7 @@
 
   &_visible {
     pointer-events: all;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(4px);
 
     &_light {
       background-color: rgba($color: $background-dark, $alpha: 0.5);
