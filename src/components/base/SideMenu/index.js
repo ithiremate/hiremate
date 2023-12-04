@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 
 import { ROOT } from "../../../utils/constants/routes";
@@ -19,14 +19,19 @@ import styles from "./index.module.scss";
 
 function SideMenu({ isVisible, onClose }) {
   const navigate = useNavigate();
+
+  const { pathname } = useLocation();
   const { currentTheme } = useSelector((state) => state.theme);
   const { dbUser } = useSelector((state) => state.user);
+
   const sideMenuRoutes = useSideMenuRoutes();
   const menuRef = useRef(null);
 
   const handleLogoClick = () => {
     navigate(ROOT);
   };
+
+  useEffect(onClose, [pathname]);
 
   useClickOutside(menuRef, onClose);
 
