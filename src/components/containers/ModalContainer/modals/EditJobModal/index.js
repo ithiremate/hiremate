@@ -1,4 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
 import FORM from "../../../../../utils/constants/form";
@@ -10,10 +11,8 @@ import Form from "../../../../base/Form";
 
 import styles from "./index.module.scss";
 
-function EditJobModal() {
+function EditJobModal({ data }) {
   const dispatch = useDispatch();
-
-  const { data } = useSelector((state) => state.modal);
 
   const [inputs, setInputs] = useState(POST_JOB.DEFAULT_FORM_FIELDS);
 
@@ -71,5 +70,28 @@ function EditJobModal() {
     </div>
   );
 }
+
+EditJobModal.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    companyImage: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    companyName: PropTypes.string.isRequired,
+    experienceFrom: PropTypes.number.isRequired,
+    experienceTo: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    salaryFrom: PropTypes.number.isRequired,
+    salaryTo: PropTypes.number.isRequired,
+    employmentType: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    workNature: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    skills: PropTypes.arrayOf(
+      PropTypes.shape({ name: PropTypes.string }).isRequired,
+    ).isRequired,
+    location: PropTypes.shape({
+      display_name: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+};
 
 export default EditJobModal;

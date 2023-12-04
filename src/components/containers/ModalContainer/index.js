@@ -9,26 +9,29 @@ import { hideModal } from "../../../store/slices/modalSlice";
 
 import SvgButton from "../../shared/SvgButton";
 import EditJobModal from "./modals/EditJobModal";
+import DeleteJobModal from "./modals/DeleteJobModal";
 
 import styles from "./index.module.scss";
 
 const MODALS_BY_TYPE = {
   [MODAL.MODAL_TYPES.EDIT_JOB]: EditJobModal,
+  [MODAL.MODAL_TYPES.DELETE_JOB]: DeleteJobModal,
 };
 
-function Modal({ type }) {
+function Modal({ type, data }) {
   const Component = MODALS_BY_TYPE[type] ?? "div";
 
-  return <Component />;
+  return <Component data={data} />;
 }
 
 function ModalContainer({ children }) {
   const dispatch = useDispatch();
 
   const { currentTheme } = useSelector((state) => state.theme);
-  const { type } = useSelector((state) => state.modal);
+  const { type, data } = useSelector((state) => state.modal);
 
   const [internalType, setInternalType] = useState(type);
+  const [internalData, setInternalData] = useState(data);
 
   const outsideRef = useRef(null);
 
@@ -41,9 +44,11 @@ function ModalContainer({ children }) {
   useEffect(() => {
     if (type) {
       setInternalType(type);
+      setInternalData(data);
     } else {
       setTimeout(() => {
         setInternalType(type);
+        setInternalData(data);
       }, 300);
     }
   }, [type]);
@@ -81,7 +86,7 @@ function ModalContainer({ children }) {
             />
           </div>
 
-          <Modal type={internalType} />
+          <Modal type={internalType} data={internalData} />
         </div>
       </div>
     </div>
@@ -90,6 +95,11 @@ function ModalContainer({ children }) {
 
 Modal.propTypes = {
   type: PropTypes.string.isRequired,
+  data: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.oneOf([null])]),
+};
+
+Modal.defaultProps = {
+  data: null,
 };
 
 export default ModalContainer;

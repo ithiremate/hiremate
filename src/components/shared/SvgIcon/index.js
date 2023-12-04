@@ -21,6 +21,9 @@ import { ReactComponent as Checked } from "../../../assets/icons/checked.svg";
 import { ReactComponent as Unchecked } from "../../../assets/icons/unchecked.svg";
 import { ReactComponent as Pin } from "../../../assets/icons/pin.svg";
 import { ReactComponent as Clock } from "../../../assets/icons/clock.svg";
+import { ReactComponent as Options } from "../../../assets/icons/options.svg";
+import { ReactComponent as Edit } from "../../../assets/icons/edit.svg";
+import { ReactComponent as Delete } from "../../../assets/icons/delete.svg";
 
 // SIDE MENU
 import { ReactComponent as Case } from "../../../assets/icons/case.svg";
@@ -51,6 +54,9 @@ function SvgIcon({ type, onClick, className, fill }) {
     unchecked: Unchecked,
     pin: Pin,
     clock: Clock,
+    options: Options,
+    edit: Edit,
+    delete: Delete,
   };
 
   const SIDE_MENU = {

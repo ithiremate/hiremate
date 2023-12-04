@@ -16,9 +16,7 @@ function SessionGuard({ children }) {
   const { dbUser } = useSelector((state) => state.user);
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(subscribeOnSessionChanges());
-    }, 2000);
+    dispatch(subscribeOnSessionChanges());
   }, []);
 
   useEffect(() => {

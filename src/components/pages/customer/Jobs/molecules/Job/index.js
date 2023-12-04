@@ -8,7 +8,7 @@ import POST_JOB from "../../../../../../utils/constants/postJob";
 import { showModal } from "../../../../../../store/slices/modalSlice";
 
 import SvgIcon from "../../../../../shared/SvgIcon";
-import Button from "../../../../../shared/Button";
+import OptionsMenu from "../../../../../shared/OptionsMenu";
 import EllipsisText from "../../../../../shared/EllipsisText";
 
 import styles from "./index.module.scss";
@@ -91,10 +91,10 @@ function Job({ job }) {
       ? `$${job.salaryFrom / 1000}K/mo`
       : `$${job.salaryFrom / 1000}-${job.salaryTo / 1000}K/mo`;
 
-  const showEditModal = () => {
+  const showJobModal = (type) => () => {
     dispatch(
       showModal({
-        type: MODAL.MODAL_TYPES.EDIT_JOB,
+        type,
         data: job,
       }),
     );
@@ -128,7 +128,20 @@ function Job({ job }) {
             </div>
           </div>
 
-          <Button label="edit" onClick={showEditModal} />
+          <OptionsMenu
+            options={[
+              {
+                icon: "edit",
+                label: "Edit job",
+                onClick: showJobModal(MODAL.MODAL_TYPES.EDIT_JOB),
+              },
+              {
+                icon: "delete",
+                label: "Delete job",
+                onClick: showJobModal(MODAL.MODAL_TYPES.DELETE_JOB),
+              },
+            ]}
+          />
         </div>
 
         <div className={styles.jobBody}>

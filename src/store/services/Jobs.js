@@ -22,12 +22,13 @@ export default class JobsAPI extends Base {
   postNewJob(newJob) {
     return this.firebaseApiClient.firebaseRequest({
       query: async (auth) => {
-        const collectionRef = fb.functions.db.collection(
+        const collectionRef = fb.functions.db.doc(
           fb.db,
           `${FB.COLLECTION_TYPES.JOBS}/${auth.currentUser.uid}/items`,
+          newJob.id,
         );
 
-        await fb.functions.db.addDoc(collectionRef, newJob);
+        await fb.functions.db.setDoc(collectionRef, newJob);
       },
     });
   }
@@ -40,7 +41,20 @@ export default class JobsAPI extends Base {
           `${FB.COLLECTION_TYPES.JOBS}/${auth.currentUser.uid}/items/${job.id}`,
         );
 
-        await fb.functions.db.updateDoc(docref, job);
+        await fb.functions.db.setDoc(docref, job);
+      },
+    });
+  }
+
+  deleteJob(id) {
+    return this.firebaseApiClient.firebaseRequest({
+      query: async (auth) => {
+        const docref = fb.functions.db.doc(
+          fb.db,
+          `${FB.COLLECTION_TYPES.JOBS}/${auth.currentUser.uid}/items/${id}`,
+        );
+
+        await fb.functions.db.deleteDoc(docref);
       },
     });
   }

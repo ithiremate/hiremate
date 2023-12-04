@@ -44,7 +44,7 @@ export const postNewJob = createAsyncThunk(
         addToast({
           type: TOAST.SUCCESS_TYPE,
           duration: TOAST.DEFAULT_DURATION,
-          message: "Job created",
+          message: "Job successfully created",
         }),
       );
     } catch (error) {
@@ -78,7 +78,7 @@ export const editExistedJob = createAsyncThunk(
         addToast({
           type: TOAST.SUCCESS_TYPE,
           duration: TOAST.DEFAULT_DURATION,
-          message: "Job saved",
+          message: "Job successfully edited",
         }),
       );
     } catch (error) {
@@ -90,7 +90,36 @@ export const editExistedJob = createAsyncThunk(
         }),
       );
 
-      console.error("postNewJob error: ", error);
+      console.error("editExistedJob error: ", error);
+
+      throw error;
+    }
+  },
+);
+
+export const deleteExistedJob = createAsyncThunk(
+  "jobs/deleteExistedJob",
+  async (id, { dispatch }) => {
+    try {
+      await api.jobs.deleteJob(id);
+
+      await dispatch(
+        addToast({
+          type: TOAST.SUCCESS_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: "Job successfully deleted",
+        }),
+      );
+    } catch (error) {
+      await dispatch(
+        addToast({
+          type: TOAST.ERROR_TYPE,
+          duration: TOAST.DEFAULT_DURATION,
+          message: FB.ERRORS[error.code] ?? FB.ERRORS.default,
+        }),
+      );
+
+      console.error("deleteExistedJob error: ", error);
 
       throw error;
     }
