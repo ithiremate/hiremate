@@ -1,7 +1,8 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { JOBS_NEW } from "../../../../utils/constants/routes";
+import { editExistedJob } from "../../../../store/actions/jobsActions";
 
 import LoadingContainer from "../../../containers/LoadingContainer";
 import Button from "../../../shared/Button";
@@ -26,7 +27,13 @@ function DummyJobs() {
 }
 
 function Jobs() {
+  const dispatch = useDispatch();
+
   const { list, isInitialized } = useSelector((state) => state.jobs);
+
+  const editJob = (job) => async () => {
+    await dispatch(editExistedJob(job));
+  };
 
   if (isInitialized && list.length === 0) {
     return <DummyJobs />;
@@ -39,7 +46,7 @@ function Jobs() {
 
         <div className={styles.jobs}>
           {list.map((job) => (
-            <Job key={job.id} id={job.id} job={job} />
+            <Job key={job.id} id={job.id} job={job} editJob={editJob} />
           ))}
         </div>
       </div>

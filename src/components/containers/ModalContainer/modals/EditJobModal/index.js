@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import FORM from "../../../../../utils/constants/form";
 import POST_JOB from "../../../../../utils/constants/postJob";
-import { editExistedJob } from "../../../../../store/actions/jobsActions";
 import { hideModal } from "../../../../../store/slices/modalSlice";
 
 import Form from "../../../../base/Form";
@@ -50,8 +49,7 @@ function EditJobModal({ data }) {
     setInputs(output);
   };
 
-  const handleSubmit = async (editedJob) => {
-    await dispatch(editExistedJob({ ...data, ...editedJob }));
+  const handleSubmit = async () => {
     dispatch(hideModal());
   };
 

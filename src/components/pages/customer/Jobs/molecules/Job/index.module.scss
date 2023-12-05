@@ -34,6 +34,11 @@
 
 .left {
     display: flex;
+    gap: 20px;
+}
+
+.leftItem {
+    display: flex;
     gap: 10px;
 }
 
@@ -147,7 +152,8 @@
         background: $background-dark;
         border: 2px solid $background-dark;
 
-        svg path {
+        svg path,
+        svg rect {
             fill: $text-primary-dark;
         }
     }
@@ -157,10 +163,15 @@
         background: $background-light;
         border: 2px solid $background-light;
 
-        svg path {
+        svg path,
+        svg rect {
             fill: $text-primary-light;
         }
     }
+}
+
+.status {
+    text-transform: capitalize;
 }
 
 .salary {

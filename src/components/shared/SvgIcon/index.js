@@ -24,6 +24,10 @@ import { ReactComponent as Clock } from "../../../assets/icons/clock.svg";
 import { ReactComponent as Options } from "../../../assets/icons/options.svg";
 import { ReactComponent as Edit } from "../../../assets/icons/edit.svg";
 import { ReactComponent as Delete } from "../../../assets/icons/delete.svg";
+import { ReactComponent as Ban } from "../../../assets/icons/ban.svg";
+import { ReactComponent as Send } from "../../../assets/icons/send.svg";
+import { ReactComponent as Verified } from "../../../assets/icons/verified.svg";
+import { ReactComponent as Archive } from "../../../assets/icons/archive.svg";
 
 // SIDE MENU
 import { ReactComponent as Case } from "../../../assets/icons/case.svg";
@@ -57,6 +61,10 @@ function SvgIcon({ type, onClick, className, fill }) {
     options: Options,
     edit: Edit,
     delete: Delete,
+    ban: Ban,
+    send: Send,
+    verified: Verified,
+    archive: Archive,
   };
 
   const SIDE_MENU = {

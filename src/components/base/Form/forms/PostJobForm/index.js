@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import POST_JOB from "../../../../../utils/constants/postJob";
 import { validatePostJob } from "../../../../../utils/validation";
 import useSearch from "../../../../../hooks/useSearch";
-import { postNewJob } from "../../../../../store/actions/jobsActions";
+
+import {
+  editExistedJob,
+  postNewJob,
+} from "../../../../../store/actions/jobsActions";
 
 import Button from "../../../../shared/Button";
 import CheckboxGroup from "../../../../shared/CheckboxGroup";
@@ -18,19 +22,33 @@ import styles from "./index.module.scss";
 
 function PostJobForm({ actionType, inputs, onSubmit }) {
   const dispatch = useDispatch();
+
   const { dbUser } = useSelector((state) => state.user);
+  const { data } = useSelector((state) => state.modal);
 
   const [isLoading, setIsLoading] = useState(false);
   const [internalInputs, setInternalInputs] = useState(inputs);
 
   const { locations, skills, searchHandlers, resetHandlers } = useSearch();
 
-  const resetFields = () => setInternalInputs(inputs);
+  const resetFields = () => setInternalInputs(POST_JOB.DEFAULT_FORM_FIELDS);
 
   const postJob = async (validData) => {
-    await dispatch(
-      postNewJob({ ...validData, companyName: dbUser.companyName }),
-    );
+    setIsLoading(true);
+
+    if (actionType === POST_JOB.ACTION_TYPES.POST) {
+      await dispatch(
+        postNewJob({ ...validData, companyName: dbUser.companyName }),
+      );
+    }
+
+    if (actionType === POST_JOB.ACTION_TYPES.EDIT) {
+      await dispatch(editExistedJob({ ...data, ...validData }));
+    }
+
+    if (onSubmit) {
+      onSubmit();
+    }
 
     resetFields();
     setIsLoading(false);
@@ -108,7 +126,7 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
     setInternalInputs(updatedInputs);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (status) => (e) => {
     e.preventDefault();
 
     const employmentType = [];
@@ -138,16 +156,9 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
         experienceTo: internalInputs.experienceTo.value,
         employmentType,
         workNature,
+        status,
       },
-      onSuccess: (validData) => {
-        setIsLoading(true);
-
-        if (onSubmit) {
-          onSubmit(validData);
-        } else {
-          postJob(validData);
-        }
-      },
+      onSuccess: (validData) => postJob(validData),
       onError: (errors) => handleFormError(errors),
     });
   };
@@ -155,7 +166,7 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
   useEffect(() => setInternalInputs(inputs), [inputs]);
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form className={styles.form}>
       <div className={styles.inputs}>
         <Input
           label="Title"
@@ -323,12 +334,21 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
         />
       </div>
 
-      <div className={styles.inputs}>
+      <div className={styles.buttonsContainer}>
         <Button
-          label={POST_JOB.SUBMIT_BUTTON_TITLES[actionType]}
-          type="submit"
           className={styles.button}
+          type="submit"
+          label="save draft"
           isLoading={isLoading}
+          onClick={handleSubmit(POST_JOB.STATUS_TYPES.DRAFT)}
+        />
+
+        <Button
+          className={styles.button}
+          type="submit"
+          label="publish"
+          isLoading={isLoading}
+          onClick={handleSubmit(POST_JOB.STATUS_TYPES.PUBLISHED)}
         />
       </div>
     </form>
@@ -336,7 +356,7 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
 }
 
 PostJobForm.propTypes = {
-  actionType: PropTypes.string,
+  actionType: PropTypes.oneOf(Object.values(POST_JOB.ACTION_TYPES)),
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf([null])]),
   inputs: PropTypes.shape({
     description: PropTypes.shape({

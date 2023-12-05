@@ -13,9 +13,30 @@
     gap: 10px;
 }
 
+.buttonsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.button {
+    width: 100%;
+}
+
 .doubleRows {
     display: grid;
     gap: 10px;
+}
+
+@include tablet {
+    .buttonsContainer {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .button {
+        width: 240px;
+    }
 }
 
 @include desktop {

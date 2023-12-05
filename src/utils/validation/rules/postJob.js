@@ -1,3 +1,5 @@
+import POST_JOB from "../../constants/postJob";
+
 const postJob = {
   title: ["required", "trim", "string"],
   description: ["required", "trim", "string"],
@@ -8,6 +10,12 @@ const postJob = {
   employmentType: "not_empty_list",
   workNature: "not_empty_list",
   skills: "not_empty_list",
+  status: [
+    "required",
+    "trim",
+    "string",
+    { one_of: Object.values(POST_JOB.STATUS_TYPES) },
+  ],
   location: {
     nested_object: {
       addresstype: ["required", "trim", "string"],

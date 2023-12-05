@@ -26,23 +26,6 @@ export function mapErrors(error) {
   return mapedErrors;
 }
 
-function decodeErrorObject(errors) {
-  const decodedErrors = { ...errors };
-
-  for (const field in decodedErrors) {
-    if (Object.prototype.hasOwnProperty.call(decodedErrors, field)) {
-      const errorField = field.replace("data/", "");
-
-      decodedErrors[errorField] = decodeErrorCode(
-        decodedErrors[field],
-        errorField,
-      );
-    }
-  }
-
-  return decodedErrors;
-}
-
 export function decodeErrorCode(code, field = "") {
   switch (code) {
     case "REQUIRED": {
@@ -83,6 +66,23 @@ export function decodeErrorCode(code, field = "") {
       return code;
     }
   }
+}
+
+function decodeErrorObject(errors) {
+  const decodedErrors = { ...errors };
+
+  for (const field in decodedErrors) {
+    if (Object.prototype.hasOwnProperty.call(decodedErrors, field)) {
+      const errorField = field.replace("data/", "");
+
+      decodedErrors[errorField] = decodeErrorCode(
+        decodedErrors[field],
+        errorField,
+      );
+    }
+  }
+
+  return decodedErrors;
 }
 
 function validate({ rule, data, onSuccess, onError }) {

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
@@ -12,6 +13,12 @@ import OptionsMenu from "../../../../../shared/OptionsMenu";
 import EllipsisText from "../../../../../shared/EllipsisText";
 
 import styles from "./index.module.scss";
+
+const JOB_ICONS_BY_STATUS = {
+  [POST_JOB.STATUS_TYPES.PUBLISHED]: "verified",
+  [POST_JOB.STATUS_TYPES.DRAFT]: "ban",
+  [POST_JOB.STATUS_TYPES.ARCHIVED]: "archive",
+};
 
 const prepareTags = (location, experienceFrom, experienceTo, workNature) => {
   const locationTitle = location.display_name.split(",")[0];
@@ -30,7 +37,7 @@ const prepareTags = (location, experienceFrom, experienceTo, workNature) => {
   ];
 };
 
-const praparePostedTitle = (date) => {
+const prapareEditedTitle = (date) => {
   const now = dayjs();
   const posted = dayjs(date);
   const diffYears = now.diff(posted, "years");
@@ -43,36 +50,36 @@ const praparePostedTitle = (date) => {
 
   switch (true) {
     case diffYears > 0: {
-      return `Posted ${diffYears} years ago`;
+      return `Edited ${diffYears} years ago`;
     }
 
     case diffMonths > 0: {
-      return `Posted ${diffMonths} months ago`;
+      return `Edited ${diffMonths} months ago`;
     }
 
     case diffWeeks > 0: {
-      return `Posted ${diffWeeks} weeks ago`;
+      return `Edited ${diffWeeks} weeks ago`;
     }
 
     case diffDays > 0: {
-      return `Posted ${diffDays} days ago`;
+      return `Edited ${diffDays} days ago`;
     }
 
     case diffHours > 0: {
-      return `Posted ${diffHours} hours ago`;
+      return `Edited ${diffHours} hours ago`;
     }
 
     case diffMinutes > 0: {
-      return `Posted ${diffMinutes} minutes ago`;
+      return `Edited ${diffMinutes} minutes ago`;
     }
 
     default: {
-      return `Posted ${diffSeconds} seconds ago`;
+      return `Edited ${diffSeconds} seconds ago`;
     }
   }
 };
 
-function Job({ job }) {
+function Job({ job, editJob }) {
   const dispatch = useDispatch();
 
   const { currentTheme } = useSelector((state) => state.theme);
@@ -84,12 +91,28 @@ function Job({ job }) {
     job.workNature,
   );
 
-  const postedTitle = praparePostedTitle(job.createdAt);
+  const editedTitle = prapareEditedTitle(job.updatedAt);
 
   const salaryTitle =
     job.salaryFrom === job.salaryTo
       ? `$${job.salaryFrom / 1000}K/mo`
       : `$${job.salaryFrom / 1000}-${job.salaryTo / 1000}K/mo`;
+
+  const statusOption = useMemo(() => {
+    if (job.status === POST_JOB.STATUS_TYPES.PUBLISHED) {
+      return {
+        icon: "archive",
+        label: "To archive",
+        onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.ARCHIVED }),
+      };
+    }
+
+    return {
+      icon: "send",
+      label: "Publish",
+      onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.PUBLISHED }),
+    };
+  }, [job.status]);
 
   const showJobModal = (type) => () => {
     dispatch(
@@ -130,6 +153,7 @@ function Job({ job }) {
 
           <OptionsMenu
             options={[
+              statusOption,
               {
                 icon: "edit",
                 label: "Edit job",
@@ -173,9 +197,17 @@ function Job({ job }) {
           styles[`jobFooter_${currentTheme}`],
         )}>
         <div className={styles.left}>
-          <SvgIcon type="clock" />
+          <div className={styles.leftItem}>
+            <SvgIcon type={JOB_ICONS_BY_STATUS[job.status]} />
 
-          <span>{postedTitle}</span>
+            <span className={styles.status}>{job.status.toLowerCase()}</span>
+          </div>
+
+          <div className={styles.leftItem}>
+            <SvgIcon type="clock" />
+
+            <span>{editedTitle}</span>
+          </div>
         </div>
 
         <p className={styles.salary}>{salaryTitle}</p>
@@ -185,6 +217,7 @@ function Job({ job }) {
 }
 
 Job.propTypes = {
+  editJob: PropTypes.func.isRequired,
   job: PropTypes.shape({
     id: PropTypes.string.isRequired,
     companyImage: PropTypes.string,
@@ -193,9 +226,10 @@ Job.propTypes = {
     experienceFrom: PropTypes.number.isRequired,
     experienceTo: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired,
     salaryFrom: PropTypes.number.isRequired,
     salaryTo: PropTypes.number.isRequired,
+    status: PropTypes.oneOf(Object.values(POST_JOB.STATUS_TYPES)),
     workNature: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     location: PropTypes.shape({
       display_name: PropTypes.string.isRequired,

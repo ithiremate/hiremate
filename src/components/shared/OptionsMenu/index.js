@@ -21,7 +21,10 @@ function OptionsMenu({ options }) {
 
   const handleOptionClick = (option) => () => {
     setIsMenuVisible(false);
-    option.onClick();
+
+    if (option.onClick) {
+      option.onClick();
+    }
   };
 
   useClickOutside(clickOutsideRef, () => setIsMenuVisible(false));
@@ -52,7 +55,7 @@ function OptionsMenu({ options }) {
                 styles.option,
                 styles[`option_${currentTheme}`],
               )}>
-              <SvgIcon type={icon} />
+              <SvgIcon className={styles.icon} type={icon} />
               <span>{label}</span>
             </div>
           );

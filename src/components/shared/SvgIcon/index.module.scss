@@ -7,13 +7,15 @@
     }
 
     &_light {
-        path {
+        path,
+        rect {
             fill: $text-primary-light;
         }
     }
 
     &_dark {
-        path {
+        path,
+        rect {
             fill: $text-primary-dark;
         }
     }
