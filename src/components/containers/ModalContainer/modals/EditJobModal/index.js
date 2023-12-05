@@ -27,6 +27,7 @@ function EditJobModal({ data }) {
     output.salaryTo.value = `${data.salaryTo}`;
     output.skills.chosen = data.skills;
     output.title.value = data.title;
+    output.isDraft.value = data.status === POST_JOB.STATUS_TYPES.DRAFT;
 
     output.employmentType[POST_JOB.EMPLOYMENT_TYPES.FULL_TIME] =
       data.employmentType.includes(POST_JOB.EMPLOYMENT_TYPES.FULL_TIME);
@@ -79,6 +80,7 @@ EditJobModal.propTypes = {
     experienceTo: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
     salaryFrom: PropTypes.number.isRequired,
     salaryTo: PropTypes.number.isRequired,
     employmentType: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,

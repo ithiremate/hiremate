@@ -36,6 +36,7 @@ const DEFAULT_FORM_FIELDS = {
   salaryFrom: { value: "", errorMessage: "" },
   salaryTo: { value: "", errorMessage: "" },
   description: { value: "", errorMessage: "" },
+  isDraft: { value: false },
   employmentType: {
     [EMPLOYMENT_TYPES.FULL_TIME]: false,
     [EMPLOYMENT_TYPES.PART_TIME]: false,

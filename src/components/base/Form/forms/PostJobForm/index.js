@@ -17,6 +17,7 @@ import Input from "../../../../shared/Input";
 import InputGroup from "../../../../shared/InputGroup";
 import SearchInput from "../../../../shared/SearchInput";
 import TextArea from "../../../../shared/TextArea";
+import Checkbox from "../../../../shared/Checkbox";
 
 import styles from "./index.module.scss";
 
@@ -126,11 +127,14 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
     setInternalInputs(updatedInputs);
   };
 
-  const handleSubmit = (status) => (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const employmentType = [];
     const workNature = [];
+    const status = internalInputs.isDraft.value
+      ? POST_JOB.STATUS_TYPES.DRAFT
+      : POST_JOB.STATUS_TYPES.PUBLISHED;
 
     Object.values(POST_JOB.EMPLOYMENT_TYPES).forEach((type) => {
       if (internalInputs.employmentType[type]) {
@@ -166,7 +170,7 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
   useEffect(() => setInternalInputs(inputs), [inputs]);
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.inputs}>
         <Input
           label="Title"
@@ -332,23 +336,21 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
           onChange={handleInputChange}
           isRequired
         />
+
+        <Checkbox
+          label="Save as draft?"
+          isChecked={internalInputs.isDraft.value}
+          valueKey="isDraft"
+          onChange={handleInputChange}
+        />
       </div>
 
       <div className={styles.buttonsContainer}>
         <Button
           className={styles.button}
           type="submit"
-          label="save draft"
-          isLoading={isLoading}
-          onClick={handleSubmit(POST_JOB.STATUS_TYPES.DRAFT)}
-        />
-
-        <Button
-          className={styles.button}
-          type="submit"
           label="publish"
           isLoading={isLoading}
-          onClick={handleSubmit(POST_JOB.STATUS_TYPES.PUBLISHED)}
         />
       </div>
     </form>
@@ -362,6 +364,9 @@ PostJobForm.propTypes = {
     description: PropTypes.shape({
       value: PropTypes.string,
       errorMessage: PropTypes.string,
+    }),
+    isDraft: PropTypes.shape({
+      value: PropTypes.bool,
     }),
     employmentType: PropTypes.shape({
       fullTime: PropTypes.bool,
@@ -410,35 +415,7 @@ PostJobForm.propTypes = {
 PostJobForm.defaultProps = {
   actionType: POST_JOB.ACTION_TYPES.POST,
   onSubmit: null,
-  inputs: {
-    description: { value: "", errorMessage: "" },
-    employmentType: {
-      fullTime: false,
-      partTime: false,
-      project: false,
-      errorMessage: "",
-    },
-    experienceFrom: { value: "", errorMessage: "" },
-    experienceTo: { value: "", errorMessage: "" },
-    location: {
-      errorMessage: "",
-      value: { display_name: "" },
-    },
-    salaryFrom: { value: "", errorMessage: "" },
-    salaryTo: { value: "", errorMessage: "" },
-    skills: {
-      chosen: [],
-      errorMessage: "",
-      value: { name: "" },
-    },
-    title: { value: "", errorMessage: "" },
-    workNature: {
-      onSite: false,
-      remote: false,
-      hybrid: false,
-      errorMessage: "",
-    },
-  },
+  inputs: POST_JOB.DEFAULT_FORM_FIELDS,
 };
 
 export default PostJobForm;

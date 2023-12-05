@@ -34,7 +34,7 @@
     gap: 20px;
 }
 
-@include desktop {
+@include laptop {
     .jobs {
         grid-template-columns: repeat(2, 1fr);
     }
