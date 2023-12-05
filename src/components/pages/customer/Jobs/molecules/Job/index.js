@@ -196,7 +196,7 @@ function Job({ job, editJob }) {
           styles.jobFooter,
           styles[`jobFooter_${currentTheme}`],
         )}>
-        <div className={styles.left}>
+        <div className={styles.footerLeft}>
           <div className={styles.leftItem}>
             <SvgIcon type={JOB_ICONS_BY_STATUS[job.status]} />
 

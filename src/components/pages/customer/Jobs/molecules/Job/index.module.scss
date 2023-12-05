@@ -170,6 +170,12 @@
     }
 }
 
+.footerLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .status {
     text-transform: capitalize;
 }
@@ -196,6 +202,11 @@
     .jobFooter {
         flex-direction: row;
         align-items: center;
+    }
+
+    .footerLeft {
+        flex-direction: row;
+        gap: 20px;
     }
 
     .salary {
