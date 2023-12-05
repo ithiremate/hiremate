@@ -28,14 +28,25 @@
     gap: 10px;
 }
 
-@include tablet {
+@include mobile-md {
     .buttonsContainer {
         flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .button {
+        flex: 1;
+    }
+}
+
+@include laptop {
+    .buttonsContainer {
         justify-content: flex-end;
     }
 
     .button {
         width: 240px;
+        flex: unset;
     }
 }
 

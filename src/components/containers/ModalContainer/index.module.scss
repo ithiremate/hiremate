@@ -102,8 +102,14 @@
 
 @include tablet {
     .content {
-        width: 50%;
+        width: 60%;
         gap: 40px;
         padding: 40px;
+    }
+}
+
+@include desktop {
+    .content {
+        width: 50%;
     }
 }
