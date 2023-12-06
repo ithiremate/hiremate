@@ -6,9 +6,11 @@ import { editExistedJob } from "../../../../store/actions/jobsActions";
 
 import LoadingContainer from "../../../containers/LoadingContainer";
 import Button from "../../../shared/Button";
+import FilterableTabs from "../../../shared/FilterableTabs";
 import Job from "./molecules/Job";
 
 import styles from "./index.module.scss";
+import POST_JOB from "../../../../utils/constants/postJob";
 
 function DummyJobs() {
   const navigate = useNavigate();
@@ -44,11 +46,33 @@ function Jobs() {
       <div className={styles.container}>
         <h1 className={styles.title}>Jobs</h1>
 
-        <div className={styles.jobs}>
-          {list.map((job) => (
-            <Job key={job.id} id={job.id} job={job} editJob={editJob} />
-          ))}
-        </div>
+        <FilterableTabs
+          tabs={[
+            {
+              label: "all",
+            },
+            {
+              label: "published",
+              filterKey: "status",
+              filterValue: POST_JOB.STATUS_TYPES.PUBLISHED,
+            },
+            {
+              label: "draft",
+              filterKey: "status",
+              filterValue: POST_JOB.STATUS_TYPES.DRAFT,
+            },
+            {
+              label: "archived",
+              filterKey: "status",
+              filterValue: POST_JOB.STATUS_TYPES.ARCHIVED,
+            },
+          ]}
+          items={list}
+          itemComponent={Job}
+          itemsContainerClassName={styles.jobs}
+          itemComponentProps={{ editJob }}
+          itemComponentDynamicProps={(job) => ({ id: job.id, job })}
+        />
       </div>
     </LoadingContainer>
   );

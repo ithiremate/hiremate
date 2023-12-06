@@ -1,0 +1,77 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tabs {
+    width: 100%;
+    display: flex;
+    overflow-x: scroll;
+
+    &_light {
+        border-bottom: 2px solid $background-dark;
+    }
+
+    &_dark {
+        border-bottom: 2px solid $background-light;
+    }
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+}
+
+.tab {
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 30px;
+    box-sizing: border-box;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+    @include font-base;
+    @include transition(background-color, color);
+
+    &_light {
+        color: $text-primary-light;
+
+        &:hover,
+        &_active {
+            background-color: $background-dark;
+            color: $text-primary-dark;
+        }
+    }
+
+    &_dark {
+        color: $text-primary-dark;
+
+        &:hover,
+        &_active {
+            background-color: $background-light;
+            color: $text-primary-light;
+        }
+    }
+}
+
+.items {
+    width: 100%;
+}
+
+.dummyContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include font-lg;
+}
