@@ -9,6 +9,7 @@
 
 .label {
   @include font-lg;
+  @include transition(color);
 
   &_light {
     color: $text-primary-light;
@@ -36,19 +37,19 @@
   flex-wrap: wrap;
   box-sizing: border-box;
   position: relative;
-  @include transition(border, color);
+  @include transition(border, color, background-color);
 
   &_with_icon {
     padding-right: 48px;
   }
 
   &_light {
-    background: $background-light;
+    background-color: $background-light;
     border: 2px solid $text-primary-light;
   }
 
   &_dark {
-    background: $background-dark;
+    background-color: $background-dark;
     border: 2px solid $text-primary-dark;
   }
 
@@ -73,19 +74,21 @@
   padding: 0 14px;
   box-sizing: border-box;
   @include font-base;
+  @include transition(color, background-color);
 
   &_light {
     color: $text-primary-light;
-    background: $background-light;
+    background-color: $background-light;
 
     &::placeholder {
+      @include transition(color);
       color: rgba($color: $text-primary-light, $alpha: 0.6);
     }
   }
 
   &_dark {
     color: $text-primary-dark;
-    background: $background-dark;
+    background-color: $background-dark;
 
     &::placeholder {
       color: rgba($color: $text-primary-dark, $alpha: 0.6);

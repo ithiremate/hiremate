@@ -54,13 +54,15 @@ span {
 }
 
 .root_theme {
+  @include transition(background-color);
+
   &_light {
     color: $text-primary-light;
-    background: $background-light;
+    background-color: $background-light;
   }
 
   &_dark {
     color: $text-primary-dark;
-    background: $background-dark;
+    background-color: $background-dark;
   }
 }

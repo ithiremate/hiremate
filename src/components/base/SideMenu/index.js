@@ -2,11 +2,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 
 import { ROOT } from "../../../utils/constants/routes";
+import THEME from "../../../utils/constants/theme";
 
 import useClickOutside from "../../../hooks/useClickOutside";
 import useSideMenuRoutes from "../../../hooks/useSideMenuRotes";
@@ -14,10 +15,13 @@ import useSideMenuRoutes from "../../../hooks/useSideMenuRotes";
 import Logo from "../../shared/Logo";
 import ProfileAvatar from "../../shared/ProfileAvatar";
 import Navigation from "./molecules/Navigation";
+import Switch from "../../shared/Switch";
 
 import styles from "./index.module.scss";
+import { updateTheme } from "../../../store/slices/themeSlice";
 
 function SideMenu({ isVisible, onClose }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
@@ -29,6 +33,13 @@ function SideMenu({ isVisible, onClose }) {
 
   const handleLogoClick = () => {
     navigate(ROOT);
+  };
+
+  const handleThemeChange = (isDark) => {
+    const newTheme = isDark ? THEME.THEME_DARK_TYPE : THEME.THEME_LIGHT_TYPE;
+
+    dispatch(updateTheme(newTheme));
+    localStorage.setItem(THEME.THEME_TYPE_KEY, newTheme);
   };
 
   useEffect(onClose, [pathname]);
@@ -50,23 +61,34 @@ function SideMenu({ isVisible, onClose }) {
           styles.content,
           styles[`content_${currentTheme}`],
         )}>
-        <Logo
-          type="default"
-          className={styles.logo}
-          onClick={handleLogoClick}
-        />
+        <div className={styles.top}>
+          <Logo
+            type="default"
+            className={styles.logo}
+            onClick={handleLogoClick}
+          />
 
-        <div
-          className={classNames(
-            styles.profileAvatarContainer,
-            styles[`profileAvatarContainer_${currentTheme}`],
-          )}>
-          <ProfileAvatar />
+          <div
+            className={classNames(
+              styles.profileAvatarContainer,
+              styles[`profileAvatarContainer_${currentTheme}`],
+            )}>
+            <ProfileAvatar />
 
-          <p className={styles.greeting}>Hi, {dbUser.companyName}</p>
+            <p className={styles.greeting}>Hi, {dbUser.companyName}</p>
+          </div>
+
+          <Navigation routes={sideMenuRoutes} />
         </div>
 
-        <Navigation routes={sideMenuRoutes} />
+        <div className={styles.bottom}>
+          <Switch
+            leftLabel="Light"
+            rightLabel="Dark"
+            isChecked={currentTheme === THEME.THEME_DARK_TYPE}
+            onChange={handleThemeChange}
+          />
+        </div>
       </div>
 
       <div

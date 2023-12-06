@@ -12,6 +12,7 @@
     width: 100%;
     display: flex;
     overflow-x: scroll;
+    @include transition(border-bottom);
 
     &_light {
         border-bottom: 2px solid $background-dark;

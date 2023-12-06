@@ -51,9 +51,10 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
+    @include transition(background-color);
 
     &_light {
-        background: $background-dark;
+        background-color: $background-dark;
 
         svg path {
             fill: $background-light;
@@ -61,7 +62,7 @@
     }
 
     &_dark {
-        background: $background-light;
+        background-color: $background-light;
 
         svg path {
             fill: $background-dark;
@@ -105,13 +106,13 @@
     justify-content: center;
     align-items: center;
     gap: 6px;
-    padding: 0 12px;
+    padding: 2px 14px;
     box-sizing: border-box;
+    @include transition(color, background-color);
 
     &_light {
         color: $text-primary-dark;
-        background: $background-dark;
-        border: 2px solid $background-dark;
+        background-color: $background-dark;
 
         svg path {
             fill: $text-primary-dark;
@@ -120,8 +121,7 @@
 
     &_dark {
         color: $text-primary-light;
-        background: $background-light;
-        border: 2px solid $background-light;
+        background-color: $background-light;
 
         svg path {
             fill: $text-primary-light;
@@ -146,11 +146,11 @@
     gap: 10px;
     padding: 20px;
     box-sizing: border-box;
+    @include transition(color, background-color);
 
     &_light {
         color: $text-primary-dark;
-        background: $background-dark;
-        border: 2px solid $background-dark;
+        background-color: $background-dark;
 
         svg path,
         svg rect {
@@ -160,8 +160,7 @@
 
     &_dark {
         color: $text-primary-light;
-        background: $background-light;
-        border: 2px solid $background-light;
+        background-color: $background-light;
 
         svg path,
         svg rect {

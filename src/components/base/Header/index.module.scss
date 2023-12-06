@@ -12,13 +12,14 @@
   z-index: 1;
   box-sizing: border-box;
   @include main-layout-adaptive-container;
+  @include transition(background-color);
 
   &_light {
-    background: $background-light-secondary;
+    background-color: $background-light-secondary;
   }
 
   &_dark {
-    background: $background-dark-secondary;
+    background-color: $background-dark-secondary;
   }
 }
 

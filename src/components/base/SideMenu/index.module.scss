@@ -20,18 +20,20 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 40px;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  box-sizing: border-box;
   overflow-y: auto;
   position: relative;
   z-index: 4;
+  @include transition(background-color);
 
   &_light {
-    background: $background-light-secondary;
+    background-color: $background-light-secondary;
   }
 
   &_dark {
-    background: $background-dark-secondary;
+    background-color: $background-dark-secondary;
   }
 
   &::-webkit-scrollbar {
@@ -39,9 +41,26 @@
   }
 }
 
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.bottom {
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
 .logo {
   cursor: pointer;
   margin-top: 20px;
+
+  svg path {
+    @include transition(background-color);
+  }
 }
 
 .profileAvatarContainer {
@@ -56,19 +75,20 @@
   z-index: 30;
   padding: 20px 0;
   box-sizing: border-box;
+  @include transition(background-color);
 
   &_light {
-    background: $background-light-secondary;
+    background-color: $background-light-secondary;
   }
 
   &_dark {
-    background: $background-dark-secondary;
+    background-color: $background-dark-secondary;
   }
 }
 
 .greeting {
   font-weight: 600;
-  @include transition(font-size);
+  @include transition(font-size, color);
 }
 
 .backdrop {

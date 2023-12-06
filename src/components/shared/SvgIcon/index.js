@@ -83,6 +83,7 @@ function SvgIcon({ type, onClick, className, fill }) {
   return (
     <Component
       className={classNames(
+        styles.icon,
         { [styles[`icon_${currentTheme}`]]: fill },
         className,
       )}

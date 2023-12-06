@@ -14,8 +14,8 @@
   font-weight: 600;
   padding: 10px 60px;
   cursor: pointer;
-  @include transition(color, background-color, border-color);
   @include font-base;
+  @include transition(border-color, background-color, color);
 
   &_light {
     color: $text-primary-light;

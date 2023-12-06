@@ -9,6 +9,7 @@
 
 .label {
   @include font-lg;
+  @include transition(color);
 
   &_light {
     color: $text-primary-light;
@@ -42,8 +43,8 @@
   outline: 0;
   border: 0;
   border-radius: 0;
-  @include transition(border, color);
   @include font-base;
+  @include transition(border, color, background-color);
 
   &_with_icon {
     padding-right: 48px;
@@ -51,30 +52,32 @@
 
   &_light {
     color: $text-primary-light;
-    background: $background-light;
+    background-color: $background-light;
     border: 2px solid $text-primary-light;
 
     &::placeholder {
+      @include transition(color);
       color: rgba($color: $text-primary-light, $alpha: 0.6);
     }
 
     &:read-only {
-      background: rgba($color: $text-primary-light, $alpha: 0.2);
+      background-color: rgba($color: $text-primary-light, $alpha: 0.2);
       cursor: not-allowed;
     }
   }
 
   &_dark {
     color: $text-primary-dark;
-    background: $background-dark;
+    background-color: $background-dark;
     border: 2px solid $text-primary-dark;
 
     &::placeholder {
+      @include transition(color);
       color: rgba($color: $text-primary-dark, $alpha: 0.6);
     }
 
     &:read-only {
-      background: rgba($color: $text-primary-dark, $alpha: 0.2);
+      background-color: rgba($color: $text-primary-dark, $alpha: 0.2);
       cursor: not-allowed;
     }
   }

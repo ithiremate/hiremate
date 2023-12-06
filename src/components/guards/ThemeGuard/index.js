@@ -9,18 +9,25 @@ function ThemeGuard({ children }) {
   const { currentTheme } = useSelector((state) => state.theme);
 
   const updateRootClassname = () => {
-    const className = `root_theme_${currentTheme}`;
+    const className = `root_theme root_theme_${currentTheme}`;
     const root = document.querySelector("#root");
 
     root.className = className;
   };
 
   const initTheme = () => {
-    const lsTheme =
-      localStorage.getItem(THEME.THEME_TYPE_KEY) ?? THEME.THEME_DARK_TYPE;
+    const isPreferDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
 
-    localStorage.setItem(THEME.THEME_TYPE_KEY, lsTheme);
-    dispatch(updateTheme(lsTheme));
+    const lsTheme = localStorage.getItem(THEME.THEME_TYPE_KEY);
+
+    const initialTheme = isPreferDark
+      ? THEME.THEME_DARK_TYPE
+      : THEME.THEME_LIGHT_TYPE;
+
+    localStorage.setItem(THEME.THEME_TYPE_KEY, lsTheme || initialTheme);
+    dispatch(updateTheme(lsTheme || initialTheme));
   };
 
   useEffect(() => {

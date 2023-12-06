@@ -9,6 +9,7 @@
 
 .label {
     @include font-lg;
+    @include transition(color);
 
     &_light {
         color: $text-primary-light;

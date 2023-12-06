@@ -32,7 +32,6 @@
     background-color: transparent;
     backdrop-filter: none;
     @include main-page-adaptive-container;
-    @include transition(background-color, backdrop-filter, padding);
 
     &_active {
         overflow: auto;
@@ -59,7 +58,6 @@
     box-sizing: border-box;
     opacity: 0;
     transform: scale(0.99);
-    @include transition(opacity, transform);
 
     &_active {
         opacity: 1;
