@@ -59,7 +59,7 @@
     box-sizing: border-box;
     white-space: nowrap;
     cursor: pointer;
-    @include transition(background-color);
+    @include transition(background-color, color);
 
     svg {
         @include transition(fill);
