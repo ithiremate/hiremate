@@ -10,6 +10,9 @@ const postJob = {
   employmentType: "not_empty_list",
   workNature: "not_empty_list",
   skills: "not_empty_list",
+  contactPerson: ["trim", "string"],
+  contactPhone: ["trim", "string"],
+  additionalContact: ["trim", "string"],
   status: [
     "required",
     "trim",
@@ -18,6 +21,21 @@ const postJob = {
   ],
   location: {
     nested_object: {
+      address: {
+        nested_object: {
+          borough: ["trim", "string"],
+          city: ["trim", "string"],
+          country: ["trim", "string"],
+          country_code: ["trim", "string"],
+          house_number: ["trim", "string"],
+          neighbourhood: ["trim", "string"],
+          postcode: ["trim", "string"],
+          quarter: ["trim", "string"],
+          road: ["trim", "string"],
+          shop: ["trim", "string"],
+          suburb: ["trim", "string"],
+        },
+      },
       addresstype: ["required", "trim", "string"],
       display_name: ["required", "trim", "string"],
       lat: ["required", "trim", "string"],

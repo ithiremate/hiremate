@@ -158,6 +158,9 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
         salaryTo: internalInputs.salaryTo.value,
         experienceFrom: internalInputs.experienceFrom.value,
         experienceTo: internalInputs.experienceTo.value,
+        contactPerson: internalInputs.contactPerson.value,
+        contactPhone: internalInputs.contactPhone.value,
+        additionalContact: internalInputs.additionalContact.value,
         employmentType,
         workNature,
         status,
@@ -195,6 +198,33 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
           isRequired
           onChange={handleLocationChange}
           onChose={handleLocationChose}
+        />
+
+        <Input
+          label="Contact Person"
+          placeholder="Contact Person"
+          value={internalInputs.contactPerson.value}
+          valueKey="contactPerson"
+          name="contactPerson"
+          onChange={handleInputChange}
+        />
+
+        <Input
+          label="Contact Phone"
+          placeholder="Contact Phone"
+          value={internalInputs.contactPhone.value}
+          valueKey="contactPhone"
+          name="contactPhone"
+          onChange={handleInputChange}
+        />
+
+        <Input
+          label="Additional Contact"
+          placeholder="Additional Contact: skype, telegram etc."
+          value={internalInputs.additionalContact.value}
+          valueKey="additionalContact"
+          name="additionalContact"
+          onChange={handleInputChange}
         />
 
         <SearchInput
@@ -402,6 +432,15 @@ PostJobForm.propTypes = {
     title: PropTypes.shape({
       value: PropTypes.string,
       errorMessage: PropTypes.string,
+    }),
+    contactPerson: PropTypes.shape({
+      value: PropTypes.string,
+    }),
+    contactPhone: PropTypes.shape({
+      value: PropTypes.string,
+    }),
+    additionalContact: PropTypes.shape({
+      value: PropTypes.string,
     }),
     workNature: PropTypes.shape({
       onSite: PropTypes.bool,

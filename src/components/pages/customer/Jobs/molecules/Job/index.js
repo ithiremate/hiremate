@@ -21,7 +21,7 @@ const JOB_ICONS_BY_STATUS = {
 };
 
 const prepareTags = (location, experienceFrom, experienceTo, workNature) => {
-  const locationTitle = location.display_name.split(",")[0];
+  const locationTitle = location.address.city || location.address.country;
   const experienceTitle =
     experienceFrom === experienceTo
       ? `${experienceFrom} years`
@@ -147,7 +147,9 @@ function Job({ job, editJob }) {
 
             <div className={styles.titleContainer}>
               <span className={styles.jobTitle}>{job.title}</span>
-              <span className={styles.companyName}>{job.companyName}</span>
+              <span className={styles.companyName}>
+                {job.contactPerson || job.companyName}
+              </span>
             </div>
           </div>
 
@@ -223,6 +225,9 @@ Job.propTypes = {
     companyImage: PropTypes.string,
     title: PropTypes.string.isRequired,
     companyName: PropTypes.string.isRequired,
+    contactPerson: PropTypes.string,
+    contactPhone: PropTypes.string,
+    additionalContact: PropTypes.string,
     experienceFrom: PropTypes.number.isRequired,
     experienceTo: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,

@@ -19,7 +19,9 @@ function EditJobModal({ data }) {
     const output = structuredClone(inputs);
 
     output.description.value = data.description;
-
+    output.contactPerson.value = data.contactPerson;
+    output.contactPhone.value = data.contactPhone;
+    output.additionalContact.value = data.additionalContact;
     output.experienceFrom.value = `${data.experienceFrom}`;
     output.experienceTo.value = `${data.experienceTo}`;
     output.location.value = data.location;
@@ -76,6 +78,9 @@ EditJobModal.propTypes = {
     companyImage: PropTypes.string,
     title: PropTypes.string.isRequired,
     companyName: PropTypes.string.isRequired,
+    contactPerson: PropTypes.string,
+    contactPhone: PropTypes.string,
+    additionalContact: PropTypes.string,
     experienceFrom: PropTypes.number.isRequired,
     experienceTo: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
