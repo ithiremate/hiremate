@@ -100,18 +100,47 @@ function Job({ job, editJob }) {
 
   const statusOption = useMemo(() => {
     if (job.status === POST_JOB.STATUS_TYPES.PUBLISHED) {
-      return {
-        icon: "archive",
-        label: "To archive",
-        onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.ARCHIVED }),
-      };
+      return [
+        {
+          icon: "ban",
+          label: "To draft",
+          onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.DRAFT }),
+        },
+        {
+          icon: "archive",
+          label: "To archive",
+          onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.ARCHIVED }),
+        },
+      ];
     }
 
-    return {
-      icon: "send",
-      label: "Publish",
-      onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.PUBLISHED }),
-    };
+    if (job.status === POST_JOB.STATUS_TYPES.DRAFT) {
+      return [
+        {
+          icon: "send",
+          label: "Publish",
+          onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.PUBLISHED }),
+        },
+        {
+          icon: "archive",
+          label: "To archive",
+          onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.ARCHIVED }),
+        },
+      ];
+    }
+
+    return [
+      {
+        icon: "send",
+        label: "Publish",
+        onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.PUBLISHED }),
+      },
+      {
+        icon: "ban",
+        label: "To draft",
+        onClick: editJob({ ...job, status: POST_JOB.STATUS_TYPES.DRAFT }),
+      },
+    ];
   }, [job.status]);
 
   const showJobModal = (type) => () => {
@@ -155,7 +184,7 @@ function Job({ job, editJob }) {
 
           <OptionsMenu
             options={[
-              statusOption,
+              ...statusOption,
               {
                 icon: "edit",
                 label: "Edit job",
