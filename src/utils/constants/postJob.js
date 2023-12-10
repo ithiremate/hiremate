@@ -39,6 +39,7 @@ const DEFAULT_FORM_FIELDS = {
   contactPerson: { value: "" },
   contactPhone: { value: "" },
   additionalContact: { value: "" },
+  questions: [],
   isDraft: { value: false },
   employmentType: {
     [EMPLOYMENT_TYPES.FULL_TIME]: false,

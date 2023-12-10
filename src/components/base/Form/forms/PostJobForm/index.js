@@ -17,6 +17,7 @@ import Input from "../../../../shared/Input";
 import InputGroup from "../../../../shared/InputGroup";
 import SearchInput from "../../../../shared/SearchInput";
 import TextArea from "../../../../shared/TextArea";
+import JobScreening from "../../../../shared/JobScreening";
 import Checkbox from "../../../../shared/Checkbox";
 
 import styles from "./index.module.scss";
@@ -367,6 +368,8 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
           isRequired
         />
 
+        <JobScreening questions={internalInputs.questions} />
+
         <Checkbox
           label="Save as draft?"
           isChecked={internalInputs.isDraft.value}
@@ -375,7 +378,7 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
         />
       </div>
 
-      <div className={styles.buttonsContainer}>
+      <div className={styles.buttonContainer}>
         <Button
           className={styles.button}
           type="submit"
@@ -390,65 +393,7 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
 PostJobForm.propTypes = {
   actionType: PropTypes.oneOf(Object.values(POST_JOB.ACTION_TYPES)),
   onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf([null])]),
-  inputs: PropTypes.shape({
-    description: PropTypes.shape({
-      value: PropTypes.string,
-      errorMessage: PropTypes.string,
-    }),
-    isDraft: PropTypes.shape({
-      value: PropTypes.bool,
-    }),
-    employmentType: PropTypes.shape({
-      fullTime: PropTypes.bool,
-      partTime: PropTypes.bool,
-      project: PropTypes.bool,
-      errorMessage: PropTypes.string,
-    }),
-    experienceFrom: PropTypes.shape({
-      value: PropTypes.string,
-      errorMessage: PropTypes.string,
-    }),
-    experienceTo: PropTypes.shape({
-      value: PropTypes.string,
-      errorMessage: PropTypes.string,
-    }),
-    location: PropTypes.shape({
-      value: PropTypes.shape({ display_name: PropTypes.string }),
-      errorMessage: PropTypes.string,
-    }),
-    salaryFrom: PropTypes.shape({
-      value: PropTypes.string,
-      errorMessage: PropTypes.string,
-    }),
-    salaryTo: PropTypes.shape({
-      value: PropTypes.string,
-      errorMessage: PropTypes.string,
-    }),
-    skills: PropTypes.shape({
-      value: PropTypes.shape({ name: PropTypes.string }),
-      chosen: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string })),
-      errorMessage: PropTypes.string,
-    }),
-    title: PropTypes.shape({
-      value: PropTypes.string,
-      errorMessage: PropTypes.string,
-    }),
-    contactPerson: PropTypes.shape({
-      value: PropTypes.string,
-    }),
-    contactPhone: PropTypes.shape({
-      value: PropTypes.string,
-    }),
-    additionalContact: PropTypes.shape({
-      value: PropTypes.string,
-    }),
-    workNature: PropTypes.shape({
-      onSite: PropTypes.bool,
-      remote: PropTypes.bool,
-      hybrid: PropTypes.bool,
-      errorMessage: PropTypes.string,
-    }),
-  }),
+  inputs: PropTypes.shape({}),
 };
 
 PostJobForm.defaultProps = {

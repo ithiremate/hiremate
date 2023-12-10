@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 
 import Title from "./molecules/Title";
 import UserTypeForm from "./molecules/UserTypeForm";
-import CustomerForm from "./molecules/CustomerForm";
-import TalentForm from "./molecules/TalentForm";
 
 import styles from "./index.module.scss";
 import FB from "../../../utils/constants/fb";
+import Form from "../../base/Form";
+import FORM from "../../../utils/constants/form";
 
 function Wizard() {
   const { dbUser } = useSelector((state) => state.user);
@@ -19,10 +19,10 @@ function Wizard() {
     }
 
     if (dbUser.userType === FB.USER_TYPES.CUSTOMER) {
-      return <CustomerForm />;
+      return <Form type={FORM.FORM_TYPES.CUSTOMER_WIZARD} />;
     }
 
-    return <TalentForm />;
+    return <Form type={FORM.FORM_TYPES.TALENT_WIZARD} />;
   }, [dbUser]);
 
   return (

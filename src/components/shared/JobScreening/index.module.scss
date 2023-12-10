@@ -1,0 +1,19 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.container {
+    margin-bottom: 30px;
+}
+
+.label {
+    @include font-lg;
+    @include transition(color);
+
+    &_light {
+        color: $text-primary-light;
+    }
+
+    &_dark {
+        color: $text-primary-dark;
+    }
+}

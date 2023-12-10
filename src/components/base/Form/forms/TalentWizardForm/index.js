@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import FORM from "../../../../../utils/constants/form";
 import useSearch from "../../../../../hooks/useSearch";
 import { validateTalentWizard } from "../../../../../utils/validation";
 import { updateUserFieldInDb } from "../../../../../store/actions/userActions";
@@ -11,14 +12,11 @@ import Button from "../../../../shared/Button";
 
 import styles from "./index.module.scss";
 
-function CustomerForm() {
+function TalentWizardForm() {
   const dispatch = useDispatch();
 
+  const [inputs, setInputs] = useState(FORM.TALENT_WIZARD);
   const [isLoading, setIsLoading] = useState(false);
-  const [inputs, setInputs] = useState({
-    location: { value: { display_name: "" }, errorMessage: "" },
-    username: { value: "", errorMessage: "" },
-  });
 
   const { locations, searchHandlers, resetHandlers } = useSearch();
 
@@ -35,7 +33,7 @@ function CustomerForm() {
   const handleInputChange = ({ value, valueKey }) => {
     setInputs((prev) => ({
       ...prev,
-      [valueKey]: { errorMessage: "", value },
+      [valueKey]: { ...prev[valueKey], errorMessage: "", value },
     }));
   };
 
@@ -71,11 +69,13 @@ function CustomerForm() {
     setInputs(updatedInputs);
   };
 
-  const handleSubmit = () => (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     validateTalentWizard({
       data: {
+        firstName: inputs.firstName.value,
+        surname: inputs.surname.value,
         location: inputs.location.value,
         username: inputs.username.value,
       },
@@ -85,31 +85,54 @@ function CustomerForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit()} className={styles.form}>
-      <SearchInput
-        label="Location"
-        placeholder="Enter location"
-        value={inputs.location.value.display_name}
-        valueKey="location"
-        displayKey="display_name"
-        errorMessage={inputs.location.errorMessage}
-        results={locations.results}
-        isLoading={locations.isLoading}
-        isRequired
-        onChange={handleLocationChange}
-        onChose={handleLocationChose}
-      />
+    <form onSubmit={handleSubmit} className={styles.form}>
+      {Object.entries(inputs).map(([inputKey, input]) => {
+        const {
+          type,
+          label,
+          placeholder,
+          value,
+          displayKey,
+          errorMessage,
+          isRequired,
+          secured,
+        } = input;
 
-      <Input
-        label="Username"
-        placeholder="Enter Username"
-        value={inputs.username.value}
-        valueKey="username"
-        name="username"
-        errorMessage={inputs.username.errorMessage}
-        isRequired
-        onChange={handleInputChange}
-      />
+        if (type === FORM.FIELD_TYPES.INPUT) {
+          return (
+            <Input
+              key={inputKey}
+              label={label}
+              placeholder={placeholder}
+              value={value}
+              valueKey={inputKey}
+              name={inputKey}
+              errorMessage={errorMessage}
+              isRequired={isRequired}
+              secured={secured}
+              onChange={handleInputChange}
+            />
+          );
+        }
+
+        return (
+          <SearchInput
+            key={inputKey}
+            label={label}
+            placeholder={placeholder}
+            value={value.display_name}
+            valueKey={inputKey}
+            displayKey={displayKey}
+            name={inputKey}
+            errorMessage={errorMessage}
+            results={locations.results}
+            isLoading={locations.isLoading}
+            isRequired
+            onChange={handleLocationChange}
+            onChose={handleLocationChose}
+          />
+        );
+      })}
 
       <Button
         label="Submit"
@@ -121,4 +144,4 @@ function CustomerForm() {
   );
 }
 
-export default CustomerForm;
+export default TalentWizardForm;
