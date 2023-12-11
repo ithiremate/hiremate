@@ -12,7 +12,7 @@ function JobAutoscreeningModal() {
   const { data } = useSelector((state) => state.modal);
 
   const handleSubmit = () => {
-    data.onSubmit("SUBMITTED!");
+    data.onSubmit({ questions: [{ value: "SUBMITTED!" }] });
     dispatch(hideModal());
   };
 
