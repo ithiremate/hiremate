@@ -14,6 +14,7 @@ import Wizard from "../../components/pages/Wizard";
 import Dashboard from "../../components/pages/customer/DashBoard";
 import Jobs from "../../components/pages/customer/Jobs";
 import PostJob from "../../components/pages/customer/PostJob";
+import EditJob from "../../components/pages/customer/EditJob";
 
 // ROUTES
 import * as routes from "./routes";
@@ -33,6 +34,7 @@ const CUSTOMER_ROUTER = {
   [routes.JOBS]: { element: Jobs, layout: MainLayout },
   [routes.JOBS_ALL]: { element: Jobs, layout: MainLayout },
   [routes.JOBS_NEW]: { element: PostJob, layout: MainLayout },
+  [routes.JOBS_EDIT]: { element: EditJob, layout: MainLayout },
 };
 
 const router = {

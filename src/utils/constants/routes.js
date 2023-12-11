@@ -4,9 +4,10 @@ export const SIGN_IN = `${ROOT}sign-in`;
 export const SIGN_UP = `${ROOT}sign-up`;
 
 // CUSTOMER ROUTES
-export const JOBS = `${ROOT}jobs/:jobStatus`;
-export const JOBS_ALL = `/jobs/all`;
-export const JOBS_NEW = `/jobs/new`;
+export const JOBS = `${ROOT}jobs`;
+export const JOBS_ALL = `${JOBS}/all`;
+export const JOBS_NEW = `${JOBS}/new`;
+export const JOBS_EDIT = `${JOBS}/:jobId/edit`;
 export const JOBS_ACTIVE = `/jobs/active`;
 export const JOBS_PENDING = `/jobs/pending`;
 export const JOBS_CLOSED = `/jobs/closed`;
@@ -25,6 +26,7 @@ export const CUSTOMER_SIDE_MENU = {
   [JOBS]: {
     title: "Jobs",
     icon: "case",
+    match: JOBS,
     nested: {
       [JOBS_ALL]: {
         title: "All Jobs",

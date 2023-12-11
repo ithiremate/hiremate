@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import POST_JOB from "../../../../../utils/constants/postJob";
 import { validatePostJob } from "../../../../../utils/validation";
@@ -27,15 +27,18 @@ import FORM from "../../../../../utils/constants/form";
 function PostJobForm() {
   const dispatch = useDispatch();
 
+  const { jobId } = useParams();
+  const { list } = useSelector((state) => state.jobs);
   const { dbUser } = useSelector((state) => state.user);
-  const { data } = useSelector((state) => state.modal);
 
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState(FORM.POST_JOB);
 
+  const job = useMemo(() => list.find((el) => el.id === jobId), [jobId]);
+
   const { locations, skills, searchHandlers, resetHandlers } = useSearch();
 
-  const actionType = data
+  const actionType = job
     ? POST_JOB.ACTION_TYPES.EDIT
     : POST_JOB.ACTION_TYPES.PUBLISH;
 
@@ -48,12 +51,13 @@ function PostJobForm() {
       await dispatch(
         postNewJob({ ...validData, companyName: dbUser.companyName }),
       );
+
+      resetFields();
     }
 
     if (actionType === POST_JOB.ACTION_TYPES.EDIT) {
-      await dispatch(editExistedJob({ ...data, ...validData }));
+      await dispatch(editExistedJob({ ...job, ...validData }));
       dispatch(hideModal());
-      resetFields();
     }
 
     setIsLoading(false);
@@ -205,55 +209,55 @@ function PostJobForm() {
     setInputs((prev) => {
       const output = structuredClone(prev);
 
-      output.jobTitle.value = data.title;
-      output.location.value = data.location;
-      output.contactPerson.value = data.contactPerson ?? "";
-      output.contactPhone.value = data.contactPhone ?? "";
-      output.additionalContact.value = data.additionalContact ?? "";
-      output.skills.chosen = data.skills;
-      output.experience.inputs.experienceFrom.value = data.experienceFrom;
-      output.experience.inputs.experienceTo.value = data.experienceTo;
-      output.salary.inputs.salaryFrom.value = data.salaryFrom;
-      output.salary.inputs.salaryTo.value = data.salaryTo;
-      output.description.value = data.description;
-      output.isDraft.isChecked = data.status === POST_JOB.STATUS_TYPES.DRAFT;
+      output.jobTitle.value = job.title;
+      output.location.value = job.location;
+      output.contactPerson.value = job.contactPerson ?? "";
+      output.contactPhone.value = job.contactPhone ?? "";
+      output.additionalContact.value = job.additionalContact ?? "";
+      output.skills.chosen = job.skills;
+      output.experience.inputs.experienceFrom.value = job.experienceFrom;
+      output.experience.inputs.experienceTo.value = job.experienceTo;
+      output.salary.inputs.salaryFrom.value = job.salaryFrom;
+      output.salary.inputs.salaryTo.value = job.salaryTo;
+      output.description.value = job.description;
+      output.isDraft.isChecked = job.status === POST_JOB.STATUS_TYPES.DRAFT;
 
       output.employmentType.inputs[
         POST_JOB.EMPLOYMENT_TYPES.FULL_TIME
-      ].isChecked = data.employmentType.includes(
+      ].isChecked = job.employmentType.includes(
         POST_JOB.EMPLOYMENT_TYPES.FULL_TIME,
       );
 
       output.employmentType.inputs[
         POST_JOB.EMPLOYMENT_TYPES.PART_TIME
-      ].isChecked = data.employmentType.includes(
+      ].isChecked = job.employmentType.includes(
         POST_JOB.EMPLOYMENT_TYPES.PART_TIME,
       );
 
       output.employmentType.inputs[
         POST_JOB.EMPLOYMENT_TYPES.PROJECT
-      ].isChecked = data.employmentType.includes(
+      ].isChecked = job.employmentType.includes(
         POST_JOB.EMPLOYMENT_TYPES.PROJECT,
       );
 
       output.workNature.inputs[POST_JOB.WORK_NATURE_TYPES.ON_SITE].isChecked =
-        data.workNature.includes(POST_JOB.WORK_NATURE_TYPES.ON_SITE);
+        job.workNature.includes(POST_JOB.WORK_NATURE_TYPES.ON_SITE);
 
       output.workNature.inputs[POST_JOB.WORK_NATURE_TYPES.REMOTE].isChecked =
-        data.workNature.includes(POST_JOB.WORK_NATURE_TYPES.REMOTE);
+        job.workNature.includes(POST_JOB.WORK_NATURE_TYPES.REMOTE);
 
       output.workNature.inputs[POST_JOB.WORK_NATURE_TYPES.HYBRID].isChecked =
-        data.workNature.includes(POST_JOB.WORK_NATURE_TYPES.HYBRID);
+        job.workNature.includes(POST_JOB.WORK_NATURE_TYPES.HYBRID);
 
       return output;
     });
   };
 
   useEffect(() => {
-    if (data) {
-      initInputs(inputs);
+    if (job) {
+      initInputs();
     }
-  }, [data]);
+  }, [job]);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>

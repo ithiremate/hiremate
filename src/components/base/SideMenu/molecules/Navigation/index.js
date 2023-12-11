@@ -79,8 +79,11 @@ function Navigation({ routes }) {
     <div className={styles.container}>
       <div className={styles.content}>
         {Object.entries(internalRoutes).map(([routePath, routeContent]) => {
-          const { title, icon, nested } = routeContent;
-          const isActive = !!matchPath(routePath, pathname);
+          const { title, icon, match, nested } = routeContent;
+
+          const isActive =
+            !!matchPath(routePath, pathname) || pathname.includes(match);
+
           const isExpanded = !!internalRoutes[routePath].isExpanded;
 
           return (

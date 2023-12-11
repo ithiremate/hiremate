@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import dayjs from "dayjs";
@@ -13,6 +14,7 @@ import OptionsMenu from "../../../../../shared/OptionsMenu";
 import EllipsisText from "../../../../../shared/EllipsisText";
 
 import styles from "./index.module.scss";
+import { JOBS } from "../../../../../../utils/constants/routes";
 
 const JOB_ICONS_BY_STATUS = {
   [POST_JOB.STATUS_TYPES.PUBLISHED]: "verified",
@@ -80,6 +82,7 @@ const prapareEditedTitle = (date) => {
 };
 
 function Job({ job, editJob }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { currentTheme } = useSelector((state) => state.theme);
@@ -143,6 +146,10 @@ function Job({ job, editJob }) {
     ];
   }, [job.status]);
 
+  const navigateToEditJob = (jobId) => () => {
+    navigate(`${JOBS}/${jobId}/edit`);
+  };
+
   const showJobModal = (type) => () => {
     dispatch(
       showModal({
@@ -188,7 +195,7 @@ function Job({ job, editJob }) {
               {
                 icon: "edit",
                 label: "Edit job",
-                onClick: showJobModal(MODAL.MODAL_TYPES.EDIT_JOB),
+                onClick: navigateToEditJob(job.id),
               },
               {
                 icon: "delete",

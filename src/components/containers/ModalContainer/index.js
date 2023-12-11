@@ -8,13 +8,11 @@ import useOnClickOutside from "../../../hooks/useClickOutside";
 import { hideModal } from "../../../store/slices/modalSlice";
 
 import SvgButton from "../../shared/SvgButton";
-import EditJobModal from "./modals/EditJobModal";
 import DeleteJobModal from "./modals/DeleteJobModal";
 
 import styles from "./index.module.scss";
 
 const MODALS_BY_TYPE = {
-  [MODAL.MODAL_TYPES.EDIT_JOB]: EditJobModal,
   [MODAL.MODAL_TYPES.DELETE_JOB]: DeleteJobModal,
 };
 
