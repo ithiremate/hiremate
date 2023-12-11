@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import POST_JOB from "../../../../../utils/constants/postJob";
 import { validatePostJob } from "../../../../../utils/validation";
 import useSearch from "../../../../../hooks/useSearch";
+import { hideModal } from "../../../../../store/slices/modalSlice";
 
 import {
   editExistedJob,
@@ -51,9 +52,10 @@ function PostJobForm() {
 
     if (actionType === POST_JOB.ACTION_TYPES.EDIT) {
       await dispatch(editExistedJob({ ...data, ...validData }));
+      dispatch(hideModal());
+      resetFields();
     }
 
-    resetFields();
     setIsLoading(false);
   };
 
@@ -199,13 +201,59 @@ function PostJobForm() {
     });
   };
 
-  const initInputs = () => {};
+  const initInputs = () => {
+    setInputs((prev) => {
+      const output = structuredClone(prev);
+
+      output.jobTitle.value = data.title;
+      output.location.value = data.location;
+      output.contactPerson.value = data.contactPerson ?? "";
+      output.contactPhone.value = data.contactPhone ?? "";
+      output.additionalContact.value = data.additionalContact ?? "";
+      output.skills.chosen = data.skills;
+      output.experience.inputs.experienceFrom.value = data.experienceFrom;
+      output.experience.inputs.experienceTo.value = data.experienceTo;
+      output.salary.inputs.salaryFrom.value = data.salaryFrom;
+      output.salary.inputs.salaryTo.value = data.salaryTo;
+      output.description.value = data.description;
+      output.isDraft.isChecked = data.status === POST_JOB.STATUS_TYPES.DRAFT;
+
+      output.employmentType.inputs[
+        POST_JOB.EMPLOYMENT_TYPES.FULL_TIME
+      ].isChecked = data.employmentType.includes(
+        POST_JOB.EMPLOYMENT_TYPES.FULL_TIME,
+      );
+
+      output.employmentType.inputs[
+        POST_JOB.EMPLOYMENT_TYPES.PART_TIME
+      ].isChecked = data.employmentType.includes(
+        POST_JOB.EMPLOYMENT_TYPES.PART_TIME,
+      );
+
+      output.employmentType.inputs[
+        POST_JOB.EMPLOYMENT_TYPES.PROJECT
+      ].isChecked = data.employmentType.includes(
+        POST_JOB.EMPLOYMENT_TYPES.PROJECT,
+      );
+
+      output.workNature.inputs[POST_JOB.WORK_NATURE_TYPES.ON_SITE].isChecked =
+        data.workNature.includes(POST_JOB.WORK_NATURE_TYPES.ON_SITE);
+
+      output.workNature.inputs[POST_JOB.WORK_NATURE_TYPES.REMOTE].isChecked =
+        data.workNature.includes(POST_JOB.WORK_NATURE_TYPES.REMOTE);
+
+      output.workNature.inputs[POST_JOB.WORK_NATURE_TYPES.HYBRID].isChecked =
+        data.workNature.includes(POST_JOB.WORK_NATURE_TYPES.HYBRID);
+
+      return output;
+    });
+  };
 
   useEffect(() => {
     if (data) {
       initInputs(inputs);
     }
-  }, [inputs]);
+  }, [data]);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
