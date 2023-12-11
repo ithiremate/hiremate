@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
+import FORM from "../../../../../utils/constants/form";
 import POST_JOB from "../../../../../utils/constants/postJob";
 import { validatePostJob } from "../../../../../utils/validation";
 import useSearch from "../../../../../hooks/useSearch";
@@ -22,7 +23,21 @@ import TextArea from "../../../../shared/TextArea";
 import Checkbox from "../../../../shared/Checkbox";
 
 import styles from "./index.module.scss";
-import FORM from "../../../../../utils/constants/form";
+import { JOBS_NEW } from "../../../../../utils/constants/routes";
+
+function DummyJob() {
+  const navigate = useNavigate();
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.dummyContent}>
+        <p className={styles.dummyTitle}>Job not found</p>
+
+        <Button label="post new job" onClick={() => navigate(JOBS_NEW)} />
+      </div>
+    </div>
+  );
+}
 
 function PostJobForm() {
   const dispatch = useDispatch();
@@ -258,6 +273,10 @@ function PostJobForm() {
       initInputs();
     }
   }, [job]);
+
+  if (jobId && !job) {
+    return <DummyJob />;
+  }
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>

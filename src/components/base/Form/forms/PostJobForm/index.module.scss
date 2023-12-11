@@ -1,6 +1,28 @@
 @import "../../../../../styles/variables.scss";
 @import "../../../../../styles/mixins.scss";
 
+.container {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    @include main-page-adaptive-container;
+}
+
+.dummyContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.dummyTitle {
+    @include font-lg;
+}
+
 .form {
     width: 100%;
     display: flex;
