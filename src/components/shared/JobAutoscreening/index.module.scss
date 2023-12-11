@@ -3,6 +3,10 @@
 
 .container {
     margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
 }
 
 .label {
@@ -16,4 +20,8 @@
     &_dark {
         color: $text-primary-dark;
     }
+}
+
+.emptyMessage {
+    @include transition(color);
 }

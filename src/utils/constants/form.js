@@ -16,6 +16,7 @@ const FIELD_TYPES = {
   CHECKBOX_GROUP: "CHECKBOX_GROUP",
   TEXT_AREA: "TEXT_AREA",
   CHECKBOX: "CHECKBOX",
+  AUTOSCREENING: "AUTOSCREENING",
 };
 
 const SIGN_IN = {
@@ -258,6 +259,10 @@ const POST_JOB = {
     errorMessage: "",
     isRequired: true,
     type: FIELD_TYPES.TEXT_AREA,
+  },
+  autoscreening: {
+    questions: [],
+    type: FIELD_TYPES.AUTOSCREENING,
   },
   isDraft: {
     label: "Save as draft?",

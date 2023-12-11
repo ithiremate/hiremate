@@ -7,6 +7,7 @@ const postJob = {
   salaryTo: ["positive_integer", "required"],
   experienceFrom: ["positive_integer", "required"],
   experienceTo: ["positive_integer", "required"],
+  companyName: ["required", "trim", "string"],
   employmentType: "not_empty_list",
   workNature: "not_empty_list",
   skills: "not_empty_list",
@@ -19,6 +20,11 @@ const postJob = {
     "string",
     { one_of: Object.values(POST_JOB.STATUS_TYPES) },
   ],
+  autoscreening: {
+    nested_object: {
+      questions: "list_of_objects",
+    },
+  },
   location: {
     nested_object: {
       address: {

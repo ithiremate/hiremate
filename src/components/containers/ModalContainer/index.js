@@ -9,11 +9,13 @@ import { hideModal } from "../../../store/slices/modalSlice";
 
 import SvgButton from "../../shared/SvgButton";
 import DeleteJobModal from "./modals/DeleteJobModal";
+import JobAutoscreeningModal from "./modals/JobAutoscreeningModal";
 
 import styles from "./index.module.scss";
 
 const MODALS_BY_TYPE = {
   [MODAL.MODAL_TYPES.DELETE_JOB]: DeleteJobModal,
+  [MODAL.MODAL_TYPES.JOB_AUTOSCREENING]: JobAutoscreeningModal,
 };
 
 function Modal({ type, data }) {

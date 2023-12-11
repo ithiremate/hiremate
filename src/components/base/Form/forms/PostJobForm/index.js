@@ -19,7 +19,7 @@ import Input from "../../../../shared/Input";
 import InputGroup from "../../../../shared/InputGroup";
 import SearchInput from "../../../../shared/SearchInput";
 import TextArea from "../../../../shared/TextArea";
-// import JobScreening from "../../../../shared/JobScreening";
+import JobAutoscreening from "../../../../shared/JobAutoscreening";
 import Checkbox from "../../../../shared/Checkbox";
 
 import styles from "./index.module.scss";
@@ -63,9 +63,7 @@ function PostJobForm() {
     setIsLoading(true);
 
     if (actionType === POST_JOB.ACTION_TYPES.PUBLISH) {
-      await dispatch(
-        postNewJob({ ...validData, companyName: dbUser.companyName }),
-      );
+      await dispatch(postNewJob({ ...validData }));
 
       resetFields();
     }
@@ -211,6 +209,8 @@ function PostJobForm() {
         contactPerson: inputs.contactPerson.value,
         contactPhone: inputs.contactPhone.value,
         additionalContact: inputs.additionalContact.value,
+        autoscreening: inputs.autoscreening,
+        companyName: dbUser.companyName,
         employmentType,
         workNature,
         status,
@@ -235,6 +235,7 @@ function PostJobForm() {
       output.salary.inputs.salaryFrom.value = job.salaryFrom;
       output.salary.inputs.salaryTo.value = job.salaryTo;
       output.description.value = job.description;
+      output.autoscreening.questions = job.autoscreening.questions;
       output.isDraft.isChecked = job.status === POST_JOB.STATUS_TYPES.DRAFT;
 
       output.employmentType.inputs[
@@ -294,6 +295,7 @@ function PostJobForm() {
             addon,
             inputs: groupInputs,
             isChecked,
+            questions,
           } = input;
 
           if (type === FORM.FIELD_TYPES.INPUT) {
@@ -395,6 +397,10 @@ function PostJobForm() {
                 isRequired={isRequired}
               />
             );
+          }
+
+          if (type === FORM.FIELD_TYPES.AUTOSCREENING) {
+            return <JobAutoscreening key={inputKey} questions={questions} />;
           }
 
           if (type === FORM.FIELD_TYPES.CHECKBOX) {
