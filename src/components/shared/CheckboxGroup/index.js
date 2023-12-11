@@ -26,8 +26,8 @@ function CheckboxGroup({
       </span>
 
       <div className={styles.inputs}>
-        {inputs.map((input) => {
-          const { label: inputLabel, isChecked, valueKey } = input;
+        {Object.entries(inputs).map(([valueKey, input]) => {
+          const { label: inputLabel, isChecked } = input;
 
           return (
             <Checkbox
@@ -58,13 +58,11 @@ CheckboxGroup.propTypes = {
   isError: PropTypes.bool,
   errorMessage: PropTypes.string,
   onChange: PropTypes.func,
-  inputs: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      isChecked: PropTypes.bool,
-      valueKey: PropTypes.string,
-    }),
-  ),
+  inputs: PropTypes.shape({
+    label: PropTypes.string,
+    isChecked: PropTypes.bool,
+    valueKey: PropTypes.string,
+  }),
 };
 
 CheckboxGroup.defaultProps = {
@@ -73,13 +71,11 @@ CheckboxGroup.defaultProps = {
   isError: false,
   errorMessage: "",
   onChange: () => {},
-  inputs: [
-    {
-      label: "",
-      isChecked: false,
-      valueKey: "",
-    },
-  ],
+  inputs: {
+    label: "",
+    isChecked: false,
+    valueKey: "",
+  },
 };
 
 export default CheckboxGroup;

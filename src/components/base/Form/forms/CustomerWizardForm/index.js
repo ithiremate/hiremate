@@ -97,38 +97,38 @@ function CustomerWizardForm() {
           secured,
         } = input;
 
-        if (type === FORM.FIELD_TYPES.INPUT) {
+        if (type === FORM.FIELD_TYPES.LOCATION) {
           return (
-            <Input
+            <SearchInput
               key={inputKey}
               label={label}
               placeholder={placeholder}
-              value={value}
+              value={value.display_name}
               valueKey={inputKey}
+              displayKey={displayKey}
               name={inputKey}
               errorMessage={errorMessage}
-              isRequired={isRequired}
-              secured={secured}
-              onChange={handleInputChange}
+              results={locations.results}
+              isLoading={locations.isLoading}
+              isRequired
+              onChange={handleLocationChange}
+              onChose={handleLocationChose}
             />
           );
         }
 
         return (
-          <SearchInput
+          <Input
             key={inputKey}
             label={label}
             placeholder={placeholder}
-            value={value.display_name}
+            value={value}
             valueKey={inputKey}
-            displayKey={displayKey}
             name={inputKey}
             errorMessage={errorMessage}
-            results={locations.results}
-            isLoading={locations.isLoading}
-            isRequired
-            onChange={handleLocationChange}
-            onChose={handleLocationChose}
+            isRequired={isRequired}
+            secured={secured}
+            onChange={handleInputChange}
           />
         );
       })}

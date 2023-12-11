@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 
 import POST_JOB from "../../../../../utils/constants/postJob";
@@ -17,28 +17,33 @@ import Input from "../../../../shared/Input";
 import InputGroup from "../../../../shared/InputGroup";
 import SearchInput from "../../../../shared/SearchInput";
 import TextArea from "../../../../shared/TextArea";
-import JobScreening from "../../../../shared/JobScreening";
+// import JobScreening from "../../../../shared/JobScreening";
 import Checkbox from "../../../../shared/Checkbox";
 
 import styles from "./index.module.scss";
+import FORM from "../../../../../utils/constants/form";
 
-function PostJobForm({ actionType, inputs, onSubmit }) {
+function PostJobForm() {
   const dispatch = useDispatch();
 
   const { dbUser } = useSelector((state) => state.user);
   const { data } = useSelector((state) => state.modal);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [internalInputs, setInternalInputs] = useState(inputs);
+  const [inputs, setInputs] = useState(FORM.POST_JOB);
 
   const { locations, skills, searchHandlers, resetHandlers } = useSearch();
 
-  const resetFields = () => setInternalInputs(POST_JOB.DEFAULT_FORM_FIELDS);
+  const actionType = data
+    ? POST_JOB.ACTION_TYPES.EDIT
+    : POST_JOB.ACTION_TYPES.PUBLISH;
+
+  const resetFields = () => setInputs(FORM.POST_JOB);
 
   const postJob = async (validData) => {
     setIsLoading(true);
 
-    if (actionType === POST_JOB.ACTION_TYPES.POST) {
+    if (actionType === POST_JOB.ACTION_TYPES.PUBLISH) {
       await dispatch(
         postNewJob({ ...validData, companyName: dbUser.companyName }),
       );
@@ -48,58 +53,71 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
       await dispatch(editExistedJob({ ...data, ...validData }));
     }
 
-    if (onSubmit) {
-      onSubmit();
-    }
-
     resetFields();
     setIsLoading(false);
   };
 
   const handleInputChange = ({ value, valueKey }) => {
-    setInternalInputs((prev) => ({
-      ...prev,
-      [valueKey]: { errorMessage: "", value },
-    }));
+    setInputs((prev) => {
+      const output = structuredClone(prev);
+
+      output[valueKey].value = value;
+      output[valueKey].errorMessage = "";
+
+      return output;
+    });
   };
 
-  const handleLocationChange = ({ value }) => {
-    setInternalInputs((prev) => ({
-      ...prev,
-      location: {
-        ...prev.location,
-        errorMessage: "",
-        value: { display_name: value },
-      },
-    }));
+  const handleLocationChange = ({ value: display_name }) => {
+    setInputs((prev) => {
+      const output = structuredClone(prev);
 
-    searchHandlers.locationSearch(value);
+      output.location.value = { display_name };
+      output.location.errorMessage = "";
+
+      return output;
+    });
+
+    searchHandlers.locationSearch(display_name);
   };
 
-  const handleSkillsChange = ({ value }) => {
-    setInternalInputs((prev) => ({
-      ...prev,
-      skills: {
-        ...prev.skills,
-        errorMessage: "",
-        value: { name: value },
-      },
-    }));
+  const handleSkillsChange = ({ value: name }) => {
+    setInputs((prev) => {
+      const output = structuredClone(prev);
 
-    searchHandlers.skillsSearch(value);
+      output.skills.value = { name };
+      output.skills.errorMessage = "";
+
+      return output;
+    });
+
+    searchHandlers.skillsSearch(name);
   };
+
+  const handleInputGroupChange =
+    (inputKey) =>
+    ({ valueKey, value }) => {
+      setInputs((prev) => {
+        const output = structuredClone(prev);
+
+        output[inputKey].inputs[valueKey].value = value;
+        output[inputKey].inputs[valueKey].errorMessage = "";
+
+        return output;
+      });
+    };
 
   const handleCheckboxChange =
-    (objectKey) =>
+    (inputKey) =>
     ({ value, valueKey }) => {
-      setInternalInputs((prev) => ({
-        ...prev,
-        [objectKey]: {
-          ...prev[objectKey],
-          [valueKey]: value,
-          errorMessage: "",
-        },
-      }));
+      setInputs((prev) => {
+        const output = structuredClone(prev);
+
+        output[inputKey].inputs[valueKey].isChecked = value;
+        output[inputKey].errorMessage = "";
+
+        return output;
+      });
     };
 
   const handleLocationChose = ({ value, valueKey }) => {
@@ -108,24 +126,34 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
   };
 
   const handleSkillsChose = ({ items, valueKey }) => {
-    setInternalInputs((prev) => ({
+    setInputs((prev) => ({
       ...prev,
       [valueKey]: { ...prev[valueKey], errorMessage: "", chosen: items },
     }));
   };
 
   const handleFormError = (errors) => {
-    const updatedInputs = structuredClone(internalInputs);
+    const updatedInputs = structuredClone(inputs);
 
     Object.keys(errors).forEach((errorKey) => {
-      if (updatedInputs[errorKey] && errorKey === "location") {
+      if (errorKey === "location") {
         updatedInputs[errorKey].errorMessage = "Please enter job location";
+      } else if (errorKey === "experienceFrom") {
+        updatedInputs.experience.inputs[errorKey].errorMessage =
+          errors[errorKey];
+      } else if (errorKey === "experienceTo") {
+        updatedInputs.experience.inputs[errorKey].errorMessage =
+          errors[errorKey];
+      } else if (errorKey === "salaryFrom") {
+        updatedInputs.salary.inputs[errorKey].errorMessage = errors[errorKey];
+      } else if (errorKey === "salaryTo") {
+        updatedInputs.salary.inputs[errorKey].errorMessage = errors[errorKey];
       } else if (updatedInputs[errorKey]) {
         updatedInputs[errorKey].errorMessage = errors[errorKey];
       }
     });
 
-    setInternalInputs(updatedInputs);
+    setInputs(updatedInputs);
   };
 
   const handleSubmit = (e) => {
@@ -133,35 +161,35 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
 
     const employmentType = [];
     const workNature = [];
-    const status = internalInputs.isDraft.value
+    const status = inputs.isDraft.value
       ? POST_JOB.STATUS_TYPES.DRAFT
       : POST_JOB.STATUS_TYPES.PUBLISHED;
 
     Object.values(POST_JOB.EMPLOYMENT_TYPES).forEach((type) => {
-      if (internalInputs.employmentType[type]) {
+      if (inputs.employmentType.inputs[type].isChecked) {
         employmentType.push(type);
       }
     });
 
     Object.values(POST_JOB.WORK_NATURE_TYPES).forEach((type) => {
-      if (internalInputs.workNature[type]) {
+      if (inputs.workNature.inputs[type].isChecked) {
         workNature.push(type);
       }
     });
 
     validatePostJob({
       data: {
-        title: internalInputs.title.value,
-        description: internalInputs.description.value,
-        skills: internalInputs.skills.chosen,
-        location: internalInputs.location.value,
-        salaryFrom: internalInputs.salaryFrom.value,
-        salaryTo: internalInputs.salaryTo.value,
-        experienceFrom: internalInputs.experienceFrom.value,
-        experienceTo: internalInputs.experienceTo.value,
-        contactPerson: internalInputs.contactPerson.value,
-        contactPhone: internalInputs.contactPhone.value,
-        additionalContact: internalInputs.additionalContact.value,
+        title: inputs.jobTitle.value,
+        description: inputs.description.value,
+        skills: inputs.skills.chosen,
+        location: inputs.location.value,
+        experienceFrom: inputs.experience.inputs.experienceFrom.value,
+        experienceTo: inputs.experience.inputs.experienceTo.value,
+        salaryFrom: inputs.salary.inputs.salaryFrom.value,
+        salaryTo: inputs.salary.inputs.salaryTo.value,
+        contactPerson: inputs.contactPerson.value,
+        contactPhone: inputs.contactPhone.value,
+        additionalContact: inputs.additionalContact.value,
         employmentType,
         workNature,
         status,
@@ -171,211 +199,147 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
     });
   };
 
-  useEffect(() => setInternalInputs(inputs), [inputs]);
+  const initInputs = () => {};
+
+  useEffect(() => {
+    if (data) {
+      initInputs(inputs);
+    }
+  }, [inputs]);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.inputs}>
-        <Input
-          label="Title"
-          placeholder="Job Title"
-          value={internalInputs.title.value}
-          valueKey="title"
-          name="jobTitle"
-          errorMessage={internalInputs.title.errorMessage}
-          isRequired
-          onChange={handleInputChange}
-        />
+        {Object.entries(inputs).map(([inputKey, input]) => {
+          const {
+            type,
+            label,
+            placeholder,
+            value,
+            chosen,
+            displayKey,
+            errorMessage,
+            isRequired,
+            addon,
+            inputs: groupInputs,
+            isChecked,
+          } = input;
 
-        <SearchInput
-          label="Location"
-          placeholder="Job Location"
-          value={internalInputs.location.value.display_name}
-          valueKey="location"
-          displayKey="display_name"
-          errorMessage={internalInputs.location.errorMessage}
-          results={locations.results}
-          isLoading={locations.isLoading}
-          isRequired
-          onChange={handleLocationChange}
-          onChose={handleLocationChose}
-        />
+          if (type === FORM.FIELD_TYPES.INPUT) {
+            return (
+              <Input
+                key={inputKey}
+                label={label}
+                placeholder={placeholder}
+                value={value}
+                valueKey={inputKey}
+                name={inputKey}
+                errorMessage={errorMessage}
+                isRequired={isRequired}
+                onChange={handleInputChange}
+              />
+            );
+          }
 
-        <Input
-          label="Contact Person"
-          placeholder="Contact Person"
-          value={internalInputs.contactPerson.value}
-          valueKey="contactPerson"
-          name="contactPerson"
-          onChange={handleInputChange}
-        />
+          if (type === FORM.FIELD_TYPES.LOCATION) {
+            return (
+              <SearchInput
+                key={inputKey}
+                label={label}
+                placeholder={placeholder}
+                value={value[displayKey]}
+                valueKey={inputKey}
+                displayKey={displayKey}
+                name={inputKey}
+                errorMessage={errorMessage}
+                results={locations.results}
+                chosen={chosen}
+                isLoading={locations.isLoading}
+                isRequired
+                onChange={handleLocationChange}
+                onChose={handleLocationChose}
+              />
+            );
+          }
 
-        <Input
-          label="Contact Phone"
-          placeholder="Contact Phone"
-          value={internalInputs.contactPhone.value}
-          valueKey="contactPhone"
-          name="contactPhone"
-          onChange={handleInputChange}
-        />
+          if (type === FORM.FIELD_TYPES.SKILLS) {
+            return (
+              <SearchInput
+                key={inputKey}
+                label={label}
+                placeholder={placeholder}
+                value={value.name}
+                chosen={chosen}
+                valueKey={inputKey}
+                displayKey={displayKey}
+                name={inputKey}
+                errorMessage={errorMessage}
+                results={skills.results}
+                isLoading={skills.isLoading}
+                isRequired
+                isMultiple
+                onChange={handleSkillsChange}
+                onChose={handleSkillsChose}
+              />
+            );
+          }
 
-        <Input
-          label="Additional Contact"
-          placeholder="Additional Contact: skype, telegram etc."
-          value={internalInputs.additionalContact.value}
-          valueKey="additionalContact"
-          name="additionalContact"
-          onChange={handleInputChange}
-        />
+          if (type === FORM.FIELD_TYPES.INPUT_GROUP) {
+            return (
+              <InputGroup
+                key={inputKey}
+                addon={addon}
+                label={label}
+                onChange={handleInputGroupChange(inputKey)}
+                inputs={groupInputs}
+                isRequired={isRequired}
+              />
+            );
+          }
 
-        <SearchInput
-          label="Skills / Requirements"
-          placeholder="Skills and Requirements"
-          value={internalInputs.skills.value.name}
-          chosen={internalInputs.skills.chosen}
-          valueKey="skills"
-          displayKey="name"
-          errorMessage={internalInputs.skills.errorMessage}
-          results={skills.results}
-          isLoading={skills.isLoading}
-          isRequired
-          isMultiple
-          onChange={handleSkillsChange}
-          onChose={handleSkillsChose}
-        />
+          if (type === FORM.FIELD_TYPES.CHECKBOX_GROUP) {
+            return (
+              <CheckboxGroup
+                key={inputKey}
+                label={label}
+                isError={!!errorMessage}
+                errorMessage={errorMessage}
+                onChange={handleCheckboxChange(inputKey)}
+                inputs={groupInputs}
+                isRequired={isRequired}
+              />
+            );
+          }
 
-        <InputGroup
-          addon="to"
-          label="Experience"
-          onChange={handleInputChange}
-          isRequired
-          inputs={[
-            {
-              placeholder: "Experience from",
-              value: internalInputs.experienceFrom.value,
-              valueKey: "experienceFrom",
-              errorMessage: internalInputs.experienceFrom.errorMessage,
-              name: "experienceFrom",
-              type: "number",
-            },
-            {
-              placeholder: "Experience to",
-              value: internalInputs.experienceTo.value,
-              valueKey: "experienceTo",
-              errorMessage: internalInputs.experienceTo.errorMessage,
-              name: "experienceTo",
-              type: "number",
-            },
-          ]}
-        />
+          if (type === FORM.FIELD_TYPES.TEXT_AREA) {
+            return (
+              <TextArea
+                key={inputKey}
+                label={label}
+                placeholder={placeholder}
+                value={value}
+                valueKey={inputKey}
+                errorMessage={errorMessage}
+                onChange={handleInputChange}
+                isRequired={isRequired}
+              />
+            );
+          }
 
-        <InputGroup
-          addon="to"
-          label="Salary"
-          onChange={handleInputChange}
-          isRequired
-          inputs={[
-            {
-              placeholder: "Salary from",
-              value: internalInputs.salaryFrom.value,
-              valueKey: "salaryFrom",
-              errorMessage: internalInputs.salaryFrom.errorMessage,
-              name: "salaryFrom",
-              type: "number",
-            },
-            {
-              placeholder: "Salary to",
-              value: internalInputs.salaryTo.value,
-              valueKey: "salaryTo",
-              errorMessage: internalInputs.salaryTo.errorMessage,
-              name: "salaryTo",
-              type: "number",
-            },
-          ]}
-        />
+          if (type === FORM.FIELD_TYPES.CHECKBOX) {
+            return (
+              <Checkbox
+                key={inputKey}
+                label={label}
+                isChecked={isChecked}
+                valueKey={inputKey}
+                onChange={handleInputChange}
+              />
+            );
+          }
 
-        <div className={styles.doubleRows}>
-          <CheckboxGroup
-            label="Type of employment"
-            isError={!!internalInputs.employmentType.errorMessage}
-            errorMessage={internalInputs.employmentType.errorMessage}
-            onChange={handleCheckboxChange("employmentType")}
-            inputs={[
-              {
-                label: "Full-time",
-                isChecked:
-                  internalInputs.employmentType[
-                    POST_JOB.EMPLOYMENT_TYPES.FULL_TIME
-                  ],
-                valueKey: POST_JOB.EMPLOYMENT_TYPES.FULL_TIME,
-              },
-              {
-                label: "Part-time",
-                isChecked:
-                  internalInputs.employmentType[
-                    POST_JOB.EMPLOYMENT_TYPES.PART_TIME
-                  ],
-                valueKey: POST_JOB.EMPLOYMENT_TYPES.PART_TIME,
-              },
-              {
-                label: "Project",
-                isChecked:
-                  internalInputs.employmentType[
-                    POST_JOB.EMPLOYMENT_TYPES.PROJECT
-                  ],
-                valueKey: POST_JOB.EMPLOYMENT_TYPES.PROJECT,
-              },
-            ]}
-            isRequired
-          />
-
-          <CheckboxGroup
-            label="Nature of work"
-            isError={!!internalInputs.workNature.errorMessage}
-            errorMessage={internalInputs.workNature.errorMessage}
-            onChange={handleCheckboxChange("workNature")}
-            inputs={[
-              {
-                label: "On-site",
-                isChecked:
-                  internalInputs.workNature[POST_JOB.WORK_NATURE_TYPES.ON_SITE],
-                valueKey: POST_JOB.WORK_NATURE_TYPES.ON_SITE,
-              },
-              {
-                label: "Remote",
-                isChecked:
-                  internalInputs.workNature[POST_JOB.WORK_NATURE_TYPES.REMOTE],
-                valueKey: POST_JOB.WORK_NATURE_TYPES.REMOTE,
-              },
-              {
-                label: "Hybrid",
-                isChecked:
-                  internalInputs.workNature[POST_JOB.WORK_NATURE_TYPES.HYBRID],
-                valueKey: POST_JOB.WORK_NATURE_TYPES.HYBRID,
-              },
-            ]}
-            isRequired
-          />
-        </div>
-
-        <TextArea
-          label="Description"
-          placeholder="Job Description"
-          value={internalInputs.description.value}
-          valueKey="description"
-          errorMessage={internalInputs.description.errorMessage}
-          onChange={handleInputChange}
-          isRequired
-        />
-
-        <JobScreening questions={internalInputs.questions} />
-
-        <Checkbox
-          label="Save as draft?"
-          isChecked={internalInputs.isDraft.value}
-          valueKey="isDraft"
-          onChange={handleInputChange}
-        />
+          return <div key={inputKey} />;
+        })}
       </div>
 
       <div className={styles.buttonContainer}>
@@ -389,17 +353,5 @@ function PostJobForm({ actionType, inputs, onSubmit }) {
     </form>
   );
 }
-
-PostJobForm.propTypes = {
-  actionType: PropTypes.oneOf(Object.values(POST_JOB.ACTION_TYPES)),
-  onSubmit: PropTypes.oneOfType([PropTypes.func, PropTypes.oneOf([null])]),
-  inputs: PropTypes.shape({}),
-};
-
-PostJobForm.defaultProps = {
-  actionType: POST_JOB.ACTION_TYPES.POST,
-  onSubmit: null,
-  inputs: POST_JOB.DEFAULT_FORM_FIELDS,
-};
 
 export default PostJobForm;

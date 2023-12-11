@@ -9,8 +9,10 @@ import styles from "./index.module.scss";
 function InputGroup({ addon, label, isRequired, className, onChange, inputs }) {
   const { currentTheme } = useSelector((state) => state.theme);
 
+  const inputsCount = useMemo(() => Object.keys(inputs).length, []);
+
   const isError = useMemo(
-    () => inputs.some((input) => !!input.errorMessage),
+    () => Object.values(inputs).some((input) => !!input.errorMessage),
     [inputs],
   );
 
@@ -29,20 +31,11 @@ function InputGroup({ addon, label, isRequired, className, onChange, inputs }) {
       </label>
 
       <div className={styles.fieldsContainer}>
-        {inputs.map((input, index) => {
-          const {
-            placeholder,
-            value,
-            valueKey,
-            errorMessage,
-            name,
-            type,
-            min,
-            max,
-          } = input;
+        {Object.entries(inputs).map(([inputKey, input], index) => {
+          const { placeholder, value, errorMessage, type } = input;
 
           return (
-            <Fragment key={valueKey}>
+            <Fragment key={inputKey}>
               {index > 0 && (
                 <div
                   className={classNames(
@@ -62,17 +55,15 @@ function InputGroup({ addon, label, isRequired, className, onChange, inputs }) {
                     {
                       [styles[`field_${currentTheme}_first`]]: index === 0,
                       [styles[`field_${currentTheme}_last`]]:
-                        index === inputs.length - 1,
+                        index === inputsCount - 1,
                       [styles[`field_error_${currentTheme}`]]: !!errorMessage,
                     },
                   )}
                   placeholder={placeholder}
                   value={value}
-                  name={name}
+                  name={inputKey}
                   type={type}
-                  min={min}
-                  max={max}
-                  onChange={handleChange(valueKey)}
+                  onChange={handleChange(inputKey)}
                 />
 
                 <span
@@ -97,18 +88,16 @@ InputGroup.propTypes = {
   isRequired: PropTypes.bool,
   className: PropTypes.string,
   onChange: PropTypes.func,
-  inputs: PropTypes.arrayOf(
-    PropTypes.shape({
-      placeholder: PropTypes.string,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      valueKey: PropTypes.string,
-      errorMessage: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      min: PropTypes.number,
-      max: PropTypes.number,
-    }),
-  ),
+  inputs: PropTypes.shape({
+    placeholder: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    valueKey: PropTypes.string,
+    errorMessage: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    min: PropTypes.number,
+    max: PropTypes.number,
+  }),
 };
 
 InputGroup.defaultProps = {
@@ -117,18 +106,16 @@ InputGroup.defaultProps = {
   isRequired: false,
   className: "",
   onChange: () => {},
-  inputs: [
-    {
-      placeholder: "",
-      value: "",
-      valueKey: "",
-      errorMessage: "",
-      name: "",
-      type: "text",
-      min: 0,
-      max: 100,
-    },
-  ],
+  inputs: {
+    placeholder: "",
+    value: "",
+    valueKey: "",
+    errorMessage: "",
+    name: "",
+    type: "text",
+    min: 0,
+    max: 100,
+  },
 };
 
 export default InputGroup;
