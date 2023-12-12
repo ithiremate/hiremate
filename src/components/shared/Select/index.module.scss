@@ -1,0 +1,203 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.label {
+    cursor: default;
+    @include font-lg;
+    @include transition(color);
+
+    &_light {
+        color: $text-primary-light;
+    }
+
+    &_dark {
+        color: $text-primary-dark;
+    }
+}
+
+.asterisk {
+    &_light {
+        color: $red-light;
+    }
+
+    &_dark {
+        color: $red-dark;
+    }
+}
+
+.fieldContainer {
+    width: 100%;
+    position: relative;
+}
+
+.field {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    @include font-base;
+    @include transition(border, color, background-color);
+
+    &_light {
+        color: $text-primary-light;
+        background-color: $background-light;
+        border: 2px solid $text-primary-light;
+
+        &::placeholder {
+            @include transition(color);
+            color: rgba($color: $text-primary-light, $alpha: 0.6);
+        }
+    }
+
+    &_dark {
+        color: $text-primary-dark;
+        background-color: $background-dark;
+        border: 2px solid $text-primary-dark;
+
+        &::placeholder {
+            @include transition(color);
+            color: rgba($color: $text-primary-dark, $alpha: 0.6);
+        }
+    }
+
+    &_error {
+        &_light {
+            color: $red-light;
+            border: 2px solid $red-light;
+        }
+
+        &_dark {
+            color: $red-dark;
+            border: 2px solid $red-dark;
+        }
+    }
+
+    &:hover {
+        .placeholder {
+            &_light {
+                color: $text-primary-light;
+            }
+
+            &_dark {
+                color: $text-primary-dark;
+            }
+        }
+
+        .arrow {
+            opacity: 1;
+
+            &:not(&_expanded) {
+                transform: rotate(45deg);
+            }
+        }
+    }
+}
+
+.placeholder {
+    @include transition(color);
+
+    &_light {
+        color: rgba($color: $text-primary-light, $alpha: 0.6);
+    }
+
+    &_dark {
+        color: rgba($color: $text-primary-dark, $alpha: 0.6);
+    }
+}
+
+.arrow {
+    opacity: 0.6;
+    @include transition(opacity, transform);
+
+    &_expanded {
+        transform: rotate((180deg));
+    }
+}
+
+.options {
+    width: 100%;
+    max-height: 0;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: -1px;
+    z-index: 1;
+    box-sizing: border-box;
+    @include transition(max-height, opacity);
+
+    &_light {
+        background: $background-light;
+        border: 2px solid $background-dark;
+        border-top-width: 0;
+    }
+
+    &_dark {
+        background: $background-dark;
+        border: 2px solid $background-light;
+        border-top-width: 0;
+    }
+
+    &_expanded {
+        max-height: 200px;
+    }
+}
+
+.option {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    @include transition(background-color);
+
+    &_light {
+        &:hover {
+            background-color: $background-dark;
+            color: $text-primary-dark;
+        }
+    }
+
+    &_dark {
+        &:hover {
+            background-color: $background-light;
+            color: $text-primary-light;
+        }
+    }
+}
+
+.errorMessage {
+    display: inline-block;
+    height: 21px;
+    @include font-sm;
+
+    &_light {
+        color: $red-light;
+    }
+
+    &_dark {
+        color: $red-dark;
+    }
+}
+
+@include tablet {
+    .options {
+        position: absolute;
+        top: calc(100% - 1px);
+        left: 0;
+    }
+}
