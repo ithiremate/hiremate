@@ -135,11 +135,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  top: -1px;
   z-index: 1;
   box-sizing: border-box;
-  @include transition(max-height, opacity);
+  border-color: transparent !important;
+  transition:
+    max-height 0.3s ease-in-out,
+    border-color 0s ease-in-out 0.3s;
 
   &_light {
     background: $background-light;
@@ -155,6 +156,10 @@
 
   &_expanded {
     max-height: 200px;
+    border-color: unset !important;
+    transition:
+      max-height 0.3s ease-in-out,
+      border-color 0s ease-in-out;
   }
 }
 
@@ -197,7 +202,7 @@
 @include tablet {
   .options {
     position: absolute;
-    top: calc(100% - 1px);
+    top: 100%;
     left: 0;
   }
 }
