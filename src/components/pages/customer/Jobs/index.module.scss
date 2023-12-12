@@ -1,42 +1,42 @@
 @import "../../../../styles/mixins.scss";
 
 .container {
-    max-width: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    @include main-page-adaptive-container;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  @include main-page-adaptive-container;
 }
 
 .dummyContent {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .dummyTitle {
-    @include font-lg;
+  @include font-lg;
 }
 
 .title {
-    line-height: 42px;
-    @include font-4xl;
-    @include transition(color);
+  line-height: 42px;
+  @include font-4xl;
+  @include transition(color);
 }
 
 .jobs {
-    max-width: 100%;
-    width: 100%;
-    display: grid;
-    gap: 20px;
+  max-width: 100%;
+  width: 100%;
+  display: grid;
+  gap: 20px;
 }
 
 @include desktop {
-    .jobs {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .jobs {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

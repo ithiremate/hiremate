@@ -2,52 +2,52 @@
 @import "../../../styles/mixins.scss";
 
 .container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
 .label {
-    white-space: nowrap;
-    text-transform: uppercase;
-    @include font-base;
+  white-space: nowrap;
+  text-transform: uppercase;
+  @include font-base;
 }
 
 .switch {
-    width: 50px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    border-radius: 30px;
-    position: relative;
+  width: 50px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  position: relative;
 
-    &_light {
-        background-color: $background-dark;
-    }
+  &_light {
+    background-color: $background-dark;
+  }
 
-    &_dark {
-        background-color: $background-light;
-    }
+  &_dark {
+    background-color: $background-light;
+  }
 }
 
 .indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    position: absolute;
-    left: 4px;
-    @include transition(left);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+  left: 4px;
+  @include transition(left);
 
-    &_light {
-        background-color: $background-light;
-    }
+  &_light {
+    background-color: $background-light;
+  }
 
-    &_dark {
-        background-color: $background-dark;
-    }
+  &_dark {
+    background-color: $background-dark;
+  }
 
-    &_checked {
-        left: calc(100% - 22px);
-    }
+  &_checked {
+    left: calc(100% - 22px);
+  }
 }

@@ -2,106 +2,106 @@
 @import "../../../../../styles/mixins.scss";
 
 .container {
-    max-width: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    @include main-page-adaptive-container;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  @include main-page-adaptive-container;
 }
 
 .dummyContent {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .dummyTitle {
-    @include font-lg;
+  @include font-lg;
 }
 
 .form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .inputs {
-    width: 100%;
-    display: grid;
-    gap: 10px;
+  width: 100%;
+  display: grid;
+  gap: 10px;
 }
 
 .buttonContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .button {
-    width: 100%;
+  width: 100%;
 }
 
 .doubleRows {
-    display: grid;
-    gap: 10px;
+  display: grid;
+  gap: 10px;
 }
 
 .inputBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .label {
-    @include font-lg;
-    @include transition(color);
+  @include font-lg;
+  @include transition(color);
 
-    &_light {
-        color: $text-primary-light;
-    }
+  &_light {
+    color: $text-primary-light;
+  }
 
-    &_dark {
-        color: $text-primary-dark;
-    }
+  &_dark {
+    color: $text-primary-dark;
+  }
 }
 
 .formButton {
-    flex: 1;
-    margin-bottom: 30px;
+  flex: 1;
+  margin-bottom: 30px;
 }
 
 @include mobile-md {
-    .buttonContainer {
-        flex-direction: row;
-        justify-content: space-between;
-    }
+  .buttonContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-    .button {
-        flex: 1;
-    }
+  .button {
+    flex: 1;
+  }
 }
 
 @include laptop {
-    .buttonContainer {
-        justify-content: flex-end;
-    }
+  .buttonContainer {
+    justify-content: flex-end;
+  }
 
-    .button,
-    .formButton {
-        width: 240px;
-        flex: unset;
-    }
+  .button,
+  .formButton {
+    width: 240px;
+    flex: unset;
+  }
 }
 
 @include desktop {
-    .doubleRows {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .doubleRows {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

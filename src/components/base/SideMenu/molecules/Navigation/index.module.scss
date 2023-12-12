@@ -2,100 +2,100 @@
 @import "../../../../../styles/mixins.scss";
 
 .container {
-    width: 100%;
-    flex: 1;
-    font-weight: 600;
+  width: 100%;
+  flex: 1;
+  font-weight: 600;
 }
 
 .content {
-    width: 100%;
+  width: 100%;
 }
 
 .linkContainer,
 .linkContainer_left {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 
 .linkContainer,
 .link {
-    padding: 10px 20px;
-    box-sizing: border-box;
-    cursor: pointer;
-    @include transition(color, background-color);
+  padding: 10px 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  @include transition(color, background-color);
 
-    svg {
+  svg {
+    path {
+      @include transition(fill);
+    }
+  }
+
+  &_light {
+    &:hover,
+    &_active {
+      color: $red-light;
+      background-color: rgba($color: $red-light, $alpha: 0.1);
+
+      svg {
         path {
-            @include transition(fill);
+          fill: $red-light;
         }
+      }
     }
+  }
 
-    &_light {
-        &:hover,
-        &_active {
-            color: $red-light;
-            background-color: rgba($color: $red-light, $alpha: 0.1);
+  &_dark {
+    &:hover,
+    &_active {
+      color: $red-dark;
+      background-color: rgba($color: $red-dark, $alpha: 0.1);
 
-            svg {
-                path {
-                    fill: $red-light;
-                }
-            }
+      svg {
+        path {
+          fill: $red-dark;
         }
+      }
     }
-
-    &_dark {
-        &:hover,
-        &_active {
-            color: $red-dark;
-            background-color: rgba($color: $red-dark, $alpha: 0.1);
-
-            svg {
-                path {
-                    fill: $red-dark;
-                }
-            }
-        }
-    }
+  }
 }
 
 .linkContainer {
-    &:hover:not(&_expanded) {
-        .icon {
-            transform: rotate(45deg);
-        }
+  &:hover:not(&_expanded) {
+    .icon {
+      transform: rotate(45deg);
     }
+  }
 
-    &_expanded {
-        .icon {
-            transform: rotate(180deg);
-        }
+  &_expanded {
+    .icon {
+      transform: rotate(180deg);
     }
+  }
 
-    &_withoutIcon {
-        padding-left: 54px;
-    }
+  &_withoutIcon {
+    padding-left: 54px;
+  }
 }
 
 .icon {
-    @include transition(transform);
+  @include transition(transform);
 }
 
 .link {
-    &_withoutIcon {
-        padding-left: 54px;
-    }
+  &_withoutIcon {
+    padding-left: 54px;
+  }
 }
 
 .nested {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0;
-    @include transition(max-height);
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+  @include transition(max-height);
 
-    &_expanded {
-        max-height: 310px;
-    }
+  &_expanded {
+    max-height: 310px;
+  }
 }

@@ -1,18 +1,18 @@
 @import "../../../../../styles/mixins.scss";
 
 .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 @include mobile-lg {
-    .container {
-        gap: 40px;
-    }
+  .container {
+    gap: 40px;
+  }
 
-    .buttons {
-        flex-direction: row;
-        justify-content: space-between;
-    }
+  .buttons {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }

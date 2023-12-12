@@ -18,6 +18,8 @@ function JobAutoscreeningModal() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.content}></div>
+
       <div className={styles.buttons}>
         <Button className={styles.button} label="save" onClick={handleSubmit} />
 

@@ -2,50 +2,50 @@
 @import "../../../styles/mixins.scss";
 
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .label {
-    @include font-lg;
-    @include transition(color);
+  @include font-lg;
+  @include transition(color);
 
-    &_light {
-        color: $text-primary-light;
-    }
+  &_light {
+    color: $text-primary-light;
+  }
 
-    &_dark {
-        color: $text-primary-dark;
-    }
+  &_dark {
+    color: $text-primary-dark;
+  }
 }
 
 .asterisk {
-    &_light {
-        color: $red-light;
-    }
+  &_light {
+    color: $red-light;
+  }
 
-    &_dark {
-        color: $red-dark;
-    }
+  &_dark {
+    color: $red-dark;
+  }
 }
 
 .inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .errorMessage {
-    display: inline-block;
-    height: 21px;
-    @include font-sm;
+  display: inline-block;
+  height: 21px;
+  @include font-sm;
 
-    &_light {
-        color: $red-light;
-    }
+  &_light {
+    color: $red-light;
+  }
 
-    &_dark {
-        color: $red-dark;
-    }
+  &_dark {
+    color: $red-dark;
+  }
 }

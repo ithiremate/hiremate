@@ -2,48 +2,48 @@
 @import "../../../styles/mixins.scss";
 
 .container {
-    width: 76px;
-    height: 76px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    position: relative;
-    @include transition(width, height, background-color);
+  width: 76px;
+  height: 76px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: relative;
+  @include transition(width, height, background-color);
+
+  svg {
+    width: 50%;
+    height: 50%;
+
+    path {
+      @include transition(fill);
+    }
+  }
+
+  &_light {
+    background-color: $text-primary-light;
 
     svg {
-        width: 50%;
-        height: 50%;
-
-        path {
-            @include transition(fill);
-        }
+      path {
+        fill: $text-primary-dark;
+      }
     }
+  }
 
-    &_light {
-        background-color: $text-primary-light;
+  &_dark {
+    background-color: $text-primary-dark;
 
-        svg {
-            path {
-                fill: $text-primary-dark;
-            }
-        }
+    svg {
+      path {
+        fill: $text-primary-light;
+      }
     }
-
-    &_dark {
-        background-color: $text-primary-dark;
-
-        svg {
-            path {
-                fill: $text-primary-light;
-            }
-        }
-    }
+  }
 }
 
 @include tablet {
-    .container {
-        width: 90px;
-        height: 90px;
-    }
+  .container {
+    width: 90px;
+    height: 90px;
+  }
 }

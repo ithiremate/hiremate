@@ -2,214 +2,214 @@
 @import "../../../../../../styles/mixins.scss";
 
 .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 20px;
-    box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  box-sizing: border-box;
 
-    &_light {
-        border: 2px solid $background-dark;
-    }
+  &_light {
+    border: 2px solid $background-dark;
+  }
 
-    &_dark {
-        border: 2px solid $background-light;
-    }
+  &_dark {
+    border: 2px solid $background-light;
+  }
 }
 
 .job {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .jobHeader {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 20px 20px 0;
-    box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 20px 0;
+  box-sizing: border-box;
 }
 
 .left {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .leftItem {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .companyImage {
-    min-width: 50px;
-    min-height: 50px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    @include transition(background-color);
+  min-width: 50px;
+  min-height: 50px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  @include transition(background-color);
 
-    &_light {
-        background-color: $background-dark;
+  &_light {
+    background-color: $background-dark;
 
-        svg path {
-            fill: $background-light;
-        }
+    svg path {
+      fill: $background-light;
     }
+  }
 
-    &_dark {
-        background-color: $background-light;
+  &_dark {
+    background-color: $background-light;
 
-        svg path {
-            fill: $background-dark;
-        }
+    svg path {
+      fill: $background-dark;
     }
+  }
 }
 
 .titleContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .jobTitle {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 600;
-    @include font-base;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  @include font-base;
 }
 
 .companyName {
-    @include font-sm;
+  @include font-sm;
 }
 
 .jobBody {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 0 20px 20px;
-    box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px 20px;
+  box-sizing: border-box;
 }
 
 .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .tag {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    padding: 2px 14px;
-    box-sizing: border-box;
-    @include transition(color, background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 14px;
+  box-sizing: border-box;
+  @include transition(color, background-color);
 
-    &_light {
-        color: $text-primary-dark;
-        background-color: $background-dark;
+  &_light {
+    color: $text-primary-dark;
+    background-color: $background-dark;
 
-        svg path {
-            fill: $text-primary-dark;
-        }
+    svg path {
+      fill: $text-primary-dark;
     }
+  }
 
-    &_dark {
-        color: $text-primary-light;
-        background-color: $background-light;
+  &_dark {
+    color: $text-primary-light;
+    background-color: $background-light;
 
-        svg path {
-            fill: $text-primary-light;
-        }
+    svg path {
+      fill: $text-primary-light;
     }
+  }
 }
 
 .tagIcon {
-    width: 16px;
+  width: 16px;
 }
 
 .tagTitle {
-    font-weight: 400;
-    @include font-sm;
+  font-weight: 400;
+  @include font-sm;
 }
 
 .jobFooter {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 20px;
-    box-sizing: border-box;
-    @include transition(color, background-color);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  @include transition(color, background-color);
 
-    &_light {
-        color: $text-primary-dark;
-        background-color: $background-dark;
+  &_light {
+    color: $text-primary-dark;
+    background-color: $background-dark;
 
-        svg path,
-        svg rect {
-            fill: $text-primary-dark;
-        }
+    svg path,
+    svg rect {
+      fill: $text-primary-dark;
     }
+  }
 
-    &_dark {
-        color: $text-primary-light;
-        background-color: $background-light;
+  &_dark {
+    color: $text-primary-light;
+    background-color: $background-light;
 
-        svg path,
-        svg rect {
-            fill: $text-primary-light;
-        }
+    svg path,
+    svg rect {
+      fill: $text-primary-light;
     }
+  }
 }
 
 .footerLeft {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .status {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .salary {
-    white-space: nowrap;
-    font-weight: 700;
-    @include font-xl;
+  white-space: nowrap;
+  font-weight: 700;
+  @include font-xl;
 }
 
 @include mobile-lg {
-    .companyImage {
-        margin-top: 6px;
-    }
+  .companyImage {
+    margin-top: 6px;
+  }
 
-    .jobTitle {
-        @include font-lg;
-    }
+  .jobTitle {
+    @include font-lg;
+  }
 
-    .companyName {
-        @include font-base;
-    }
+  .companyName {
+    @include font-base;
+  }
 
-    .jobFooter {
-        flex-direction: row;
-        align-items: center;
-    }
+  .jobFooter {
+    flex-direction: row;
+    align-items: center;
+  }
 
-    .footerLeft {
-        flex-direction: row;
-        gap: 20px;
-    }
+  .footerLeft {
+    flex-direction: row;
+    gap: 20px;
+  }
 
-    .salary {
-        font-weight: 700;
-        @include font-2xl;
-    }
+  .salary {
+    font-weight: 700;
+    @include font-2xl;
+  }
 }

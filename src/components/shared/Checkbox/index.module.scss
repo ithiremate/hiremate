@@ -2,39 +2,39 @@
 @import "../../../styles/mixins.scss";
 
 .label {
-    width: min-content;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    @include transition(color);
+  width: min-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  @include transition(color);
 
-    svg {
+  svg {
+    path {
+      @include transition(fill);
+    }
+  }
+
+  &_error {
+    &_light {
+      color: $red-light;
+
+      svg {
         path {
-            @include transition(fill);
+          fill: $red-light;
         }
+      }
     }
 
-    &_error {
-        &_light {
-            color: $red-light;
+    &_dark {
+      color: $red-dark;
 
-            svg {
-                path {
-                    fill: $red-light;
-                }
-            }
+      svg {
+        path {
+          fill: $red-dark;
         }
-
-        &_dark {
-            color: $red-dark;
-
-            svg {
-                path {
-                    fill: $red-dark;
-                }
-            }
-        }
+      }
     }
+  }
 }

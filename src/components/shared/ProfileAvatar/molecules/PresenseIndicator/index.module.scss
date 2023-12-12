@@ -2,53 +2,53 @@
 @import "../../../../../styles/mixins.scss";
 
 .container {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    position: absolute;
-    top: 100%;
-    left: 100%;
-    transform: translate(-100%, -100%);
-    padding: 6px;
-    box-sizing: border-box;
-    @include transition(background-color);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  transform: translate(-100%, -100%);
+  padding: 6px;
+  box-sizing: border-box;
+  @include transition(background-color);
 
-    &_light {
-        background-color: $background-light-secondary;
-    }
+  &_light {
+    background-color: $background-light-secondary;
+  }
 
-    &_dark {
-        background-color: $background-dark-secondary;
-    }
+  &_dark {
+    background-color: $background-dark-secondary;
+  }
 }
 
 .indicator {
-    width: 100%;
-    height: 100%;
-    flex: 1;
-    border-radius: 50%;
-    @include transition(background-color);
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  border-radius: 50%;
+  @include transition(background-color);
 
-    &_online {
-        &_light {
-            background-color: $green-light;
-        }
-
-        &_dark {
-            background-color: $green-dark;
-        }
+  &_online {
+    &_light {
+      background-color: $green-light;
     }
 
-    &_offline {
-        &_light {
-            background-color: $red-light;
-        }
-
-        &_dark {
-            background-color: $red-dark;
-        }
+    &_dark {
+      background-color: $green-dark;
     }
+  }
+
+  &_offline {
+    &_light {
+      background-color: $red-light;
+    }
+
+    &_dark {
+      background-color: $red-dark;
+    }
+  }
 }

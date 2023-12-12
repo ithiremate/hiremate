@@ -2,23 +2,23 @@
 @import "../../../styles/mixins.scss";
 
 .icon {
+  @include transition(fill);
+
+  path {
     @include transition(fill);
+  }
 
-    path {
-        @include transition(fill);
+  &_light {
+    path,
+    rect {
+      fill: $text-primary-light;
     }
+  }
 
-    &_light {
-        path,
-        rect {
-            fill: $text-primary-light;
-        }
+  &_dark {
+    path,
+    rect {
+      fill: $text-primary-dark;
     }
-
-    &_dark {
-        path,
-        rect {
-            fill: $text-primary-dark;
-        }
-    }
+  }
 }
