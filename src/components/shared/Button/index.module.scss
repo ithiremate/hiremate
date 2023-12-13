@@ -16,14 +16,14 @@
   cursor: pointer;
   white-space: nowrap;
   @include font-base;
-  @include transition(border-color, background-color, color);
+  @include transition(border-color, background-color, color, opacity);
 
   &_light {
     color: $text-primary-light;
     border-color: $text-primary-light;
     background-color: $background-light;
 
-    &:hover {
+    &:hover:not(&:disabled) {
       color: $background-light;
       background-color: $text-primary-light;
     }
@@ -40,7 +40,7 @@
     border-color: $text-primary-dark;
     background-color: $background-dark;
 
-    &:hover {
+    &:hover:not(&:disabled) {
       color: $background-dark;
       background-color: $text-primary-dark;
     }
@@ -70,5 +70,10 @@
       border-color: $text-primary-dark;
       background-color: $background-dark;
     }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }

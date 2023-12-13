@@ -34,6 +34,9 @@
 
 .fieldContainer {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   position: relative;
 }
 
@@ -135,6 +138,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  top: 100%;
+  left: 0;
   z-index: 1;
   box-sizing: border-box;
   border-color: transparent !important;
@@ -171,6 +177,11 @@
   @include transition(background-color);
 
   &_light {
+    &_chosen {
+      background-color: $background-dark;
+      color: $text-primary-dark;
+    }
+
     &:hover {
       background-color: $background-dark;
       color: $text-primary-dark;
@@ -178,6 +189,11 @@
   }
 
   &_dark {
+    &_chosen {
+      background-color: $background-light;
+      color: $text-primary-light;
+    }
+
     &:hover {
       background-color: $background-light;
       color: $text-primary-light;
@@ -196,13 +212,5 @@
 
   &_dark {
     color: $red-dark;
-  }
-}
-
-@include tablet {
-  .options {
-    position: absolute;
-    top: 100%;
-    left: 0;
   }
 }

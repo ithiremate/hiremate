@@ -7,6 +7,12 @@
   gap: 10px;
 }
 
+.labelContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .label {
   @include font-lg;
   @include transition(color);

@@ -6,14 +6,22 @@ import classNames from "classnames";
 import styles from "./index.module.scss";
 import LoadingIndicator from "../LoadingIndicator";
 
-function Button({ label, type, tabIndex, isLoading, className, onClick }) {
+function Button({
+  label,
+  type,
+  tabIndex,
+  isLoading,
+  disabled,
+  className,
+  onClick,
+}) {
   const { currentTheme } = useSelector((state) => state.theme);
 
   return (
     <button
       type={type}
       tabIndex={tabIndex}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       onClick={onClick}
       className={classNames(
         styles.button,
@@ -31,6 +39,7 @@ Button.propTypes = {
   type: PropTypes.oneOf(["button", "submit", "reset"]),
   tabIndex: PropTypes.number,
   isLoading: PropTypes.bool,
+  disabled: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
 };
@@ -39,6 +48,7 @@ Button.defaultProps = {
   type: "button",
   tabIndex: undefined,
   isLoading: false,
+  disabled: false,
   className: "",
   onClick: () => {},
 };

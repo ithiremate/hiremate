@@ -7,6 +7,40 @@
   gap: 40px;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.blankMessage {
+  opacity: 0.5;
+}
+
+.questions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.question {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  &_dark {
+    border: 2px dashed $background-light;
+  }
+
+  &_light {
+    border: 2px dashed $background-dark;
+  }
+}
+
 .newQuestionContainer {
   width: 100%;
   display: flex;

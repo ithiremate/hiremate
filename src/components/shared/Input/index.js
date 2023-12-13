@@ -16,11 +16,14 @@ function Input({
   name,
   type,
   errorMessage,
+  showErrorMessage,
+  labelButton,
   isRequired,
   readOnly,
   secured,
   onChange,
   onFocus,
+  onLabelButtonClick,
 }) {
   const { currentTheme } = useSelector((state) => state.theme);
 
@@ -40,14 +43,20 @@ function Input({
 
   return (
     <div className={styles.container}>
-      <label
-        htmlFor={id}
-        className={classNames(styles.label, styles[`label_${currentTheme}`])}>
-        {label}
-        {isRequired && (
-          <span className={styles[`asterisk_${currentTheme}`]}>*</span>
+      <div className={styles.labelContainer}>
+        <label
+          htmlFor={id}
+          className={classNames(styles.label, styles[`label_${currentTheme}`])}>
+          {label}
+          {isRequired && (
+            <span className={styles[`asterisk_${currentTheme}`]}>*</span>
+          )}
+        </label>
+
+        {labelButton && (
+          <SvgButton icon={labelButton} onClick={onLabelButtonClick} />
         )}
-      </label>
+      </div>
 
       <div className={styles.fieldContainer}>
         <input
@@ -75,13 +84,15 @@ function Input({
         )}
       </div>
 
-      <span
-        className={classNames(
-          styles.errorMessage,
-          styles[`errorMessage_${currentTheme}`],
-        )}>
-        {errorMessage}
-      </span>
+      {showErrorMessage && (
+        <span
+          className={classNames(
+            styles.errorMessage,
+            styles[`errorMessage_${currentTheme}`],
+          )}>
+          {errorMessage}
+        </span>
+      )}
     </div>
   );
 }
@@ -94,11 +105,14 @@ Input.propTypes = {
   name: PropTypes.string,
   type: PropTypes.string,
   errorMessage: PropTypes.string,
+  showErrorMessage: PropTypes.bool,
+  labelButton: PropTypes.string,
   isRequired: PropTypes.bool,
   readOnly: PropTypes.bool,
   secured: PropTypes.bool,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
+  onLabelButtonClick: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -109,11 +123,14 @@ Input.defaultProps = {
   name: "",
   type: "text",
   errorMessage: "",
+  showErrorMessage: true,
+  labelButton: "",
   isRequired: false,
   readOnly: false,
   secured: false,
   onChange: () => {},
   onFocus: () => {},
+  onLabelButtonClick: () => {},
 };
 
 export default Input;

@@ -28,6 +28,7 @@ import { ReactComponent as Ban } from "../../../assets/icons/ban.svg";
 import { ReactComponent as Send } from "../../../assets/icons/send.svg";
 import { ReactComponent as Verified } from "../../../assets/icons/verified.svg";
 import { ReactComponent as Archive } from "../../../assets/icons/archive.svg";
+import { ReactComponent as Basket } from "../../../assets/icons/basket.svg";
 
 // SIDE MENU
 import { ReactComponent as Case } from "../../../assets/icons/case.svg";
@@ -65,6 +66,7 @@ function SvgIcon({ type, onClick, className, fill }) {
     send: Send,
     verified: Verified,
     archive: Archive,
+    basket: Basket,
   };
 
   const SIDE_MENU = {

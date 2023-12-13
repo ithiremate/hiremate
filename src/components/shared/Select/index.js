@@ -75,12 +75,15 @@ function Select({
             },
           )}>
           {options.map((option) => {
+            const isChosen = option.value === value.value;
+
             return (
               <div
                 key={option.value}
                 className={classNames(
                   styles.option,
                   styles[`option_${currentTheme}`],
+                  { [styles[`option_${currentTheme}_chosen`]]: isChosen },
                 )}
                 onClick={handleChange(option)}>
                 <span>{option.label}</span>
