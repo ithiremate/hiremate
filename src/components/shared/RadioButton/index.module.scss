@@ -1,0 +1,66 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.label {
+    cursor: pointer;
+    @include font-lg;
+    @include transition(color);
+
+    &_light {
+        color: $text-primary-light;
+    }
+
+    &_dark {
+        color: $text-primary-dark;
+    }
+}
+
+.field {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+
+    &_light {
+        border: 2px solid $background-dark;
+
+        &:before {
+            background-color: $background-dark;
+        }
+    }
+
+    &_dark {
+        border: 2px solid $background-light;
+
+        &:before {
+            background-color: $background-light;
+        }
+    }
+
+    &:before {
+        width: 10px;
+        height: 10px;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        opacity: 0;
+        @include transition(opacity);
+    }
+
+    &:checked:before {
+        opacity: 1;
+    }
+}

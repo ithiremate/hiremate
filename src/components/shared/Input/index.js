@@ -21,6 +21,7 @@ function Input({
   isRequired,
   readOnly,
   secured,
+  className,
   onChange,
   onFocus,
   onLabelButtonClick,
@@ -42,7 +43,7 @@ function Input({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={classNames(styles.container, className)}>
       <div className={styles.labelContainer}>
         <label
           htmlFor={id}
@@ -110,6 +111,7 @@ Input.propTypes = {
   isRequired: PropTypes.bool,
   readOnly: PropTypes.bool,
   secured: PropTypes.bool,
+  className: PropTypes.string,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onLabelButtonClick: PropTypes.func,
@@ -128,6 +130,7 @@ Input.defaultProps = {
   isRequired: false,
   readOnly: false,
   secured: false,
+  className: "",
   onChange: () => {},
   onFocus: () => {},
   onLabelButtonClick: () => {},

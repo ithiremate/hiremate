@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
@@ -9,10 +8,13 @@ import { hideModal } from "../../../../../store/slices/modalSlice";
 
 import Select from "../../../../shared/Select";
 import Button from "../../../../shared/Button";
-import Input from "../../../../shared/Input";
-import Answers from "./molecules/Answers";
+import OneCorrectAnswer from "./molecules/OneCorrectAnswer";
 
 import styles from "./index.module.scss";
+
+const QUESTIONS_BY_TYPE = {
+  [POST_JOB.AUTOSCREENING_QUESTION_TYPES.ONE_RIGHT_ANSWER]: OneCorrectAnswer,
+};
 
 function JobAutoscreeningModal() {
   const dispatch = useDispatch();
@@ -63,11 +65,28 @@ function JobAutoscreeningModal() {
     const updatedQuestions = structuredClone(internalQuestions);
     const questionIndex = updatedQuestions.findIndex((el) => el.id === id);
     const question = updatedQuestions[questionIndex];
+    const answer = {
+      ...POST_JOB.AUTOSCREENING_DEFAULT_ANSWERS[question.type],
+      id: nanoid(),
+    };
 
-    question.answers.push(
-      POST_JOB.AUTOSCREENING_DEFAULT_ANSWERS[question.type],
+    question.answers.push(answer);
+
+    updatedQuestions[questionIndex] = question;
+
+    setInternalQuestions(updatedQuestions);
+  };
+
+  const handleAnswerChange = (questionId) => (answer) => {
+    const updatedQuestions = structuredClone(internalQuestions);
+    const questionIndex = updatedQuestions.findIndex(
+      (el) => el.id === questionId,
     );
 
+    const question = updatedQuestions[questionIndex];
+    const answerIndex = question.answers.findIndex((el) => el.id === answer.id);
+
+    question.answers[answerIndex] = answer;
     updatedQuestions[questionIndex] = question;
 
     setInternalQuestions(updatedQuestions);
@@ -83,7 +102,8 @@ function JobAutoscreeningModal() {
           )}>
           {internalQuestions.length ? (
             internalQuestions.map((question, index) => {
-              const { id, type, question: questionText } = question;
+              const { id, type } = question;
+              const Component = QUESTIONS_BY_TYPE[type];
 
               return (
                 <div
@@ -92,20 +112,13 @@ function JobAutoscreeningModal() {
                     styles.question,
                     styles[`question_${currentTheme}`],
                   )}>
-                  <Input
-                    label={`Question ${index + 1}`}
-                    placeholder="Type question text"
-                    labelButton="basket"
-                    value={questionText}
-                    showErrorMessage={false}
-                    onChange={handleQuestionInputChange(id)}
-                    onLabelButtonClick={handleDeleteQuestion(id)}
-                    isRequired
-                  />
-
-                  <Answers
+                  <Component
+                    index={index}
                     question={question}
+                    onDelete={handleDeleteQuestion(id)}
+                    onQuestionTextChange={handleQuestionInputChange(id)}
                     onAnswerAdd={handleAnswerAdd(id)}
+                    onAnswerChange={handleAnswerChange(id)}
                   />
                 </div>
               );
