@@ -1,28 +1,28 @@
 .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
 }
 
 .input {
-    width: 100%;
+  width: 100%;
 }
 
 .bottom {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .answers {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .blankMessage {
-    opacity: 0.5;
-    font-weight: 200;
+  opacity: 0.5;
+  font-weight: 200;
 }
